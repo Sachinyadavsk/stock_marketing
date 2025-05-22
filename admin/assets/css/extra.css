@@ -1,0 +1,219 @@
+.hover {
+    padding: 10px 0px;
+    background: #ffffff;
+}
+
+.hover:hover {
+    background: #dddddd;
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    cursor: pointer;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.icon-padding {
+    padding: 50px 0px
+}
+
+.text-avatar {
+    font-size: 13px !important
+}
+
+.line-height-none {
+    line-height: 11px !important;
+}
+
+.cb {
+    height: 500px !important;
+    overflow-y: auto;
+}
+
+.cb-child {
+    height: 480px !important;
+}
+
+.cb-btn {
+    width: 130px !important
+}
+
+.notif {
+    height: 25px;
+    width: 25px;
+    line-height: 20px;
+    font-size: 14px
+}
+
+.d-flex h6 {
+    margin-right: 70px
+}
+
+.text-small {
+    font-size: 10px !important;
+    padding: 2px !important;
+}
+.linebreak {
+    white-space: normal !important;
+}
+
+.linebreak span {
+    font-size: 11px !important;
+    color: #888;
+    display: block
+}
+
+.small-btn {
+    font-size: 13px;
+    padding: 4px 15px !important
+}
+
+.icon-width {
+    max-width: 40px;
+    min-width: 36px;
+}
+
+.yt_close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    padding: 3px 10px
+}
+
+.yt_close:hover {
+    color: #ff0000;
+}
+.small-col {
+    width: 180px
+}
+
+.list-inline-item {
+    margin-right: 20px !important;
+}
+
+.item-btn1 {
+    position: absolute;
+    top: 5px;
+    right: 50px
+}
+
+.item-btn2 {
+    color: red !important;
+    position: absolute;
+    top: 5px;
+    right: 20px
+}
+
+
+.fixed-img-height {
+    height: 200px !important;
+    display: block;
+    margin: 0 auto;
+    object-fit: none;
+    object-position: center;
+}
+
+.fixed-img-bottom {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding-top: 5px;
+    position: absolute;
+    bottom: 0;
+    color: #ffffff;
+}
+
+.btns {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff
+}
+
+.btn-edit,
+.btn-close {
+    color: #ffffff;
+    padding: 0px 5px;
+}
+
+.fixed-img-height {
+    height: 130px !important;
+    display: block;
+    margin: 0 auto;
+    object-fit: none;
+    object-position: center;
+}
+
+.btn-del {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+    color: #ff0000;
+}
+.fixed-height {
+    height: 150px !important;
+}
+
+.fixed-img-size {
+    height: 25px
+}
+
+.clos_e {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 0px 2px 0px 0px
+}
+
+.clos_e:hover {
+    color: #999999
+}
+
+.btn-trans {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #dddddd
+}
+
+.btn-trans:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff
+}
+
+.field_error {
+    color: red;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.field_success {
+    color: green;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+span.add-rewards_button {
+    float: right;
+    background: #333;
+    color: #eee;
+    padding: 7px;
+    margin-top: 10px;
+    font-weight: 400;
+    border-radius: 5px;
+}
+
+.logout-decor {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+    .relative {
+        position: relative;
+    }

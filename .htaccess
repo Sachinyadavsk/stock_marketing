@@ -1,0 +1,59 @@
+RewriteEngine on 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#admin panel-----
+RewriteRule ^(admin)/(accepted-ip)/?$ admin/accepted-ip.php
+RewriteRule ^(admin)/(auth-login)/?$ admin/auth-login.php
+RewriteRule ^(admin)/(dashboard)/?$ admin/dashboard.php
+RewriteRule ^(admin)/(reports)/?$ admin/leads.php
+RewriteRule ^(admin)/(offers)/?$ admin/company.php
+RewriteRule ^(admin)/(users)/?$ admin/users.php
+RewriteRule ^(admin)/(blogs)/?$ admin/blogs.php
+RewriteRule ^(admin)/(manage)/?$ admin/manage.php
+RewriteRule ^(admin)/(module-setting)/?$ admin/module_setting.php
+RewriteRule ^(admin)/(offer-categories)/?$ admin/offer-categories.php
+RewriteRule ^(admin)/(offer-types)/?$ admin/offer-types.php
+RewriteRule ^(admin)/(report-user)/?$ admin/user-report.php
+RewriteRule ^(admin)/(report-offer)/?$ admin/offer-report.php
+RewriteRule ^(admin)/(report-frauds)/?$ admin/fraud-report.php
+RewriteRule ^(admin)/(report-summary)/?$ admin/summary-report.php
+RewriteRule ^(admin)/(report-user)/([^/\.]+)/?$ admin/detailed-report.php?user_id=$3
+RewriteRule ^(admin)/(report-offer)/([^/\.]+)/?$ admin/detailed-report.php?offer_id=$3
+RewriteRule ^(admin)/members/online/page/([0-9]+)/?$ members.php?online=1&page=$1 [QSA,L]
+RewriteRule ^(admin)/members/online/?$ members.php?online=1 [QSA,L]
+RewriteRule ^(admin)/members/page/([0-9]+)/?$ members.php?page=$1 [QSA,L]
+RewriteRule ^(admin)/(members)/?$ admin/members.php [QSA,L]
+
+#User Panel
+RewriteRule ^(userpanel)/(auth-login)/?$ userpanel/login.php
+RewriteRule ^(userpanel)/(auth-false)/?$ userpanel/auth-false.php
+RewriteRule ^(userpanel)/(payment-details)/?$ userpanel/payment-details.php
+RewriteRule ^(userpanel)/(offers)/?$ userpanel/offers.php
+RewriteRule ^(userpanel)/(offers)/([^/]+)/?$ userpanel/offers.php?offer_id=$2
+RewriteRule ^(userpanel)/(hotoffer)/?$ userpanel/hotoffer.php
+RewriteRule ^(userpanel)/(my_earnings)/?$ userpanel/my_earnings.php
+RewriteRule ^(userpanel)/(my_payments)/?$ userpanel/my_payments.php
+RewriteRule ^(userpanel)/(settings)/?$ userpanel/settings.php
+RewriteRule ^(userpanel)/(dashboard)/?$ userpanel/dashboard.php
+RewriteRule ^(userpanel)/(my_referrals)/?$ userpanel/my_referrals.php
+RewriteRule ^(userpanel)/([^/\.]+)/([^/\.]+)/(leads)/?$ userpanel/leads.php
+
+# Website contents
+RewriteRule ^(faqs)/?$ faqs.php
+RewriteRule ^(about-us)/?$ about-us.php
+RewriteRule ^(contact-us)/?$ contact-us.php
+RewriteRule ^(blogs)/?$ blogs.php
+RewriteRule ^(blog)/([^/\.]+)/?$ blog.php?blog=$2
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php7_module>
+   php_value error_reporting E_ALL & ~E_NOTICE & ~E_DEPRECATED
+</IfModule>
+<IfModule lsapi_module>
+   php_value error_reporting E_ALL & ~E_NOTICE & ~E_DEPRECATED
+</IfModule>
+# END cPanel-generated php ini directives, do not edit

@@ -1,0 +1,1 @@
+function fill(a){$("#search").val(a),$("#display").hide()}$(document).ready(function(){$("#search").keyup(function(){var a=$("#search").val();" "==a?$("#display").html(""):$.ajax({type:"POST",url:"search_bar.php",data:{search:a},success:function(a){$("#display").html(a).show()}})})});
