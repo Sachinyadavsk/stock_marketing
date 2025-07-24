@@ -19,9 +19,13 @@ if (isset($_POST['app_userupdate'])) {
     if ($check->num_rows > 0) {
         // Update
         $sql = "UPDATE maintain SET update_type = '$update_type', version_code = '$version_code', lbv = '$lbv', bv = '$bv', av = '$av' WHERE admin_id = '$admin_id'";
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $admin_id, $role_type_is, $update_type, 'Update maintain');
     } else {
         // Insert
         $sql = "INSERT INTO maintain (admin_id, update_type, version_code, lbv, bv, av) VALUES ('$admin_id', '$update_type', '$version_code', '$lbv', '$bv', '$av')";
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, $update_type, 'Add New Maintain');
     }
      $con->query($sql);
      header('location:maintain.php');
@@ -39,9 +43,12 @@ if (isset($_POST['app_cleanup'])) {
     if ($check->num_rows > 0) {
         // Update
         $sql = "UPDATE maintain SET cleanup_type = '$cleanup_type', cleanup_days = '$cleanup_days' WHERE admin_id = '$admin_id'";
+        logActivity($con, $admin_id, $role_type_is, $cleanup_type, 'Update Maintain');
     } else {
         // Insert
         $sql = "INSERT INTO maintain (admin_id, cleanup_type, cleanup_days) VALUES ('$admin_id', '$cleanup_type', '$cleanup_days')";
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, $cleanup_type, 'Add New Maintain');
     }
      $con->query($sql);
      header('location:maintain.php');
@@ -58,9 +65,12 @@ if (isset($_POST['tos_update'])) {
     if ($check->num_rows > 0) {
         // Update
         $sql = "UPDATE maintain SET tos = '$tos' WHERE admin_id = '$admin_id'";
+        logActivity($con, $admin_id, $role_type_is, $tos, 'Update team of service');
     } else {
         // Insert
         $sql = "INSERT INTO maintain (admin_id, tos) VALUES ('$admin_id', '$tos')";
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, '', 'Add New team of service');
     }
      $con->query($sql);
      header('location:maintain.php');
@@ -78,9 +88,12 @@ if (isset($_POST['privacy_update'])) {
     if ($check->num_rows > 0) {
         // Update
         $sql = "UPDATE maintain SET privacy = '$privacy' WHERE admin_id = '$admin_id'";
+        logActivity($con, $admin_id, $role_type_is, $privacy, 'Update privacy');
     } else {
         // Insert
         $sql = "INSERT INTO maintain (admin_id, privacy) VALUES ('$admin_id', '$privacy')";
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, $privacy, 'Add new privacy');
     }
      $con->query($sql);
      header('location:maintain.php');
@@ -97,9 +110,12 @@ if (isset($_POST['app_ads'])) {
     if ($check->num_rows > 0) {
         // Update
         $sql = "UPDATE maintain SET ads_data = '$ads_data' WHERE admin_id = '$admin_id'";
+        logActivity($con, $admin_id, $role_type_is, 'Ads data', 'Update Ads data');
     } else {
         // Insert
         $sql = "INSERT INTO maintain (admin_id, ads_data) VALUES ('$admin_id', '$ads_data')";
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, 'Ads data', 'Add new Ads data');
     }
      $con->query($sql);
      header('location:maintain.php');

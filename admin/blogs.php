@@ -13,6 +13,7 @@ if(isset($_GET['type']) && $_GET['type']!=''){
 		$id=get_safe_value($con,$_GET['id']);
 		$delete_sql="delete from blogs where id='$id'";
 		mysqli_query($con,$delete_sql);
+		logActivity($con, $id, $role_type_is, '', 'Deleted blogs');
 		?>
     <script>
         Swal.fire({
@@ -32,11 +33,13 @@ if(isset($_GET['type']) && $_GET['type']!=''){
 	if($type=='active'){
 	$id=get_safe_value($con,$_GET['id']);
 	 mysqli_query($con,"update blogs set status='0' where id='$id'");
+	 logActivity($con, $id, $role_type_is, $type, 'Update blog');
 	}
 	
 	if($type=='deactive'){
 	$id=get_safe_value($con,$_GET['id']);
 	 mysqli_query($con,"update blogs set status='1' where id='$id'");
+	 logActivity($con, $id, $role_type_is, $type, 'Update blog');
 	}
 	
 	 

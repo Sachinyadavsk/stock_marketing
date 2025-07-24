@@ -55,6 +55,8 @@ if (isset($_POST['settings_update'])) {
     }
     
     mysqli_query($con, $query);
+    $last_id = mysqli_insert_id($con);
+    logActivity($con, $last_id, $role_type_is, $backend_name, 'add new system settings');
     header('location:settings.php');
     die();
 }
@@ -70,8 +72,11 @@ if (isset($_POST['games_hide'])) {
     $selected_games = isset($_POST['game']) ? $_POST['game'] : [];
 
     mysqli_query($con, "DELETE FROM admin_settings WHERE admin_id = '$admin_id'");
+    logActivity($con, $admin_id, $role_type_is, $selected_games, 'Delete system settings');
     foreach ($selected_games as $game) {
         mysqli_query($con, "INSERT INTO admin_settings (admin_id, game_code) VALUES ('$admin_id', '$game')");
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $admin_id, $role_type_is, $game, 'Add multiple new system settings');
     }
     header('location:settings.php');
     die();

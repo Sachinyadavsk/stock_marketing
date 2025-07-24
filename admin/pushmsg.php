@@ -4,51 +4,163 @@
 <!-- header url end -->
 
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+ require 'vendor/autoload.php';
+ 
 $msg = '';
 $color_class = '';
-
 $userid = $_POST['uid'];
 if(!empty($userid)){
     
 }else{
     if (isset($_POST['submit'])) {
-    $token_id = $_POST['token_id'];
+   
     $sendtype = $_POST['sendtype'];
-    $title = get_safe_value($con, $_POST['title']);
-    $message = get_safe_value($con, $_POST['message']);
-    $text_or_multi = $_POST['text_or_multi'];
-    $created_at = date('Y-m-d H:i:s');
+    $title = $_POST['title'];
+    $message = $_POST['message'];
+    $recipients = [];
 
-    // File upload
-    $media_file_name = '';
-    if (!empty($_FILES['multimedia_image']['name'])) {
-        $target_dir = "images/pushsms/";
-        $media_file_name = time() . '_' . basename($_FILES["multimedia_image"]["name"]);
-        $target_file = $target_dir . $media_file_name;
-        move_uploaded_file($_FILES["multimedia_image"]["tmp_name"], $target_file);
+     $textOrMulti = $_POST['text_or_multi'];
+     
+     
+  
+    // Handle image upload if applicable
+        $imageUrl = '';
+        if (in_array($textOrMulti, ['2', '3']) && isset($_FILES['multimedia_image']) && $_FILES['multimedia_image']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = "images/messages/";
+            $filename = basename($_FILES['multimedia_image']['name']);
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            $newFilename = uniqid("img_") . "." . $ext;
+            $uploadFile = $uploadDir . $newFilename;
+    
+            // Create the folder if it doesn't exist
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+    
+            if (move_uploaded_file($_FILES['multimedia_image']['tmp_name'], $uploadFile)) {
+                $imageUrl = "https://reapbucks.com/admin/" . $uploadFile; // Update domain accordingly
+            }
+        }
+    
+    // Send to single user
+    if ($sendtype == 1) {
+        $input = $_POST['email_or_userid'];
+        $type = $_POST['email_or_userid_type'];
+
+        if ($type == 1) {
+            $sql = "SELECT email FROM users WHERE id = '$input'";
+        } else {
+            $sql = "SELECT email FROM users WHERE email = '$input'";
+        }
+
+        $result = $con->query($sql);
+        if ($row = $result->fetch_assoc()) {
+            $recipients[] = $row['email'];
+        }
+
+    } elseif ($sendtype == 2) {
+        // Send to range of users
+        $from = $_POST['sendtype-2-input-from'];
+        $to = $_POST['sendtype-2-input-to'];
+        $sql = "SELECT email FROM users WHERE id BETWEEN '$from' AND '$to'";
+        $result = $con->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $recipients[] = $row['email'];
+        }
+
+    } elseif ($sendtype == 3) {
+        // Banned users (example: status = 'banned')
+        $sql = "SELECT email FROM users WHERE banstatus = '0' AND app_deleted = 0 ORDER BY id DESC LIMIT 50";
+        $result = $con->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $recipients[] = $row['email'];
+        }
+
+    } elseif ($sendtype == 4) {
+        // Leaderboard winners (top 10)
+        $sql = "SELECT email FROM users WHERE leaderboard_rank <= 10";
+        $result = $con->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $recipients[] = $row['email'];
+        }
+
+    } elseif ($sendtype == 5) {
+        // All subscribed users
+        $sql = "SELECT email FROM users WHERE subscribed = 1";
+        $result = $con->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $recipients[] = $row['email'];
+        }
     }
 
-    $email_or_userid = isset($_POST['email_or_userid']) ? $_POST['email_or_userid'] : '';
-    $email_or_userid_type = isset($_POST['email_or_userid_type']) ? $_POST['email_or_userid_type'] : '';
-    $range_from = isset($_POST['sendtype-2-input-from']) ? $_POST['sendtype-2-input-from'] : '';
-    $range_to = isset($_POST['sendtype-2-input-to']) ? $_POST['sendtype-2-input-to'] : '';
+    // Send emails
+   function buildEmailTemplate($title, $message, $imageUrl, $textOrMulti) {
+        $imgHtml = "";
+        if ($imageUrl && in_array($textOrMulti, ['2', '3'])) {
+            $imgStyle = ($textOrMulti == '2') ? 'width: 100%; max-height: 300px;' : 'width: 100%;';
+            $imgHtml = "<div style='margin-top:15px;text-align:center;'><img src='$imageUrl' style='$imgStyle' alt='Image' /></div>";
+        }
 
-    $insert = mysqli_query($con, "INSERT INTO sendpush (token_id, sendtype, email_or_userid, email_or_userid_type, range_from, range_to, title, message, text_or_multi, image_file, created_at)
-        VALUES ('$token_id', '$sendtype', '$email_or_userid', '$email_or_userid_type', '$range_from', '$range_to', '$title', '$message', '$text_or_multi', '$media_file_name', '$created_at')");
-
-    if ($insert) {
-        header('location:index.php');
-        die();
-    } else {
-        $msg = "Error occurred while submitting the form.";
-        $color_class = "alert-danger";
+        return "
+        <html>
+        <head>
+            <style>
+                body { font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 0; margin: 0; }
+                .container { max-width: 600px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 10px; }
+                .header { background-color: #007BFF; color: #fff; padding: 10px; text-align: center; border-radius: 10px 10px 0 0; }
+                .content { padding: 20px; font-size: 16px; color: #333; }
+                .footer { font-size: 12px; text-align: center; color: #aaa; margin-top: 30px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'><h2>$title</h2></div>
+                <div class='content'>
+                    <p>" . nl2br(htmlspecialchars($message)) . "</p>
+                    $imgHtml
+                </div>
+                <div class='footer'>This is an automated message from YourDomain.com</div>
+            </div>
+        </body>
+        </html>";
     }
-} else {
-    $msg = "Please submit the form properly.";
-    $color_class = "alert-warning";
-}
-}
 
+           foreach ($recipients as $email) {
+            $htmlMessage = buildEmailTemplate($title, $message, $imageUrl, $textOrMulti);
+            logActivity($con, $textOrMulti, $role_type_is, $email, 'Push Message Reapbucks');
+        
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->SMTPAuth = true;
+                $mail->SMTPSecure = 'ssl';
+                $mail->Host = 'smtp.titan.email';
+                $mail->Port = 465;
+                $mail->Username = 'info@reapbucks.com';
+                $mail->Password = 'Zettamobi@676';
+        
+                $mail->setFrom('info@reapbucks.com', 'Push Message Reapbucks');
+                $mail->addAddress($email);
+                $mail->SMTPOptions=array('ssl'=>array(
+        		'verify_peer'=>false,
+        		'verify_peer_name'=>false,
+        		'allow_self_signed'=>false
+             	));
+        
+                $mail->isHTML(true);
+                $mail->Subject = $title;
+                $mail->Body = $htmlMessage;
+                $mail->send();
+                // echo "OTP sent successfully to your email.";
+            } catch (Exception $e) {
+                // echo "Mailer Error: " . $mail->ErrorInfo;
+            }
+        }
+
+}
+}
 
 ?>
 
@@ -97,62 +209,69 @@ if(!empty($userid)){
                                         </div>
                                     </div>
                                 </label>
-                                <label class="form-selectgroup-item flex-fill">
-                                    <input id="sendtype-2-radio" type="radio" name="sendtype" value="2" class="form-selectgroup-input">
-                                    <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <div class="mr-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </div>
-                                        <div class="lh-sm">
-                                            <div class="strong mb-2">To multiple users:</div>
-                                            <div class="form-check-description">
-                                                <div class="input-group">
-                                                    <span class="input-group-text">From</span>
-                                                    <input type="text" id="sendtype-2-input" name="sendtype-2-input-from" class="form-control text-center" value="1">
-                                                    <span class="input-group-text">to</span>
-                                                    <input type="text" id="sendtype-2-input" name="sendtype-2-input-to" class="form-control text-center" value="50">
-                                                    <span class="input-group-text">users</span>
+                                
+                                <!--set to conditions in userid according -->
+                                <?php if(!empty($userid)){
+                                }else{ ?>
+                                    <label class="form-selectgroup-item flex-fill">
+                                        <input id="sendtype-2-radio" type="radio" name="sendtype" value="2" class="form-selectgroup-input">
+                                        <div class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <div class="mr-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </div>
+                                            <div class="lh-sm">
+                                                <div class="strong mb-2">To multiple users:</div>
+                                                <div class="form-check-description">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">From</span>
+                                                        <input type="text" id="sendtype-2-input" name="sendtype-2-input-from" class="form-control text-center" value="1">
+                                                        <span class="input-group-text">to</span>
+                                                        <input type="text" id="sendtype-2-input" name="sendtype-2-input-to" class="form-control text-center" value="50">
+                                                        <span class="input-group-text">users</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </label>
-                                <label class="form-selectgroup-item flex-fill">
-                                    <input type="radio" name="sendtype" value="3" class="form-selectgroup-input">
-                                    <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <div class="mr-3">
-                                            <span class="form-selectgroup-check"></span>
+                                    </label>
+                                    <label class="form-selectgroup-item flex-fill">
+                                        <input type="radio" name="sendtype" value="3" class="form-selectgroup-input">
+                                        <div class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <div class="mr-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </div>
+                                            <div class="lh-sm">
+                                                <div class="strong">Banned users</div>
+                                                <div class="form-check-description">Last 50 banned users who did not delete the app yet.</div>
+                                            </div>
                                         </div>
-                                        <div class="lh-sm">
-                                            <div class="strong">Banned users</div>
-                                            <div class="form-check-description">Last 50 banned users who did not delete the app yet.</div>
+                                    </label>
+                                    <label class="form-selectgroup-item flex-fill">
+                                        <input type="radio" name="sendtype" value="4" class="form-selectgroup-input">
+                                        <div class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <div class="mr-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </div>
+                                            <div class="lh-sm">
+                                                <div class="strong">Leaderboard winners</div>
+                                                <div class="form-check-description">Send message to the current leaderboard ranked users.</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </label>
-                                <label class="form-selectgroup-item flex-fill">
-                                    <input type="radio" name="sendtype" value="4" class="form-selectgroup-input">
-                                    <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <div class="mr-3">
-                                            <span class="form-selectgroup-check"></span>
+                                    </label>
+                                    <label class="form-selectgroup-item flex-fill">
+                                        <input type="radio" name="sendtype" value="5" class="form-selectgroup-input">
+                                        <div class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <div class="mr-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </div>
+                                            <div class="lh-sm">
+                                                <div class="strong">To all users</div>
+                                                <div class="form-check-description">Send message to all the subscribed users.</div>
+                                            </div>
                                         </div>
-                                        <div class="lh-sm">
-                                            <div class="strong">Leaderboard winners</div>
-                                            <div class="form-check-description">Send message to the current leaderboard ranked users.</div>
-                                        </div>
-                                    </div>
-                                </label>
-                                <label class="form-selectgroup-item flex-fill">
-                                    <input type="radio" name="sendtype" value="5" class="form-selectgroup-input">
-                                    <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <div class="mr-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </div>
-                                        <div class="lh-sm">
-                                            <div class="strong">To all users</div>
-                                            <div class="form-check-description">Send message to all the subscribed users.</div>
-                                        </div>
-                                    </div>
-                                </label>
+                                    </label>
+                                <?php }?>
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -177,7 +296,7 @@ if(!empty($userid)){
                                 <div class="form-label">Message type</div>
                                 <div class="form-selectgroup mr-3">
                                     <label class="form-selectgroup-item">
-                                        <input type="radio" name="text_or_multi" value="1" class="form-selectgroup-input" checked>
+                                        <input type="radio" name="text_or_multi" value="1" class="form-selectgroup-input">
                                         <span class="form-selectgroup-label">Text</span>
                                     </label>
                                     <label class="form-selectgroup-item">
@@ -238,11 +357,11 @@ if(!empty($userid)){
                         </div>
                     </div>
                 </form>
-                <?php if (!empty($msg)): ?>
-                    <div class="alert <?php echo $color_class; ?>">
-                        <?php echo $msg; ?>
-                    </div>
-                <?php endif; ?>
+                <!--</?php if (!empty($msg)): ?>-->
+                <!--    <div class="alert </?php echo $color_class; ?>">-->
+                <!--        </?php echo $msg; ?>-->
+                <!--    </div>-->
+                <!--</?php endif; ?>-->
 
             </div>
             <!-- footer Start -->

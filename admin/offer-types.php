@@ -27,6 +27,8 @@ if(isset($_POST['addtypes'])){
 <?php
 }else{
 	mysqli_query($con,"INSERT INTO `offer_types`(`type`, `added_on`) VALUES ('$name','$date_time')");
+	$last_id = mysqli_insert_id($con);
+	logActivity($con, $last_id, $role_type_is, $name, 'Add new offer types');
 ?>
         <script>
             Swal.fire({
@@ -52,6 +54,7 @@ if(isset($_GET['type']) && $_GET['type']!=''){
 		$id=get_safe_value($con,$_GET['id']);
 		$delete_sql="delete from offer_types where id='$id'";
 		mysqli_query($con,$delete_sql);
+		logActivity($con, $id, $role_type_is, $type, 'Delete offer types');
 		?>
     <script>
         Swal.fire({

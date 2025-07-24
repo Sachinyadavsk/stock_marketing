@@ -70,6 +70,7 @@ if(isset($_POST['update'])){
  $newpass=mysqli_real_escape_string($con,$_POST['newpass']);
  $password_hash=password_hash($newpass, PASSWORD_DEFAULT);
  mysqli_query($con,"update users set password='$password_hash',password_plain='$newpass' where id='$admin_id'");
+ logActivity($con, $admin_id, $user_id_u, $user_id_n, 'Password Updated &nbsp;' . $admin_id);
  ?>
  <script>
     Swal.fire({
@@ -94,6 +95,8 @@ if (isset($_POST['send'])) {
     $message = $_POST['message'];
      $insert_query = "INSERT INTO messages (user_id, message, sender_type) VALUES ('$replyid', '$message', 'user')";
     mysqli_query($con, $insert_query);
+    $last_id = mysqli_insert_id($con);
+    logActivity($con, $last_id, $user_id_u, $user_id_n, 'Access updated &nbsp;' . $last_id);
       echo "<script>alert('Access updated successfully'); window.location='https://reapbucks.com/userpanel/settings';</script>";
 }
 ?>
@@ -110,6 +113,7 @@ if(isset($_POST['update_profile'])){
  $city=mysqli_real_escape_string($con,$_POST['city']);
  $state=mysqli_real_escape_string($con,$_POST['state']);
 mysqli_query($con,"update users set name='$name', email='$email',phone='$phone' where id='$admin_id'");
+logActivity($con, $admin_id, $user_id_u, $user_id_n, 'Update profile &nbsp;' . $admin_id);
   $_SESSION['ADMIN_NAME'] = $name;
 ?>
 
@@ -335,7 +339,29 @@ mysqli_query($con,"update users set name='$name', email='$email',phone='$phone' 
                                             </g>
                                         </svg>
                                     </div>
-                                    <span class="text-sm">Send Notifications</span>
+                                    <span class="text-sm">Send Message</span>
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item pt-2">
+                                <a class="nav-link text-body" href="https://reapbucks.com/userpanel/auth-false">
+                                    <div class="icon me-2">
+                                        <svg class="text-dark mb-1" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                            <title>settings</title>
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g transform="translate(-2020.000000, -442.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                                    <g transform="translate(1716.000000, 291.000000)">
+                                                        <g transform="translate(304.000000, 151.000000)">
+                                                            <polygon class="color-background" opacity="0.596981957" points="18.0883333 15.7316667 11.1783333 8.82166667 13.3333333 6.66666667 6.66666667 0 0 6.66666667 6.66666667 13.3333333 8.82166667 11.1783333 15.315 17.6716667"></polygon>
+                                                            <path class="color-background" d="M31.5666667,23.2333333 C31.0516667,23.2933333 30.53,23.3333333 30,23.3333333 C29.4916667,23.3333333 28.9866667,23.3033333 28.48,23.245 L22.4116667,30.7433333 L29.9416667,38.2733333 C32.2433333,40.575 35.9733333,40.575 38.275,38.2733333 L38.275,38.2733333 C40.5766667,35.9716667 40.5766667,32.2416667 38.275,29.94 L31.5666667,23.2333333 Z" opacity="0.596981957"></path>
+                                                            <path class="color-background" d="M33.785,11.285 L28.715,6.215 L34.0616667,0.868333333 C32.82,0.315 31.4483333,0 30,0 C24.4766667,0 20,4.47666667 20,10 C20,10.99 20.1483333,11.9433333 20.4166667,12.8466667 L2.435,27.3966667 C0.95,28.7083333 0.0633333333,30.595 0.00333333333,32.5733333 C-0.0583333333,34.5533333 0.71,36.4916667 2.11,37.89 C3.47,39.2516667 5.27833333,40 7.20166667,40 C9.26666667,40 11.2366667,39.1133333 12.6033333,37.565 L27.1533333,19.5833333 C28.0566667,19.8516667 29.01,20 30,20 C35.5233333,20 40,15.5233333 40,10 C40,8.55166667 39.685,7.18 39.1316667,5.93666667 L33.785,11.285 Z"></path>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span class="text-sm">Logout</span>
                                 </a>
                             </li>
                            
@@ -390,7 +416,7 @@ mysqli_query($con,"update users set name='$name', email='$email',phone='$phone' 
                                         <div class="col-sm-12 col-md-6 col-lg-6">
                                             <label class="form-label">Email</label>
                                             <div class="input-group">
-                                                <input id="email" class="form-control" type="email" name="email" value="<?php echo $email;?>">
+                                                <input id="email" class="form-control" type="email" name="email" value="<?php echo $email;?>" readonly> 
                                             </div>
                                         </div>
                                     </div>
@@ -507,16 +533,65 @@ mysqli_query($con,"update users set name='$name', email='$email',phone='$phone' 
                                             <th>TYPE</th>
                                             <th>TASK</th>
                                             <th>ALIAS</th>
-                                            <th>REMAINED COIN</th>
-                                            <th>OFFERWALL</th>
-                                            <th>CAMPAIGN ID</th>
                                             <th>IP</th>
                                             <th>DATE</th>
                                         </tr>
                                     </thead>
+                                    <?php 
+                                    
+                                    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                                    $limit = 10;
+                                    $start = ($page - 1) * $limit;
+                                    
+                                    // Get activity data
+                                    $sql = "
+                                    SELECT 
+                                        ah.id AS trans_id, ah.price AS coin, ah.ip_address, ah.created_at, ah.method AS task, ah.point_name AS alias
+                                    FROM activity_history ah
+                                    JOIN users u ON ah.user_id = u.id
+                                    WHERE ah.user_id = $admin_id
+                                    ORDER BY ah.created_at DESC
+                                    LIMIT $start, $limit
+                                    ";
+                                    $result = mysqli_query($con, $sql);
+                                    ?>
                                     <tbody>
-                                        <tr>no content </tr>
+                                    <?php if (mysqli_num_rows($result) > 0): ?>
+                                        <?php while($row = mysqli_fetch_assoc($result)): ?>
+                                            <tr>
+                                                <td><?php echo $admin_id;?><?= $row['trans_id'] ?></td>
+                                                <td><?= $row['coin'] ?></td>
+                                                <td class="text-sm">
+                                                    <span class="badge bg-gradient-success">Credit</span>
+                                                </td>
+                                                <td><?= $row['task'] ?></td>
+                                                <td><?= $row['coin'] ?> &nbsp; <?= $row['alias'] ?></td>
+                                                <td><?= $row['ip_address'] ?></td>
+                                                <td><?= $row['created_at'] ?></td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <tr><td colspan="10">No activity found</td></tr>
+                                    <?php endif; ?>
                                     </tbody>
+                                    
+                                    <?php
+                                    // Pagination links
+                                    $total_query = "SELECT COUNT(*) as total FROM activity_history WHERE user_id ='$admin_id'";
+                                    $total_result = mysqli_query($conn, $total_query);
+                                    $total_row = mysqli_fetch_assoc($total_result);
+                                    $total_pages = ceil($total_row['total'] / $limit);
+                                    ?>
+                                    
+                                    <nav>
+                                      <ul class="pagination">
+                                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                          <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                            <a class="page-link" href="?user_id=<?= $admin_id ?>&page=<?= $i ?>"><?= $i ?></a>
+                                          </li>
+                                        <?php endfor; ?>
+                                      </ul>
+                                    </nav>
                                 </table>
 
                             </div>

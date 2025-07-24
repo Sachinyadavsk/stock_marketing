@@ -133,3 +133,68 @@
 
 				</div>     <!-- End header-wrapper -->
 			</header>	<!-- END HEADER -->
+			
+			<script>
+       // Function to check and request notification permission
+            function requestNotificationPermission() {
+                if (!("Notification" in window)) {
+                    // alert("This browser does not support desktop notifications.");
+                    return;
+                }
+            
+                Notification.requestPermission().then(permission => {
+                    localStorage.setItem("notification_permission", permission); // Save response
+                    
+                    if (permission === "granted") {
+                        console.log("User allowed notifications.");
+                        sendNotification();
+                    } else if (permission === "denied") {
+                        console.log("User blocked notifications.");
+                        // alert("You have blocked notifications. To enable them, change settings in your browser.");
+                    }
+                });
+            }
+            
+            // Function to fetch meta description
+            function getMetaDescription() {
+                const metaTag = document.querySelector('meta[name="description"]');
+                return metaTag ? metaTag.getAttribute("content") : "No description available";
+            }
+            
+            // Function to show notification
+            function sendNotification() {
+                let title = document.title; // Get the page title
+                let description = getMetaDescription(); // Get the meta description
+                let url = window.location.href; // Get the page URL
+            
+                if (Notification.permission === "granted") {
+                    new Notification(title, {
+                        body: description,
+                        icon: "https://reapbucks.com/" // Update with your logo URL
+                    });
+            
+                    // Send data to the server
+                    saveNotificationToDB(title, description, url);
+                }
+            }
+            
+            // Function to store the notification in the database via AJAX
+            function saveNotificationToDB(title, description, url) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "https://reapbucks.com/save_notification.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            
+                let data = `title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&url=${encodeURIComponent(url)}`;
+                xhr.send(data);
+            }
+            
+            // Check notification permission on page load
+            document.addEventListener("DOMContentLoaded", function () {
+                const permission = localStorage.getItem("notification_permission");
+            
+                if (!permission || permission === "default") {
+                    requestNotificationPermission(); // Ask only if no decision has been made
+                }
+            });
+
+    </script>

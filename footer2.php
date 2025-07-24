@@ -35,7 +35,7 @@
 						</div>
 						 <div class="col-md-2 col-sm-4">
 							<div class="footer-info1">
-								<a href="https://reapbucks.com/auth-login">Sign Up</a>
+								<a href="https://reapbucks.com/userpanel/">Sign Up</a>
 							</div>	
 						</div>
 
@@ -106,6 +106,77 @@
 
 		<script src="https://reapbucks.com/js2/changer.js"></script>
 		<script defer src="https://reapbucks.com/js2/styleswitch.js"></script>	
+        
+        <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"></script>
 
+
+        <script>
+              const firebaseConfig = {
+                apiKey: "AIzaSyCKuCRd4g1cpK0JUpE4LiZEBAruuPEslSU",
+                authDomain: "reapbucks-app-rewords.firebaseapp.com",
+                projectId: "reapbucks-app-rewords",
+                storageBucket: "reapbucks-app-rewords.firebasestorage.app",
+                messagingSenderId: "49877699544",
+                appId: "1:49877699544:web:6159119cbabca8b7b040ad",
+                measurementId: "G-D1TKN2TEGG"
+              };
+                firebase.initializeApp(firebaseConfig);
+                const messaging=firebase.messaging();
+            
+                function IntitalizeFireBaseMessaging() {
+                    messaging
+                        .requestPermission()
+                        .then(function () {
+                            //console.log("Notification Permission");
+                            return messaging.getToken();
+                        })
+                        .then(function (token) {
+                            //console.log("Token : "+token);
+                            //document.getElementById("token").innerHTML=token;
+                            $.ajax({  
+                            type: "POST",  
+                            url: "firebase_token_store.php", 
+                            data: "token="+ token,
+                            success: function(response) {
+                                
+                            }
+                        });
+                        })
+                        .catch(function (reason) {
+                            //console.log(reason);
+                        });
+                }
+            
+                messaging.onMessage(function (payload) {
+                    //console.log(payload);
+                    const notificationOption={
+                        body:payload.notification.body,
+                        icon:payload.notification.icon
+                    };
+            
+                    if(Notification.permission==="granted"){
+                        var notification=new Notification(payload.notification.title,notificationOption);
+            
+                        notification.onclick=function (ev) {
+                            ev.preventDefault();
+                            window.open(payload.notification.click_action,'_blank');
+                            notification.close();
+                        }
+                    }
+            
+                });
+                messaging.onTokenRefresh(function () {
+                    messaging.getToken()
+                        .then(function (newtoken) {
+                            console.log("New Token : "+ newtoken);
+                        })
+                        .catch(function (reason) {
+                            //console.log(reason);
+            				//alert(reason);
+                        })
+                })
+                IntitalizeFireBaseMessaging();
+</script>
 	</body>
 </html>

@@ -1,3 +1,9 @@
+
+<?php 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+ require 'vendor/autoload.php';
+ ?>
 <!-- header top url start -->
 <?php include("header_top.php");?>
 <!-- header top url end -->
@@ -84,7 +90,14 @@ $timeOnly=date('H:i');
                                         <tr>
                                             <td class="text-sm"><?php echo $method_name;?></td>
                                             <td class="text-sm"> <span class="badge bg-primary"><?php echo $list['upi_id'];?></span></td>
-                                            <td class="text-sm"><?php echo $list['timestamp'];?></td>
+                                            <td class="text-sm">
+                                               <?php 
+                                                 $date_string = $list['timestamp'];
+                                                 $date = DateTime::createFromFormat("d/m/Y H:i:s a", $date_string);
+                                                 $formatted_date = $date->format("F d Y a h:i");
+                                                 echo $formatted_date;
+                                                 ?>
+                                                </td>
                                             <td class="text-sm">
                                                 <a data-bs-toggle="modal" data-bs-target="#modal-edit<?php echo $list['id'];?>" data-bs-original-title="Edit">
                                                     <i class="fas fa-edit text-success"></i>
@@ -142,13 +155,18 @@ $timeOnly=date('H:i');
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="validationCustom01" class="form-label"> Payment
-                                                            Method</label>
-                                                        <select class="form-select" id="validationCustom01"
-                                                            name="method" required>
-                                                            <option value="<?php echo $list['method_id'];?>">
-                                                                <?php echo $method_name;?>
-                                                            </option>
+                                                        <label for="validationCustom01" class="form-label"> Payment Method</label>
+                                                        <select class="form-select" id="validationCustom01" name="method" required>
+                                                                <?php  if ($country == 'IN' && $method_name == 'upid') {?>
+                                                                  <option value="<?php echo $list['method_id'];?>">
+                                                                    <?php echo $method_name;?>
+                                                                 </option>
+                                                                <?php } ?>
+                                                               <?php  if ($country != 'IN' && $method_name == 'paypal') {?>
+                                                                    <option value="<?php echo $list['method_id'];?>">
+                                                                       <?php echo $method_name;?>
+                                                                    </option>
+                                                                <?php } ?>
                                                             <?php
                                                         
                                                                 $cat_res=mysqli_query($con,"select * from payment_methods");
@@ -158,11 +176,15 @@ $timeOnly=date('H:i');
                                                                 }
                                                                 mysqli_next_result($con);
                                                                  foreach($cat_arr as $list1){
+                                                                     $method_name = strtolower($list1['method']);
                                                                     
                                                                 ?>
-                                                            <option value="<?php echo $list1['id'];?>">
-                                                                <?php echo $list1['method'];?>
-                                                            </option>
+                                                                 <?php  if ($country == 'IN' && $method_name == 'upid') {?>
+                                                                      <option value="<?php echo $list1['id'];?>"><?php echo $method_name;?></option>
+                                                                <?php } ?>
+                                                                   <?php  if ($country != 'IN' && $method_name == 'paypal') {?>
+                                                                        <option value="<?php echo $list1['id'];?>"><?php echo $method_name;?></option>
+                                                                    <?php } ?>
                                                             <?php }?>
                                                         </select>
                                                         <div class="valid-feedback">
@@ -172,7 +194,7 @@ $timeOnly=date('H:i');
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="validationCustom02" class="form-label">UPI
+                                                        <label for="validationCustom02" class="form-label"><?php if ($country == 'IN'){ echo 'UPI'; }else{ echo 'Paypal';}?>
                                                             ID</label>
                                                         <input type="text" class="form-control" id="em" name="upi"
                                                             placeholder="Enter a valid ID"
@@ -227,19 +249,22 @@ $timeOnly=date('H:i');
                                                                     <option value="">--Select--</option>
                                                                     <?php
                                                                 
-                                                        $cat_res=mysqli_query($con,"select * from payment_methods");
-                                                        $cat_arr=array();
-                                                        while($row=mysqli_fetch_assoc($cat_res)){
-                                                          $cat_arr[]=$row;    
-                                                        }
-                                                        mysqli_next_result($con);
-                                                         foreach($cat_arr as $list){
-                                                            
-                                                        ?>
-                                                                    <option value="<?php echo $list['id'];?>">
-                                                                        <?php echo $list['method'];?>
-                                                                    </option>
-                                                                    <?php }?>
+                                                                        $cat_res=mysqli_query($con,"select * from payment_methods");
+                                                                        $cat_arr=array();
+                                                                        while($row=mysqli_fetch_assoc($cat_res)){
+                                                                          $cat_arr[]=$row;    
+                                                                        }
+                                                                        mysqli_next_result($con);
+                                                                         foreach($cat_arr as $list){
+                                                                            $method_name = strtolower($list['method']);
+                                                                               if ($country == 'IN' && $method_name == 'upid') {?>
+                                                                                  <option value="<?php echo $list['id'];?>"><?php echo $method_name;?></option>
+                                                                            <?php } ?>
+                                                                               <?php  if ($country != 'IN' && $method_name == 'paypal') {?>
+                                                                                    <option value="<?php echo $list['id'];?>"><?php echo $method_name;?></option>
+                                                                                <?php } ?>
+                                                                      
+                                                                       <?php }?>
                                                                 </select>
                                                                 <div class="valid-feedback">
                                                                     Looks good!
@@ -248,7 +273,7 @@ $timeOnly=date('H:i');
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
-                                                                <label for="validationCustom02" class="form-label">UPI
+                                                                <label for="validationCustom02" class="form-label"> <?php if ($country == 'IN'){ echo 'UPI'; }else{ echo 'Paypal';}?>
                                                                     ID</label>
                                                                 <input type="text" class="form-control" id="em" name="upi"
                                                                     placeholder="Enter a valid ID" required>
@@ -257,6 +282,19 @@ $timeOnly=date('H:i');
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        
+                                                          <div class="col-md-12">
+                                                                <div class="mb-3">
+                                                                    <label for="validationCustom02" class="form-label"><?php if ($country == 'IN'){ echo 'UPI'; }else{ echo 'Paypal';}?>
+                                                                        Email ID</label>
+                                                                    <input type="text" class="form-control" id="email" name="email"
+                                                                        placeholder="Enter a valid <?php if ($country == 'IN'){ echo 'UPI'; }else{ echo 'Paypal';}?> Email ID" required>
+                                                                    <div class="valid-feedback">
+                                                                        Looks good!
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        
                                                     </div>
         
                                                 </div>
@@ -281,6 +319,7 @@ $timeOnly=date('H:i');
         if(isset($_POST['register-submit'])){	
             $method=mysqli_real_escape_string($con,$_POST['method']);
             $upi=mysqli_real_escape_string($con,$_POST['upi']);
+            $user_email=mysqli_real_escape_string($con,$_POST['email']);
             $check_user=mysqli_num_rows(mysqli_query($con,"select * from my_account where user_id='$admin_id'"));
             if($check_user>0){
                 ?>
@@ -302,13 +341,39 @@ $timeOnly=date('H:i');
                 date_default_timezone_set("Asia/Calcutta");   //India time (GMT+5:30)
                 $date_time=date('d/m/Y H:i:s a');
             	mysqli_query($con,"insert into my_account(user_id,method_id,upi_id,timestamp) values('$admin_id','$method','$upi','$date_time')");
+                $last_id = mysqli_insert_id($con);
+                logActivity($con, $last_id, $user_id_u, $user_id_n, 'Add new ayment details &nbsp;' . $ofrid);
+                
+                    include('smtp/PHPMailerAutoload.php');
+                	$mail = new PHPMailer(); 
+                	$mail->IsSMTP(); 
+                	$mail->SMTPAuth = true; 
+                	$mail->SMTPSecure = 'ssl'; 
+                	$mail->Host = "smtp.titan.email";
+                	$mail->Port = 465; 
+                	$mail->IsHTML(true);
+                	$mail->CharSet = 'UTF-8';
+                	$mail->Username = "info@reapbucks.com";
+                	$mail->Password = "Zettamobi@676";
+                	$mail->SetFrom("info@reapbucks.com");
+                	$mail->Subject = "Add Payment ID";
+                	$mail->Body ="Payment ID validated successfully : ".$upi;
+                	$mail->AddAddress($user_email);
+                	$mail->SMTPOptions=array('ssl'=>array(
+                		'verify_peer'=>false,
+                		'verify_peer_name'=>false,
+                		'allow_self_signed'=>false
+                	));
+                	if(!$mail->Send()){
+                		echo $mail->ErrorInfo;
+                	}
             
                     ?>
                 <script>
                    Swal.fire({
                       position: 'top-end',
                       icon: 'success',
-                      title: 'ID added successfully',
+                      title: 'Add new ayment details successfully',
                       showConfirmButton: false,
                       timer: 2500
                     })
@@ -332,12 +397,16 @@ $timeOnly=date('H:i');
         $method=mysqli_real_escape_string($con,$_POST['method']);
         $upi=mysqli_real_escape_string($con,$_POST['upi']);
         $editid=mysqli_real_escape_string($con,$_POST['editid']);
-        $check_user=mysqli_num_rows(mysqli_query($con,"update my_account set method_id='$method', upi_id='$upi',timestamp='$date_time' where id='$editid'"));?>
+        $check_user=mysqli_num_rows(mysqli_query($con,"update my_account set method_id='$method', upi_id='$upi',timestamp='$date_time' where id='$editid'"));
+        logActivity($con, $editid, $user_id_u, $user_id_n, 'Update payment details &nbsp;' . $editid);
+        
+        ?>
+        
         <script>
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: 'ID Updated',
+              title: 'Update payment details',
               showConfirmButton: false,
               timer: 2500
             })

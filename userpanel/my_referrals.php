@@ -27,7 +27,18 @@ if(isset($_SESSION['ADMIN_LOGIN'])&&$_SESSION['ADMIN_LOGIN']=='yes'){
                         <div class="card-header pb-0">
                             <div class="d-lg-flex">
                                 <div>
-                                    <h5 class="mb-1 font-weight-bolder">My Referrals</h5>
+                                    <h5 class="mb-1 font-weight-bolder">My Referrals &nbsp; 
+                                    <?php 
+                                       $usd = mysqli_query($con, "SELECT * FROM users WHERE id='$admin_id'");
+                                       $ro = mysqli_fetch_assoc($usd);
+                                       $referral_link = "https://reapbucks.com/userpanel/auth-login/?referrelcode=" . $ro['my_ref_code'];
+                                    ?>
+                                    <div class="reflayot">
+                                        <p id="referralLink" style="margin: 0;"><?php echo $referral_link; ?></p>
+                                        <i class="fa fa-clone" aria-hidden="true" onclick="copyReferral()" style="cursor: pointer;"></i>
+                                    </div>
+                                    </h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -47,7 +58,7 @@ if(isset($_SESSION['ADMIN_LOGIN'])&&$_SESSION['ADMIN_LOGIN']=='yes'){
                                     </thead>
                                     <tbody>
                                            <?php
-                                                $cat_re=mysqli_query($con,"SELECT * FROM my_referrals WHERE user_id='$admin_id'");
+                                                $cat_re=mysqli_query($con,"SELECT * FROM my_earnings WHERE user_id='$admin_id' AND referral_status='1'");
                                                 $cat_ar=array();
                                                 while($ro=mysqli_fetch_assoc($cat_re)){
                                                   $cat_ar[]=$ro;    
@@ -55,7 +66,7 @@ if(isset($_SESSION['ADMIN_LOGIN'])&&$_SESSION['ADMIN_LOGIN']=='yes'){
                                                 mysqli_next_result($con);
                                                 
                                                  foreach($cat_ar as $lis){
-                                                     $offer_id=$lis['offer_id'];
+                                                     $offer_id=$lis['my_offer_id'];
                                                   
                                                 $cat_res=mysqli_query($con,"SELECT * FROM offers WHERE id='$offer_id'");
                                                 $cat_arr=array();
@@ -70,8 +81,22 @@ if(isset($_SESSION['ADMIN_LOGIN'])&&$_SESSION['ADMIN_LOGIN']=='yes'){
                                             <td class="text-sm"><?php echo $list['category'];?></td>
                                             <td class="text-sm"><?php echo $list['name'];?></td>
                                             <td class="text-sm"> <span class="badge bg-primary"><?php echo $list['points'];?></span></td>
-                                            <td class="text-sm"><?php echo $list['timestamp'];?></td>
-                                            <td class="text-sm"><?php echo $list['status'];?></td>
+                                            <td class="text-sm">
+                                                <?php 
+                                                     $date_string = $list['timestamp'];
+                                                     $date = DateTime::createFromFormat("d/m/Y H:i:s a", $date_string);
+                                                     $formatted_date = $date->format("F d Y a h:i");
+                                                     echo $formatted_date;
+                                                 ?>
+                                                </td>
+                                            <td class="text-sm">
+                                                 <?php 
+                                                if($list['status']=='1'){?>
+                                                    <span class="text text-success">Active</span>
+                                                <?php }else{ ?>
+                                                   <span class="text text-warning">Inctive</span>
+                                                <?php } ?>
+                                            </td>
                                         </tr>
                                          <?php }
                                             mysqli_free_result($cat_re);
@@ -106,6 +131,21 @@ if(isset($_SESSION['ADMIN_LOGIN'])&&$_SESSION['ADMIN_LOGIN']=='yes'){
             <?php  }
         ?>
 
+            <script>
+                function copyReferral() {
+                    var text = document.getElementById("referralLink").innerText;
+                    // Create temporary input to copy from
+                    var tempInput = document.createElement("input");
+                    tempInput.value = text;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    tempInput.setSelectionRange(0, 99999); // for mobile
+                    document.execCommand("copy");
+                    document.body.removeChild(tempInput);
+                    alert("Referral link copied: " + text);
+                }
+            </script>
+            
             <!-- footer start -->
             <?php include("footer.php");?>
             <!-- footer start -->

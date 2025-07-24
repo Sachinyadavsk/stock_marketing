@@ -3352,7 +3352,7 @@
   .ct-03 .img-block.right-column { margin-left: 0; }
   .ct-03 .img-block.left-column { margin-right: 0; }
   .ct-04 .img-block { margin-left: 0; margin-bottom: 40px; }
-  .ct-04 .img-block img { max-width: 100%; }
+  /*.ct-04 .img-block img { max-width: 100%; }*/
   .ct-06 .img-block { margin-top: -80px; margin-bottom: 40px; }
 
   .bc-1-wrapper .img-block.left-column, .bc-2-wrapper .img-block.left-column { padding-right: 0; }

@@ -27,9 +27,101 @@
 
                 <div class="row">
                     <div class="box">
-                        <div class="card">
+                        <?php
+                        // Handle filters
+                        $offers_filter = $_GET['offers'] ?? '';
+                        $offers_cate_filter = $_GET['offers_cate'] ?? '';
+                        $from_date = $_GET['from_date'] ?? '';
+                        $to_date = $_GET['to_date'] ?? '';
+                        
+                        // Pagination setup
+                        $limit = 10;
+                        $page = isset($_GET['page']) && $_GET['page'] > 0 ? (int) $_GET['page'] : 1;
+                        $offset = ($page - 1) * $limit;
+                        
+                        // Dynamic where clause
+                        $where = "WHERE 1";
+                        
+                        if (!empty($offers_filter)) {
+                            $where .= " AND offer_id = '$offers_filter'";
+                        }
+                        if (!empty($offers_cate_filter)) {
+                            $where .= " AND offer_category = '$offers_cate_filter'";
+                        }
+                        if (!empty($from_date) && !empty($to_date)) {
+                            $where .= " AND DATE(timestamp) BETWEEN '$from_date' AND '$to_date'";
+                        }
+                        
+                        // Get total unique users count
+                        $total_sql = "SELECT COUNT(DISTINCT offer_id) as total FROM final_report $where";
+                        $total_res = mysqli_query($con, $total_sql);
+                        $total_users = mysqli_fetch_assoc($total_res)['total'];
+                        $total_pages = ceil($total_users / $limit);
+                        
+                        // Fetch paginated user data
+                        $user_sql = "SELECT * FROM final_report $where GROUP BY offer_id ORDER BY id DESC LIMIT $limit OFFSET $offset";
+                        $user_result = mysqli_query($con, $user_sql);
+                        
+                        // Load dropdown data (do it before HTML output)
+                        
+                        $offers_result = mysqli_query($con, "SELECT * FROM offers");
+                        $offers_cat = mysqli_query($con, "SELECT DISTINCT category FROM offer_categories");
+                        
+                        ?>
+
+                        <!-- HTML Starts -->
+
+                       <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">All Offer's Report</h4>
+                            </div>
+                        
+                            <!-- Filter Toggle -->
+                           <div style="padding-right: 10px;font-weight: 700;"><p style="float: right;" onclick="myFunction()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z"></path>
+                                            <circle cx="10" cy="10" r="7"></circle>
+                                            <line x1="21" y1="21" x2="15" y2="15"></line>
+                                        </svg> Filter Data</p></div>
+                        
+                            <!-- FILTER FORM -->
+                                <form method="GET" class="mb-4" id="report_data" style="display: none;">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-2">
+                                            <select name="offers" class="form-control">
+                                                <option value="">All Offers</option>
+                                                <?php while($row = mysqli_fetch_assoc($offers_result)): ?>
+                                                    <option value="<?= $row['id'] ?>" <?= $offers_filter == $row['id'] ? 'selected' : '' ?>>
+                                                        <?= htmlspecialchars($row['name']) ?>
+                                                    </option>
+                                                <?php endwhile; ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select name="offers_cate" class="form-control">
+                                                <option value="">All Offers Category</option>
+                                                <?php while($row = mysqli_fetch_assoc($offers_cat)): ?>
+                                                    <option value="<?= $row['category'] ?>" <?= $offers_cate_filter == $row['category'] ? 'selected' : '' ?>>
+                                                        <?= htmlspecialchars($row['category']) ?>
+                                                    </option>
+                                                <?php endwhile; ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="date" name="from_date" value="<?= $from_date ?>" class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="date" name="to_date" value="<?= $to_date ?>" class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-primary w-100">Filter</button>
+                                        </div>
+                                    </div>
+                                </form>
+                        
+                            <!-- Table -->
                             <div class="table-responsive">
-                                <table class="table table-vcenter table-bordered table-mobile-sm card-table">
+                                <table class="table table-vcenter table-bordered">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -46,121 +138,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         <?php
-                                                 if(isset($_POST['filter-submit'])){
-                                                 // Collecting data from the form
-                                                $category = $_POST['category'];
-                                                $name = $_POST['name'];
-                                                $geo = $_POST['geo'];
-                                                $device=$_POST['device'];
-                                                $dateRange = $_POST['datetime'];
-                                                $dateArray = explode(' - ', $dateRange);
-                                                $startdate = $dateArray[0];
-                                                $enddate = $dateArray[1];
-                                                $dateTime1 = DateTime::createFromFormat('m/d/Y', $startdate);
-                                                $dateTime2 = DateTime::createFromFormat('m/d/Y', $enddate);
-                                                $start_date = $dateTime1->format('d/m/Y');
-                                                $end_date = $dateTime2->format('d/m/Y');
-                                                // Storing data into an array
-                                                $offer_data = array(
-                                                    'offer_category' => $category,
-                                                    'offer_name' => $name,
-                                                    'offer_geo' => $geo,
-                                                    'offer_device'=>$device,
-                                                    'timestamp' => "timestamp BETWEEN '$start_date' AND '$end_date'");
-                                                            
-                                                // Initializing an empty array to store conditions
-                                                $conditions = array();
-                                                
-                                                // Looping through the user data to build conditions
-                                                foreach ($offer_data as $key => $value) {
-                                                    if (!empty($value)) {
-                                                        if($key=='timestamp')
-                                                        {
-                                                          $conditions[] = "$value";  
-                                                        }else{
-                                                        $conditions[] = "$key = '$value'";
-                                                        }
-                                                    }
-                                                }
-                                                            
-                                                // Building the SQL query
-                                                $cat_ress = "select * from final_report";
-                                                $cat_ress .= " where " . implode(" and ", $conditions). " group by offer_id order by id desc";
-                                                $cat_res=mysqli_query($con,$cat_ress);
-                                                    }else{
-                                                      $cat_res=mysqli_query($con,"select * from final_report group by offer_id order by id desc ");
-                                                    }
-                                                    $cat_arr=array();
-                                                    while($row=mysqli_fetch_assoc($cat_res)){
-                                                      $cat_arr[]=$row;    
-                                                    }
-                                                     foreach($cat_arr as $list){
-                                                      $user_id=$list['user_id'];
-                                                      $user_click_id=$list['user_click_id'];
-                                                      $offer_id=$list['offer_id'];
-                                                ?>
-                                                
-                                                <?php
-                                                  $total_users=0;
-                                                  $cat_res=mysqli_query($con,"select * from final_report where offer_id='$offer_id'");
-                                                  $cat_arr=array();
-                                                    while($row=mysqli_fetch_assoc($cat_res)){
-                                                        $cat_arr[]=$row;    
-                                                    }
-                                                     foreach($cat_arr as $lista){
-                                                      $total_users++;   
-                                                     }
-                                                ?>
-                                                
-                                                <?php
-                                                  $total_clicks=0;
-                                                  $cat_res=mysqli_query($con,"select * from final_report where offer_id='$offer_id'");
-                                                    $cat_arr=array();
-                                                    while($row=mysqli_fetch_assoc($cat_res)){
-                                                      $cat_arr[]=$row;    
-                                                    }
-                                                     foreach($cat_arr as $listb){
-                                                      $total_clicks++;   
-                                                     }
-                                                ?>
-                                                
-                                                <?php
-                                                    $total_valid_conversion=0;
-                                                    $cat_res=mysqli_query($con,"select * from postback where offer_id='$offer_id' and status='1'");
-                                                    $cat_arr=array();
-                                                    while($row=mysqli_fetch_assoc($cat_res)){
-                                                      $cat_arr[]=$row;    
-                                                    }
-                                                     foreach($cat_arr as $listc){
-                                                      $total_valid_conversion++;   
-                                                     }
-                                                ?>
-                                                
-                                                <?php
-                                                    $total_proxy=0;
-                                                    $cat_res=mysqli_query($con,"select * from postback where offer_id='$offer_id' and status='0'");
-                                                    $cat_arr=array();
-                                                    while($row=mysqli_fetch_assoc($cat_res)){
-                                                      $cat_arr[]=$row;    
-                                                    }
-                                                     foreach($cat_arr as $listd){
-                                                      $total_proxy++;   
-                                                     }
-                                                ?>
-                                                
-                                                <?php
-                                                    $total_same_ip=0;
-                                                    $cat_res=mysqli_query($con,"select * from postback where offer_id='$offer_id' and status='2'");
-                                                    $cat_arr=array();
-                                                    while($row=mysqli_fetch_assoc($cat_res)){
-                                                      $cat_arr[]=$row;    
-                                                    }
-                                                     foreach($cat_arr as $liste){
-                                                      $total_same_ip++;   
-                                                     }
-                                               ?>
-                                            <tr>
+                                        <?php while($list = mysqli_fetch_assoc($user_result)): 
+                                            $offer_id = $list['offer_id'];
+                        
+                                            $total_users = mysqli_num_rows(mysqli_query($con, "SELECT id FROM final_report WHERE offer_id='$offer_id'"));
+                                            $total_clicks = $total_users; // Assuming 1 click per offer
+                                            $total_valid_conversion = mysqli_num_rows(mysqli_query($con, "SELECT id FROM postback WHERE offer_id='$offer_id' AND status='1'"));
+                                            $total_proxy = mysqli_num_rows(mysqli_query($con, "SELECT id FROM postback WHERE offer_id='$offer_id' AND status='0'"));
+                                            $total_same_ip = mysqli_num_rows(mysqli_query($con, "SELECT id FROM postback WHERE offer_id='$offer_id' AND status='2'"));
+                                        ?>
+                                       <tr>
                                                 <td data-label="Offer Id">
                                                      <div class="text-muted text-h5"><?php echo $list['offer_id'];?></div>
                                                 </td>
@@ -195,112 +182,66 @@
                                                     <?php echo $list['timestamp'];?>
                                                 </td>
                                             </tr>
-                                        <?php }?>
+                                        <?php endwhile; ?>
                                     </tbody>
                                 </table>
                             </div>
+                        
+                            <!-- Pagination Links -->
+                            <div class="text-center my-3">
+                                <ul class="pagination justify-content-center">
+                                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                        <li class="page-item <?= ($i == $page ? 'active' : '') ?>">
+                                            <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                </ul>
+                            </div>
                         </div>
+
                         <div class="float-right text-nowrap flex-nowrap">
 
                         </div>
                     </div>
                     <!--model-->
-                               <?php
-                                 $count=0;
-                                 $users=array();
-                                 $cat_res=mysqli_query($con,"select * from offer_clicks where offer_id='$ofrid'");
-                                $cat_arr=array();
-                                while($row=mysqli_fetch_assoc($cat_res)){
-                                  $cat_arr[]=$row;    
-                                }
-                                 foreach($cat_arr as $list){
-                                  $count++;   
-                                  array_push($users,$list['user_id']);
-                                 }
-                                ?>
-                                
-                            <?php
-                              $counter=0;
-                              $cat_res=mysqli_query($con,"select * from postback where offer_id='$ofrid'");
-                                $cat_arr=array();
-                                while($row=mysqli_fetch_assoc($cat_res)){
-                                  $cat_arr[]=$row;    
-                                }
-                                 foreach($cat_arr as $list){
-                                  $counter++;   
-                                 }
-                            ?>
-                            <?php
-                                $cat_res=mysqli_query($con,"select * from offers");
-                                $cat_arr=array();
-                                while($row=mysqli_fetch_assoc($cat_res)){
-                                  $cat_arr[]=$row;    
-                                }
-                                 foreach($cat_arr as $list1){
-                                     $oi=$list1['id'];
-                            ?>
-                                        <div class="modal fade" id="modal-clicks<?php echo $list1['id'];?>">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">
-                                                            <?php echo $list1['name'];?> Report
-                                                        </h5><button type="button" class="btn btn-sm btn-label-danger btn-icon" data-bs-dismiss="modal"><i
-                                                                class="mdi mdi-close"></i></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-3">
-                                                                            <h5 class="modal-title">User :</h5><br>
-                                        
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-3">
-                                                                            <h5 class="modal-title">IP :</h5><br>
-                                                                        </div>
-                                        
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                      <?php }?>
-                           <script>
-                                    document.getElementById("download_button").addEventListener("click", function () {
-                                    var table = document.querySelector("table");
-                                    var rows = table.querySelectorAll("tr");
-                                    var yourArray = [];
-                                
-                                    rows.forEach((row, rowIndex) => {
-                                        let rowData = [];
-                                        let cells = row.querySelectorAll("th, td");
-                                
-                                        cells.forEach(cell => {
-                                            rowData.push(cell.innerText.trim());
-                                        });
-                                
-                                        yourArray.push(rowData);
+                        <script>
+                                document.getElementById("download_button").addEventListener("click", function () {
+                                var table = document.querySelector("table");
+                                var rows = table.querySelectorAll("tr");
+                                var yourArray = [];
+                            
+                                rows.forEach((row, rowIndex) => {
+                                    let rowData = [];
+                                    let cells = row.querySelectorAll("th, td");
+                            
+                                    cells.forEach(cell => {
+                                        rowData.push(cell.innerText.trim());
                                     });
-                                
-                                    // Create a new workbook
-                                    const wb = XLSX.utils.book_new();
-                                
-                                    // Add a worksheet with the array data
-                                    const ws = XLSX.utils.aoa_to_sheet(yourArray);
-                                    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-                                
-                                    // Save the workbook to a file
-                                    XLSX.writeFile(wb, "output.xlsx");
+                            
+                                    yourArray.push(rowData);
                                 });
-                          </script>
-
+                            
+                                // Create a new workbook
+                                const wb = XLSX.utils.book_new();
+                            
+                                // Add a worksheet with the array data
+                                const ws = XLSX.utils.aoa_to_sheet(yourArray);
+                                XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+                            
+                                // Save the workbook to a file
+                                XLSX.writeFile(wb, "output.xlsx");
+                            });
+                        </script>
+                        <script>
+                          function myFunction() {
+                            var x = document.getElementById("report_data");
+                            if (x.style.display === "none" || x.style.display === "") {
+                              x.style.display = "block";
+                            } else {
+                              x.style.display = "none";
+                            }
+                          }
+                        </script>
                     
                 </div>
             </div>

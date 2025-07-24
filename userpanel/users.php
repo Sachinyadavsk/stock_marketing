@@ -93,6 +93,6 @@ $admin_id=$_SESSION['ADMIN_ID'];
 
 <?php require('footer.php');?>
         <?php }else{
-        header('auth-login');
+        header('location:https://reapbucks.com/userpanel/auth-login');
         }
         ?>

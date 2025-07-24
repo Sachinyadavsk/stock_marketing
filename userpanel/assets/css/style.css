@@ -221,3 +221,39 @@ li.nav-item.d-flex.align-items-center.mobileviews {
         margin-right: 49px;
     }
 }
+
+
+@media (max-width: 524px) {
+        .modal-content {
+         margin-top: 50px;
+    }
+    .dataTable-wrapper .dataTable-container .table tbody tr td {
+        padding: 0.10rem 0.5rem !important;
+    }
+    
+    .container-fluid.py-1.px-3 {
+        margin: -19px;
+    }
+    
+     img.moimg {
+        width: 68px !important;
+        height: 31px !important;
+    }
+    
+    h6.text_mobile_view {
+        font-size: 13px;
+    }
+    
+        button.btn.btn-primary {
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+    .reflayot {
+        display: unset !important;
+    }
+}
+.reflayot{
+    display: flex; align-items: center; gap: 10px;
+}
+
+

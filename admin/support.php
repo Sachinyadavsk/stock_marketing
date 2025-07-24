@@ -92,6 +92,7 @@ if (isset($_POST['send'])) {
     $message = $_POST['message'];
      $insert_query = "INSERT INTO messages (user_id, message, sender_type) VALUES ('$replyid', '$message', 'admin')";
     mysqli_query($con, $insert_query);
+    logActivity($con, $replyid, $role_type_is, 'admin', 'Access updated');
     echo "<script>alert('Access updated successfully'); window.location='https://reapbucks.com/admin/support.php';</script>";
 }
 ?>

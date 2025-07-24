@@ -30,7 +30,8 @@
      foreach($cat_arr as $list){
       $total_users++;
      }
-         $total_lost_leads=0;
+     
+    $total_lost_leads=0;
     $cat_res=mysqli_query($con,"select * from leads");
     $cat_arr=array();
     while($row=mysqli_fetch_assoc($cat_res)){
@@ -48,6 +49,12 @@
      foreach($cat_arr as $list){
       $total_pending_leads++;
      }
+     
+     $total_earnings = 0;
+    $cat_res = mysqli_query($con, "SELECT * FROM my_earnings");
+    while ($row = mysqli_fetch_assoc($cat_res)) {
+        $total_earnings += $row['points']; // or 'points'
+    }
 
 ?>
 <body class="antialiased">
@@ -117,16 +124,18 @@
                         </div>
                     
                         <div class="col-sm-6 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div class="subheader text-success">Earnings (USD)</div>
-                                        <div class="ml-auto lh-1 text-muted">Last 30 days</div>
+                            <a href="https://reapbucks.com/admin/earnings.php">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="subheader text-success">Earnings (USD)</div>
+                                            <div class="ml-auto lh-1 text-muted">Last 30 days</div>
+                                        </div>
+                                        <div class="h1 mb-3">$<?php echo $total_earnings;?></div>
+                                        <div id="chart-revenue-bg" class="chart-sm"></div>
                                     </div>
-                                    <div class="h1 mb-3">$0</div>
-                                    <div id="chart-revenue-bg" class="chart-sm"></div>
                                 </div>
-                            </div>
+                             </a>
                         </div>
                     
                         <div class="col-sm-6 col-lg-3">
@@ -202,36 +211,45 @@
                           <div class="col-lg-7">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Latest leads</h4>
+                                <h4 class="card-title">Latest leads &nbsp;<span style="float:right">(<?php echo $total_lost_leads;?>)</span></h4>
                             </div>
+                               <?php
+                                  $cat_res = mysqli_query($con, "SELECT * FROM leads ORDER BY id DESC LIMIT 6");
+                                    $cat_arr = array();
+                                    while ($row = mysqli_fetch_assoc($cat_res)) {
+                                        $cat_arr[] = $row;
+                                    }
+                                ?>
                             <table class="table card-table table-vcenter">
                                 <thead>
                                     <tr>
                                         <th>User ID</th>
-                                        <th>Network</th>
+                                        <th>Offer Category</th>
+                                        <th>Offer Name</th>
                                         <th>Amount</th>
                                         <th>Date / Time</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php foreach($cat_arr as $list){ ?>
                                     <tr>
                                         <td><a
-                                                href="members/info?userid=G273712887787">G273712887787</a>
+                                                href="https://reapbucks.com/admin/members-info.php?userid=<?php echo $list['user_id']; ?>">Rb<?php echo $list['user_id']; ?></a>
                                         </td>
-                                        <td>Ironsrc</td>
-                                        <td>$0.001</td>
-                                        <td>2025-02-21 11:34:32</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a
-                                                href="members/info?userid=5EC8C27BB275B">5EC8C27BB275B</a>
+                                        <td><?php echo $list['offer_category']; ?></td>
+                                        <td><?php echo $list['offer_name']; ?></td>
+                                        <td>
+                                           ₹ <?php
+                                                if($list['offer_points']=='0'){ ?>
+                                                   <span style="color:green;font-weight:600px">Hold</span>
+                                               <?php }else{ echo $total_dollar=$list['offer_points']; } ?>
                                         </td>
-                                        <td>video</td>
-                                        <td>$0.014</td>
-                                        <td>2022-11-08 18:01:09</td>
+                                        <td><?php echo $list['timestamp']; ?></td>
                                     </tr>
+                                   <?php } ?>
                                 </tbody>
                             </table>
+                            <span style="color:blue;padding:10px"><a href="https://reapbucks.com/admin/leads">More Leads</a></span>
                         </div>
                     </div>
                          <div class="col-lg-5">
@@ -247,6 +265,183 @@
                         </div>
                     </div>
                      </div>
+                      <div class="row row-deck row-cards">
+                          <div class="col-lg-12">
+                               <div class="card">
+                                <div class="card-header">
+                                 <h4 class="card-title">Click Offer List —  <h4>
+                                </div>
+                           <div class="card-body card-block text-center p-3">
+                            <?php
+                            // Get filters from GET
+                            $device_filter = $_GET['device'] ?? '';
+                            $os_filter = $_GET['os'] ?? '';
+                            $from_date = $_GET['from_date'] ?? '';
+                            $to_date = $_GET['to_date'] ?? '';
+                            
+                            $country_filter = $_GET['country'] ?? '';
+                            
+                            // Pagination setup
+                            $limit = 10;
+                            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                            $start_from = ($page - 1) * $limit;
+                            
+                            // Filter WHERE clause
+                            $where = "WHERE 1";
+                            if (!empty($device_filter)) {
+                                $where .= " AND user_device = '" . mysqli_real_escape_string($con, $device_filter) . "'";
+                            }
+                            if (!empty($os_filter)) {
+                                $where .= " AND user_os = '" . mysqli_real_escape_string($con, $os_filter) . "'";
+                            }
+                            if (!empty($from_date)) {
+                                $where .= " AND STR_TO_DATE(timestamp, '%d/%m/%Y %H:%i:%s') >= STR_TO_DATE('" . mysqli_real_escape_string($con, $from_date) . "', '%Y-%m-%d')";
+                            }
+                            if (!empty($to_date)) {
+                                $where .= " AND STR_TO_DATE(timestamp, '%d/%m/%Y %H:%i:%s') <= STR_TO_DATE('" . mysqli_real_escape_string($con, $to_date) . "', '%Y-%m-%d')";
+                            }
+                            
+                            if (!empty($country_filter)) {
+                                $where .= " AND user_country = '" . mysqli_real_escape_string($con, $country_filter) . "'";
+                            }
+                            
+                            
+                           $countries_query = mysqli_query($con, "SELECT sortname, name FROM countries ORDER BY name ASC");
+                            
+                            // Fetch filtered data
+                            $query = "SELECT * FROM offer_clicks $where ORDER BY id DESC LIMIT $start_from, $limit";
+                            $cat_res = mysqli_query($con, $query);
+                            
+                            // Count total for pagination
+                            $count_query = "SELECT COUNT(*) AS total FROM offer_clicks $where";
+                            $result = mysqli_query($con, $count_query);
+                            $row = mysqli_fetch_assoc($result);
+                            $total_records = $row['total'];
+                            $total_pages = ceil($total_records / $limit);
+                            ?>
+                            
+                            <!-- FILTER FORM -->
+                            <form method="GET" class="mb-4">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-2">
+                                        <select name="country" class="form-control">
+                                            <option value="">All Countries</option>
+                                            <?php while($row = mysqli_fetch_assoc($countries_query)): ?>
+                                                <option value="<?= htmlspecialchars($row['sortname']) ?>" <?= $country_filter == $row['sortname'] ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($row['name']) ?>
+                                                </option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="device" class="form-control">
+                                            <option value="">All Devices</option>
+                                            <option value="Desktop" <?= $device_filter == 'Desktop' ? 'selected' : '' ?>>Desktop</option>
+                                            <option value="Mobile" <?= $device_filter == 'Mobile' ? 'selected' : '' ?>>Mobile</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="os" class="form-control">
+                                            <option value="">All OS</option>
+                                            <option value="Windows" <?= $os_filter == 'Windows' ? 'selected' : '' ?>>Windows</option>
+                                            <option value="Android" <?= $os_filter == 'Android' ? 'selected' : '' ?>>Android</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="date" name="from_date" value="<?= $from_date ?>" class="form-control" placeholder="From Date">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="date" name="to_date" value="<?= $to_date ?>" class="form-control" placeholder="To Date">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary w-100">Filter</button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <!-- TABLE -->
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>S.N</th>
+                                        <th>User ID</th>
+                                        <th>User Name</th>
+                                        <th>Offer</th>
+                                        <th>Click ID</th>
+                                        <th>User IP</th>
+                                        <th>Country</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Device</th>
+                                        <th>OS</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $i = $start_from + 1;
+                                    while ($list = mysqli_fetch_assoc($cat_res)) {
+                                        $offer_id = $list['offer_id'];
+                                        $user_id = $list['user_id'];
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $i++; ?></td>
+                                        <td><?php echo $list['user_id']; ?></td>
+                                        <td>
+                                            <?php 
+                                            $sql = "SELECT name FROM users WHERE id = '$user_id'";
+                                            $result = mysqli_query($con, $sql);
+                                            if ($row = mysqli_fetch_assoc($result)) {
+                                                echo $row['name'];
+                                            }
+                                            ?>
+                                        </td>
+                                        
+                                        <td>
+                                            <?php 
+                                            $sql = "SELECT icon_url FROM offers WHERE id = '$offer_id'";
+                                            $result = mysqli_query($con, $sql);
+                                            if ($row = mysqli_fetch_assoc($result)) {
+                                                echo '<img src="https://reapbucks.com/admin/images/offers/' . $row['icon_url'] . '" style="width:100px;height:50px;">';
+                                            }
+                                            ?>
+                                        </td>
+                                        
+                                        <td style="background: #354052;color: white;"><?php echo $list['click_id']; ?></td>
+                                        <td><?php echo $list['user_ip']; ?></td>
+                                        <td><?php echo $list['user_country']; ?></td>
+                                        <td><?php echo $list['user_state']; ?></td>
+                                        <td><?php echo $list['user_city']; ?></td>
+                                        <td><?php echo $list['user_device']; ?></td>
+                                        <td><?php echo $list['user_os']; ?></td>
+                                        <td><?php echo $list['timestamp']; ?></td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                            
+                            <!-- PAGINATION -->
+                            <nav>
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    for ($i = 1; $i <= $total_pages; $i++) {
+                                        $active = ($i == $page) ? 'active' : '';
+                                        $queryParams = http_build_query(array_merge($_GET, ['page' => $i]));
+                                        echo "<li class='page-item $active'><a class='page-link' href='?$queryParams'>$i</a></li>";
+                                    }
+                                    ?>
+                                </ul>
+                            </nav>
+
+
+
+
+
+                           </div>
+                        </div>
+                           </div>
+                       </div>
+                     
             </div>
             <!-- footer Start -->
             <?php include('footer.php');?>

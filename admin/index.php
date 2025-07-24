@@ -33,6 +33,7 @@ if(isset($_POST['submit'])){
     			$_SESSION['ADMIN_USERNAME']=$email;
                 $_SESSION['ROLE']=$row['role'];
                 $_SESSION['EMP_ACCESS']='multiple_access';
+                logActivity($con, $row['id'], $row['role'], '', 'Login the process');
 		     	header('location:https://reapbucks.com/admin/dashboard');
 		     	die();
 			  }elseif ($row['role']=='admin') {
@@ -41,6 +42,7 @@ if(isset($_POST['submit'])){
     			$_SESSION['ADMIN_USERNAME']=$email;
                 $_SESSION['ROLE']=$row['role'];
                 $_SESSION['EMP_ACCESS']='single';
+                logActivity($con, $row['id'], $row['role'], '', 'Login the process');
 		     	header('location:https://reapbucks.com/admin/dashboard');
 		     	die();
 			  }
@@ -117,7 +119,7 @@ if(isset($_POST['submit'])){
                     </div>
                     <div class="mb-2">
                         <label class="form-label">Password <span class="form-label-description"><a
-                                    href="login/forget" tabindex="104">I forgot
+                                    href="https://reapbucks.com/admin/forget-password" tabindex="104">I forgot
                                     password</a></span> </label>
                         <div class="input-icon mb-3">
                             <span class="input-icon-addon">

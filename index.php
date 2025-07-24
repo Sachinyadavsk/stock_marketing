@@ -15,7 +15,7 @@
 									<h2 class="s-45 w-700">Unlock Your Earning Potential with Us</h2>
 
 									<!-- Button -->	
-									<a href="https://reapbucks.com/auth-login" class="btn r-04 btn--theme hover--theme">Get Started</a>
+									<a href="https://reapbucks.com/userpanel/" class="btn r-04 btn--theme hover--theme">Get Started</a>
 
 								</div>
 							</div>	<!-- END HERO TEXT -->
@@ -256,7 +256,7 @@
 						<!-- IMAGE BLOCK -->	
 						<div class="col-md-6 order-first order-md-2">
 							<div class="img-block wow fadeInLeft">
-								<img class="img-fluid" src="https://reapbucks.com/images2/Screenshot (181).png" alt="content-image">
+								<img class="img-fluid" src="https://reapbucks.com/images2/reapbucks.png" alt="content-image" style="height: 424px !important;">
 							</div>	
 						</div>
 
@@ -484,7 +484,7 @@
 										<!--<p class="p-xl">It only takes a few clicks to get started</p>-->
 
 										<!-- Button -->
-										<a href="https://reapbucks.com/auth-login" class="btn r-04 btn--theme">Get srarted</a>
+										<a href="https://reapbucks.com/userpanel/" class="btn r-04 btn--theme">Get srarted</a>
 									</div>
 								</div>	<!-- END BANNER-1 TEXT -->
 

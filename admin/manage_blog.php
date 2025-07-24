@@ -104,11 +104,14 @@ if (isset($_POST['submit'])) {
                 } else {
                      $update_sql = "UPDATE blogs SET datee ='$datee', title ='$title', description ='$description', keywords ='$keywords', descriptions ='$descriptions', url ='$url';
                      added_by ='$added_by', headline ='$headline' WHERE id='$id'";
+                     logActivity($con, $id, $role_type_is, $title, 'Update Blog');
                 }
                 mysqli_query($con, $update_sql);
             } else {
                  mysqli_query($con, "INSERT INTO blogs (datee, title, description, keywords, descriptions, url, added_by, headline, image1)
                         VALUES ('$datee', '$title', '$description', '$keywords', '$descriptions', '$url', '$added_by', '$headline', '$media_file_name')");
+                 $last_id = mysqli_insert_id($con);
+                 logActivity($con, $last_id, $role_type_is, $title, 'Add New Blog');
                   header('location:blogs.php');
                   die();
             }
@@ -124,6 +127,7 @@ if(isset($_GET['type']) && $_GET['type']!=''){
 		$id=get_safe_value($con,$_GET['id']);
 		$delete_sql="delete from blogs where id='$id'";
 		mysqli_query($con,$delete_sql);
+		logActivity($con, $id, $role_type_is, $type, 'Delete Blog');
 	}
 }
     

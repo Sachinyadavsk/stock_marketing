@@ -44,6 +44,8 @@ if (isset($_POST['submit'])) {
       if ($msg == '') {
           
         mysqli_query($con, "INSERT INTO giftcard (token_id, name, input_desc, input_type, country, image_file) VALUES ('$token_id', '$name', '$input_desc', '$input_type', '$country', '$media_file_name')");
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, $name, 'Add new giftcard');
         header('location:gateways.php');
         die();
             
@@ -55,6 +57,7 @@ if (isset($_POST['gateways_del'])) {
     $id=get_safe_value($con,$_POST['id']);
 	$delete_sql="delete from giftcard where id='$id'";
 	mysqli_query($con,$delete_sql);
+	logActivity($con, $id, $role_type_is, '', 'Delete Gift card');
 }
 
 // edit
@@ -84,10 +87,12 @@ if (isset($_POST['gateways_edit'])) {
         
        if ($image != '') {
             $update_sql = "UPDATE giftcard SET name='$name', input_desc='$input_desc', input_type='$input_type', country='$country', image_file='$image', WHERE id='$id'";
+            
         } else {
             $update_sql = "UPDATE giftcard SET name='$name', input_desc='$input_desc', input_type='$input_type', country='$country' WHERE id='$id'";
         }
         mysqli_query($con, $update_sql);
+        logActivity($con, $id, $role_type_is, $name, 'Update Gift card');
 }
 
 

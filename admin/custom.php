@@ -9,16 +9,32 @@ if(isset($_GET['type']) && $_GET['type']!=''){
         if($type=='active'){
     	$id=get_safe_value($con,$_GET['id']);
     	 mysqli_query($con,"update offers set status='0' where id='$id'");
+    	 logActivity($con, $id, $role_type_is, $type, 'offer active');
     	}
     	
 	if($type=='deactive'){
 	$id=get_safe_value($con,$_GET['id']);
 	 mysqli_query($con,"update offers set status='1' where id='$id'");
+	 logActivity($con, $id, $role_type_is, $type, 'offer deactive');
 	}
 }
 
 
-$querypostback = "SELECT * FROM postback ORDER BY id DESC LIMIT 1";
+
+if (isset($_POST['update_url'])) {
+    $postback_url = mysqli_real_escape_string($con, $_POST['postback_url']);
+    mysqli_query($con,"update url_call_log set url='$postback_url' where id='1'");
+    $update_query = "UPDATE offers SET postback_url = '$postback_url' WHERE status = '1'";
+    if (mysqli_query($con, $update_query)) {
+        // echo "<div class='alert alert-success mt-2'>Postback URL updated successfully.</div>";
+    } else {
+        // echo "<div class='alert alert-danger mt-2'>Error: " . mysqli_error($con) . "</div>";
+    }
+}
+
+
+
+$querypostback = "SELECT * FROM offers ORDER BY id DESC LIMIT 1";
 $cat_respostback = mysqli_query($con, $querypostback);
 $rowpostback = mysqli_fetch_assoc($cat_respostback);
 
@@ -40,12 +56,16 @@ $rowpostback = mysqli_fetch_assoc($cat_respostback);
                                 <div class="col-12">
                                     <label class="form-label text-truncate">Letest postback url get deatils your <span class="text-danger">Custom CPA</span></label>
                                 </div>
-                                <div class="col-12 mt-3 input-group">
-                                    <span class="input-group-text text-blue">Postback URL:</span>
-                                    <input type="text" class="form-control"
-                                        value="<?php echo $rowpostback['url'];?>"
-                                        readonly="">
-                                </div>
+                                <form method="post">
+                                    <div class="col-12 mt-3 input-group">
+                                        <span class="input-group-text text-blue">Postback URL:</span>
+                                        <input type="text" class="form-control" name="postback_url" 
+                                               value="<?php echo htmlspecialchars($rowpostback['postback_url']); ?>">
+                                                <button type="submit" name="update_url" class="btn btn-primary mt-8">Update</button>
+                                    </div>
+                                   
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -104,6 +124,7 @@ $rowpostback = mysqli_fetch_assoc($cat_respostback);
                                                 <th class="text-center">Points</th>
                                                 <th class="text-center">Date</th>
                                                 <th class="text-center">Status</th>
+                                                <th class="text-center">Point Status</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -121,6 +142,7 @@ $rowpostback = mysqli_fetch_assoc($cat_respostback);
                                                 <td><?php echo $list['points']; ?></td>
                                                 <td><?php echo $list['timestamp']; ?></td>
                                                 <td><?php echo $list['status']; ?></td>
+                                                <td><?php echo $list['point_status']; ?></td>
                                                 
                                                 <td>
                                                         <div class="btn-list flex-nowrap">

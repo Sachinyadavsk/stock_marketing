@@ -48,10 +48,13 @@ if (isset($_POST['submit'])) {
                 can_edit = '$edit' 
                 WHERE user_id = '$user_id' AND module_id = '$module_id'";
             mysqli_query($con, $update_query);
+            logActivity($con, $module_id, $role_type_is, '', 'Update access control');
         } else {
             $insert_query = "INSERT INTO access_control (user_id, module_id, can_view, can_insert, can_delete, can_edit)
                 VALUES ('$user_id', '$module_id', '$view', '$insert', '$delete', '$edit')";
             mysqli_query($con, $insert_query);
+            $last_id = mysqli_insert_id($con);
+            logActivity($con, $last_id, $role_type_is, $module_id, 'Add new access control');
         }
     }
     echo "<script>alert('Access updated successfully'); window.location='https://reapbucks.com/admin/module-setting/';</script>";
@@ -149,12 +152,12 @@ if (isset($_POST['submit'])) {
         });
     }
 
-    // Open the first accordion by default
-    if (acc.length > 0) {
-        acc[0].classList.add("active");
-        var panel = acc[0].nextElementSibling;
-        panel.style.maxHeight = panel.scrollHeight + "px";
-    }
+    // // Open the first accordion by default
+    // if (acc.length > 0) {
+    //     acc[0].classList.add("active");
+    //     var panel = acc[0].nextElementSibling;
+    //     panel.style.maxHeight = panel.scrollHeight + "px";
+    // }
 </script>
 
 </div>

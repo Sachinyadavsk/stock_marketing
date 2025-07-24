@@ -80,7 +80,7 @@ $new_admin_name=$_SESSION['SLUG_ADMIN_NAME'];
                       <h5 class="text-white-transparent-8 mb-3">Total Earnings</h5>
                       <h3 class="text-white mt-n1 mb-1">0</h3>
                       <p class="mb-1 text-white-transparent-6 text-truncate">
-                        <i class="fa fa-caret-up"></i> <b>$ <?php echo $total_dollar;?></b>
+                        <i class="fa fa-caret-up"></i> <b>₹ <?php echo $total_dollar;?></b>
                       </p>
                     </div>
                   </div>
@@ -95,7 +95,7 @@ $new_admin_name=$_SESSION['SLUG_ADMIN_NAME'];
                       </div>
                       <div class="mt-1">
                         <div>Store Earnings</div>
-                        <div class="font-weight-600 text-white">$ <?php echo $total_dollar;?></div>
+                        <div class="font-weight-600 text-white">₹ <?php echo $total_dollar;?></div>
                       </div>
                     </div>
                     
@@ -104,7 +104,7 @@ $new_admin_name=$_SESSION['SLUG_ADMIN_NAME'];
                   <hr class="hr-transparent bg-white-transparent-2 mt-3 mb-3">
                   
                   <div class="mt-3 mb-2">
-                    <a href="https://gogrocer.tecmanic.com/stores/finance" class="btn btn-yellow btn-rounded btn-sm pl-5 pr-5 pt-2 pb-2 fs-14px font-weight-600"><i class="fa fa-wallet mr-2 ml-n2"></i>Go To Store Earnings</a>
+                    <a href="https://reapbucks.com/userpanel/my_earnings" class="btn btn-yellow btn-rounded btn-sm pl-5 pr-5 pt-2 pb-2 fs-14px font-weight-600"><i class="fa fa-wallet mr-2 ml-n2"></i>Go To Store Earnings</a>
                   </div>
                   <p class="fs-12px">
                     It Takes You To The Store Earnings Section.
@@ -226,7 +226,7 @@ $new_admin_name=$_SESSION['SLUG_ADMIN_NAME'];
         </div>
         <!-- END col-6 -->
 
-
+          
          
       </div>
              <!-- footer start -->

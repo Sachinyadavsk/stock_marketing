@@ -9,7 +9,7 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script>, made with <i class="fa fa-heart"></i> by
-                    <a href="https://techappinnovation.com/" class="font-weight-bold" target="_blank">Reap Bucks</a>
+                    <a href="https://reapbucks.com/" class="font-weight-bold" target="_blank">Reap Bucks</a>
                 </div>
             </div>
         </div>

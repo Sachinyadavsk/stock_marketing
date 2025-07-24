@@ -5,6 +5,77 @@
 
 <?php 
 // Global message
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+ require 'vendor/autoload.php';
+
+if (isset($_POST['localmsg_user'])) {
+
+    $title = trim($_POST['title'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+
+    // Sanitize inputs (basic)
+    $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+    $message = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
+    
+    logActivity($con, '1', $role_type_is, $email, 'Global Message Reapbucks');
+
+    // Email HTML Template
+    $htmlTemplate = "
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9; }
+            .header { background-color: #007BFF; color: #fff; padding: 10px; text-align: center; }
+            .content { padding: 20px; }
+            .footer { font-size: 12px; color: #999; text-align: center; padding: 10px; }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h2>{$title}</h2>
+            </div>
+            <div class='content'>
+                <p>{$message}</p>
+            </div>
+            <div class='footer'>
+                <p>This is an automated message from YourDomain. Please do not reply.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
+
+           $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->SMTPAuth = true;
+                $mail->SMTPSecure = 'ssl';
+                $mail->Host = 'smtp.titan.email';
+                $mail->Port = 465;
+                $mail->Username = 'info@reapbucks.com';
+                $mail->Password = 'Zettamobi@676';
+        
+                $mail->setFrom('info@reapbucks.com', 'Global Message Reapbucks');
+                $mail->addAddress($email);
+                $mail->SMTPOptions=array('ssl'=>array(
+        		'verify_peer'=>false,
+        		'verify_peer_name'=>false,
+        		'allow_self_signed'=>false
+             	));
+        
+                $mail->isHTML(true);
+                $mail->Subject = $title;
+                $mail->Body = $htmlTemplate;
+                $mail->send();
+                // echo "OTP sent successfully to your email.";
+            } catch (Exception $e) {
+                echo "Mailer Error: " . $mail->ErrorInfo;
+            }
+}
+
 
 if(isset($_POST['localmsg_global'])){
     $token_id = get_safe_value($con, $_POST['token_id']);
@@ -24,39 +95,6 @@ if(isset($_POST['localmsg_global'])){
     die();
 }
 
-// localmsg_user
-
-if(isset($_POST['localmsg_user'])){
-    $token_id = get_safe_value($con, $_POST['token_id']);
-    $title = get_safe_value($con, $_POST['title']);
-    $message_body = get_safe_value($con, $_POST['message_body']);
-    $smsto = get_safe_value($con, $_POST['smsto']);
-    $date = date("Y-m-d H:i:s");
-    mysqli_query($con, "INSERT INTO local_sms (token_id, title, message_body, smsto, date) VALUES ('$token_id', '$title', '$message_body', '$smsto', '$date')");
-    header("Location: localmsg.php");
-    die();
-}
-
-// approved the sms
-if(isset($_GET['type']) && $_GET['type']!=''){
-	$type=get_safe_value($con,$_GET['type']);
-	
-	if($type=='status'){
-	    $id=get_safe_value($con,$_GET['id']);
-		$s=get_safe_value($con,$_GET['status']);
-		$s_sql="update local_sms set status='$s' where id='$id'";
-		mysqli_query($con,$s_sql);
-	}
-}
-
-
-// delete
-if (isset($_POST['send_local_del'])) {
-    $id=get_safe_value($con,$_POST['id']);
-	$delete_sql="delete from local_sms where id='$id'";
-	mysqli_query($con,$delete_sql);
-}
-
 $gsms = mysqli_query($con, "SELECT * FROM global_sms WHERE token_id = '" . $_SESSION['ADMIN_ID'] . "'");
 $rowgsms = mysqli_fetch_assoc($gsms);
 $gsmstitle =  $rowgsms['title'];
@@ -72,7 +110,7 @@ $gsmsdesc =  $rowgsms['description'];
 
         <div class="content">
             <div class="container-xl">
-                
+                <h3 style="color:red;font-weight:600px"> No Copy Right Content Only Writting </h3>
                 <!--Global message start-->
                 <form method="post" class="row">
                    <input type="hidden" name="token_id" value="<?php echo $_SESSION['ADMIN_ID'];?>">
@@ -100,22 +138,22 @@ $gsmsdesc =  $rowgsms['description'];
                   
                    <!--Send local message start-->
                 <form method="post" class="row">
-                    <input type="hidden" name="token_id" value="<?php echo $_SESSION['ADMIN_ID'];?>">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header h3">Send local message</div>
                             <div class="card-body row pt-3 pb-0">
                                 <div class="col-md-6 col-sm-12 mb-3">
                                     <label class="form-label">Title:</label>
-                                    <input type="text" class="form-control" name="title" value="" placeholder="Enter a message headline...">
+                                    <input type="text" class="form-control" name="title" placeholder="Enter a message headline..." required>
                                 </div>
                                 <div class="col-md-6 col-sm-12 mb-3">
                                     <label class="form-label">Send to <small>(Email or User ID)</small>:</label>
-                                    <input type="text" class="form-control" name="smsto" value="" placeholder="someone@email.tld">
+                                    <input type="email" class="form-control" name="email" placeholder="someone@email.tld" required>
                                 </div>
+                               
                                 <div class="mb-3">
                                     <label class="form-label">Message body</label>
-                                    <textarea class="form-control" name="message_body" rows="3" placeholder="Enter some message here..."></textarea>
+                                    <textarea class="form-control" name="message" rows="3" placeholder="Enter some message here..." required></textarea>
                                 </div>
                                  <?php if (has_module_access_insert($con, 'send_local_message')): ?>
                                     <div class="col-md-2 col-12 mb-3">
@@ -127,100 +165,9 @@ $gsmsdesc =  $rowgsms['description'];
                     </div>
                 </form>
                  <!--Send local message End-->
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">Pending messages</div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table card-table table-vcenter text-nowrap datatable">
-                                        <thead>
-                                            <tr>
-                                                <th class="w-6">ID</th>
-                                                <th>User ID</th>
-                                                <th>Message title</th>
-                                                <th>Pending since</th>
-                                                <th class="w-1"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $lsms = mysqli_query($con, "SELECT * FROM local_sms WHERE status='0' AND token_id = '" . $_SESSION['ADMIN_ID'] . "'");
-                                            $l=1;
-                                            while($rowlsms = mysqli_fetch_assoc($lsms)){ ?>
-                                               <tr>
-                                                   <td><?php echo $l++;?></td>
-                                                   <td><?php echo $rowlsms['smsto'];?></td>
-                                                   <td><?php echo $rowlsms['title'];?></td>
-                                                   <td><?php echo timeAgo($rowlsms['timestamp']);;?></td>
-                                                  <td>
-                    								<?php
-                    								    if($_SESSION['ROLE']=='admin' || $_SESSION['ROLE']=='superadmin'){
-                								        if($rowlsms['status']=='0'){
-                								             if (has_module_access_insert($con, 'send_local_message')):
-                								             echo "<span class='btn btn-success'style='margin-right:5px;'><a style='color:#eee' href='?type=status&id=".$rowlsms['id']."&status=1'>Send</a></span>";
-                								             endif;
-                							             }
-                    							           ?>
-                    							            <?php if (has_module_access_delete($con, 'send_local_message')): ?>
-                            							          <a href="#" class="open-send-local-del" data-id="<?php echo $rowlsms['id'];?>" data-toggle="modal"
-                                                                        data-target="#cat-del" data-backdrop="static" data-keyboard="false">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24"
-                                                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                            <path stroke="none" d="M0 0h24v24H0z" />
-                                                                            <line x1="4" y1="7" x2="20" y2="7" />
-                                                                            <line x1="10" y1="11" x2="10" y2="17" />
-                                                                            <line x1="14" y1="11" x2="14" y2="17" />
-                                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                                        </svg>
-                                                                    </a>
-                                                            <?php endif; ?>
-                    							           <?php
-                    
-                    							        }else{
-                							        	if($rowlsms['status']=='0'){
-                								           echo "<span class='btn btn-success'style='margin-right:5px;color:#eee'><a>Pending</a></span>";
-                							            }
-                							            }
-                    								?>   
-                    							   </td>
-                                               </tr>
-                                               <?php } ?>
-                                            
-                                        </tbody>
-                                    </table>
-                                    
-                                    <!--dynmically gateway setup del start-->
-                                        <form method="post" class="modal modal-blur fade" id="cat-del" tabindex="-1" role="dialog" aria-hidden="true">
-                                              <input type="hidden" name="id" id="send-local-id">
-                                            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-body">
-                                                        <div class="modal-title">Are you sure?</div>
-                                                        <div>You are about to remove this Send local message from your database.
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary mr-auto"
-                                                            data-dismiss="modal">Cancel</button>
-                                                        <button type="submit" name="send_local_del" class="btn btn-danger">Yes, delete it</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <!--dynmically gateway setup del end-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
            
-            
-
+        
             <!-- footer Start -->
             <?php include('footer.php');?>
             <!-- footer end -->

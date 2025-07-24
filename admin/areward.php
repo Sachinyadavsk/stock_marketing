@@ -37,6 +37,8 @@ if (isset($_POST['submit'])) {
             $re_days = 'Day ' . $day_number;
           
         mysqli_query($con, "INSERT INTO areward (token_id, min_point, max_point, lay_color, re_days) VALUES ('$token_id', '$min_point', '$max_point', '$lay_color', '$re_days')");
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, $re_days, 'Add new areward');
         header('location:areward.php');
         die();
             
@@ -51,6 +53,7 @@ if (isset($_POST['areward_edit'])) {
      $max_point = isset($_POST['max_point']) ? $_POST['max_point'] : '';
     
      $update_sql = "UPDATE areward SET re_days='$re_days', min_point='$min_point', max_point='$max_point', status='0' WHERE id='$id'";
+     logActivity($con, $id, $role_type_is, $re_days, 'Update areward');
      mysqli_query($con, $update_sql);
 }
 
@@ -64,12 +67,14 @@ if(isset($_GET['type']) && $_GET['type']!=''){
 		$id=get_safe_value($con,$_GET['id']);
 		$delete_sql="delete from areward where id='$id'";
 		mysqli_query($con,$delete_sql);
+		logActivity($con, $id, $role_type_is, $type, 'Delete areward');
 	}
 	
 	if($type=='approved'){
 		$id=get_safe_value($con,$_GET['id']);
 		$approved_sql="UPDATE areward SET status='1' WHERE id='$id'";
 		mysqli_query($con, $approved_sql);
+		logActivity($con, $id, $role_type_is, $type, 'Update status areward');
 	}
 	
 	
@@ -205,7 +210,8 @@ if(isset($_GET['type']) && $_GET['type']!=''){
                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                         <div class="modal-content card">
                             <div class="card-body">
-                                
+                                <h5 class="modal-title">Add Activity Reward</h5>
+                                <hr>
                                 <div class="mb-3">
                                     <label class="form-label">Min Point</label>
                                     <input type="number" class="form-control" name="min_point">

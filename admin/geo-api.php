@@ -24,6 +24,8 @@ if (isset($_POST['geo_api_update'])) {
     } else {
         // Insert
         $sql = "INSERT INTO geo_api_settings (admin_id, urls, deep_link_1, deep_link_2, key_va) VALUES ('$admin_id', '$urls', '$deep_link_1', '$deep_link_2', '$key_va')";
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, $admin_id, 'Add new geob api settings');
     }
      $con->query($sql);
      header('location:geo-api.php');

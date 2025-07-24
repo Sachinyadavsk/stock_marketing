@@ -2,6 +2,7 @@
 <?php include('header_top.php');?>
 <?php include('header_bottom.php');?>
 <!-- header url end -->
+
 <?php
 if (isset($_GET['userid']) && $_GET['userid'] != '') {
     $uid = get_safe_value($con, $_GET['userid']);
@@ -18,6 +19,7 @@ if (isset($_GET['userid']) && $_GET['userid'] != '') {
         $timestamp = $row['timestamp'];
         $status = $row['status'];
         $is_online = $row['is_online'];
+        $password_plain = $row['password_plain'];
         
         $parts = explode(' - ', $location);
         $countryCode = isset($parts[0]) ? strtolower($parts[0]) : '';
@@ -72,9 +74,11 @@ if(isset($_POST['rewards'])){
 
         // Update by adding new points to old points
         mysqli_query($con, "UPDATE reward SET points='$new_points', method='$method', date='$date' WHERE userid='$userid'");
+        logActivity($con, $userid, $role_type_is, $new_points, 'update points');
     } else {
         // First time: insert new record
         mysqli_query($con, "INSERT INTO reward (userid, points, method, date) VALUES ('$userid', '$points', '$method', '$date')");
+        logActivity($con, $userid, $role_type_is, $points, 'insert new record');
     }
     
     header("Location: members-info.php?userid=" . urlencode($userid));
@@ -97,6 +101,7 @@ if(isset($_POST['deduct'])){
 
         // Update by deduct new points to old points
         mysqli_query($con, "UPDATE reward SET points='$new_points', method='$method', date='$date' WHERE userid='$userid'");
+        logActivity($con, $userid, $role_type_is, $new_points, 'Update by deduct record');
     } else {
         header("Location: members-info.php?userid=" . urlencode($userid));
     }
@@ -113,6 +118,7 @@ if(isset($_POST['bannow'])){
     $check = mysqli_query($con, "SELECT reason FROM users WHERE id='$userid'");
     if(mysqli_num_rows($check) > 0){
         mysqli_query($con, "UPDATE users SET reason='$reason', banstatus='1' WHERE id='$userid'");
+        logActivity($con, $userid, $role_type_is, $reason, 'reason by deduct record');
     } else {
         header("Location: members-info.php?userid=" . urlencode($userid));
     }
@@ -129,6 +135,7 @@ if(isset($_POST['update'])) {
     $userid = get_safe_value($con, $_POST['userid']);
     $name = get_safe_value($con, $_POST['name']);
     $email = get_safe_value($con, $_POST['email']);
+    $status = get_safe_value($con, $_POST['status']);
     $avatar = get_safe_value($con, $_POST['avatar']);
     $refby = get_safe_value($con, $_POST['refby']);
     $deviceid = get_safe_value($con, $_POST['deviceid']);
@@ -141,7 +148,7 @@ if(isset($_POST['update'])) {
     
     if(mysqli_num_rows($check) > 0) {
         // Start building the SQL update string
-        $update_query = "UPDATE users SET name='$name', email='$email', avatar='$avatar', refby='$refby', deviceid='$deviceid', googlerefid='$googlerefid', vercode='$vercode', vername='$vername'";
+        $update_query = "UPDATE users SET name='$name', email='$email', status='$status', avatar='$avatar', refby='$refby', deviceid='$deviceid', googlerefid='$googlerefid', vercode='$vercode', vername='$vername'";
         
         // Only update password if a new one is provided
         if (!empty($password)) {
@@ -151,7 +158,7 @@ if(isset($_POST['update'])) {
 
         $update_query .= " WHERE id='$userid'";
         mysqli_query($con, $update_query);
-
+        logActivity($con, $userid, $role_type_is, $name, 'Update data successfully');
         $color_class = "alert-success";
         $msg = 'Update data successfully!';
     } else {
@@ -170,6 +177,7 @@ if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] == 'superadmin') {
         $uid = (int) $_POST['uid'];
         $sql = "UPDATE users SET is_logged_in = 0 WHERE id = $uid";
         if ($con->query($sql)) {
+            logActivity($con, $uid, $role_type_is, '', 'User logged out successfully');
             header("Location: https://reapbucks.com/admin/members-info.php?userid=$uid");
             exit;
             
@@ -253,6 +261,14 @@ $rowpoint = mysqli_fetch_assoc($totalpoint);
                                         <path d="M7 12h14l-3 -3m0 6l3 -3" />
                                     </svg>
                                     </a>
+                                    <?php if($status=='1'){?>
+                                      <span class="text text-success font-weight-bold">🟢 Active</span>
+                                    <?php }elseif($status=='0'){?>
+                                     <span class="text text-danger font-weight-bold">🔴 Inctive</span>
+                                    <?php }?>
+                                    
+                                    <p style="background-color: #f1f3f8;padding: 6px;margin-top: 10px;font-weight: 500;"> Member Password &nbsp;<span><?php echo $password_plain;?></span></p>
+                                      
                             </div>
                             
                             <form class="card-body" method="post">
@@ -269,6 +285,17 @@ $rowpoint = mysqli_fetch_assoc($totalpoint);
                                     <span class="form-label mb-1">Avatar URL:</span>
                                     <input type="text" class="form-control" name="avatar" value="<?php echo $avatar;?>">
                                 </div>
+                                
+                               <div class="mb-3">
+                                    <span class="form-label mb-1">Status:</span>
+                                    <select name="status" class="form-control">
+                                        <option value="">Choose the status</option>
+                                        <option value="1" <?php if ($status == '1') echo 'selected'; ?>>Active</option>
+                                        <option value="0" <?php if ($status == '0') echo 'selected'; ?>>Inactive</option>
+                                    </select>
+                                </div>
+
+                                
                                 <div class="input-group mb-2">
                                     <span class="input-group-text">Referred by:</span>
                                     <input type="text" class="form-control" name="refby" value="<?php if(!empty($refby)){ echo $refby;}else{ echo 'None';}?>">
@@ -333,27 +360,81 @@ $rowpoint = mysqli_fetch_assoc($totalpoint);
                                         <span class="text-nowrap"><kbd>Country: <?php echo $countryname;?></kbd></span>
                                     </div>
                                 </div>
+                                <?php
+                                    $limit = 10;
+                                    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                                    $start_from = ($page - 1) * $limit;
+                                    
+                                    // Fetch data from activity_history
+                                    $query = "SELECT * FROM withdrawal WHERE user_id='$uid' ORDER BY id DESC LIMIT $start_from, $limit";
+                                    $result = mysqli_query($con, $query);
+                                    
+                                    // Count total records
+                                    $count_query = "SELECT COUNT(*) as total FROM withdrawal";
+                                    $count_result = mysqli_query($con, $count_query);
+                                    $count_row = mysqli_fetch_assoc($count_result);
+                                    $total_records = $count_row['total'];
+                                    $total_pages = ceil($total_records / $limit);
+                                    
+                                    $start_record = $start_from + 1;
+                                    $end_record = min($start_from + $limit, $total_records);
+                                    ?>
                                     <div class=" table-responsive">
                                     <table class="table table-vcenter card-table table-striped">
                                         <thead>
                                             <tr>
+                                                <th>ID</th>
                                                 <th>Mtehod</th>
-                                                <th>Coins</th>
+                                                <th>Amount</th>
                                                 <th>Status</th>
                                                 <th style="width:180px">Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        </tbody>
+                                                <?php if (mysqli_num_rows($result) > 0): ?>
+                                                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                                        <tr>
+                                                            <td><?= $row['id'] ?></td>
+                                                            <td><?= htmlspecialchars($row['upi_id']) ?></td>
+                                                            <td><?= htmlspecialchars($row['amount']) ?></td>
+                                                            <td>
+                                                               <?php if($row['status']=='pending'){ ?>
+                                                                    <span class="text-warning"><?= $row['status'] ?></span>
+                                                                <?php }else{ ?>
+                                                                    <span class="text-green"><?= $row['status'] ?></span>
+                                                               <?php } ?>
+                                                            </td>
+                                                            <td><?= $row['created_at'] ?></td>
+                                                        </tr>
+                                                    <?php endwhile; ?>
+                                                <?php else: ?>
+                                                    <tr><td colspan="6" class="text-center">No data found.</td></tr>
+                                                <?php endif; ?>
+                                            </tbody>
                                     </table>
                                 </div>
-                                    <div class="card-footer d-flex align-items-center">
-                                    <p class="m-0 text-muted">Showing <span></span> to <span></span> of <span>0</span>
-                                        entries</p>
-                                    <ul class="pagination m-0 ml-auto">
-    
-                                    </ul>
-                                </div>
+                                   <div class="card-footer d-flex align-items-center">
+                                        <p class="m-0 text-muted">
+                                            Showing <span><?= $start_record ?></span> to <span><?= $end_record ?></span> of <span><?= $total_records ?></span> entries
+                                        </p>
+                                        <ul class="pagination m-0 ml-auto">
+                                            <?php if ($page > 1): ?>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page=<?= $page - 1 ?>">&laquo; Prev</a>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                                </li>
+                                            <?php endfor; ?>
+                                            <?php if ($page < $total_pages): ?>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page=<?= $page + 1 ?>">Next &raquo;</a>
+                                                </li>
+                                            <?php endif; ?>
+                                        </ul>
+                                    </div>
                                </div>
                             <?php endif; ?>
                             
@@ -362,9 +443,32 @@ $rowpoint = mysqli_fetch_assoc($totalpoint);
                                    <div class="card-header">
                                         <h3 class="card-title mr-3 text-nowrap">Activities history</h3>
                                         <div class="ml-auto">
-                                            <span class="text-nowrap"><kbd>Signed-up IP: ***.***.***</kbd></span>
+                                            <span class="text-nowrap"><kbd>Signed-up IP:<?php echo $ip;?></kbd></span>
                                         </div>
                                    </div>
+                                   <?php
+                                    $limit = 10;
+                                    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                                    $start_from = ($page - 1) * $limit;
+                                    
+                                    // Fetch data from activity_history
+                                    $query = "SELECT id, method, point_name, price, ip_address, created_at 
+                                              FROM activity_history WHERE user_id='$uid'
+                                              ORDER BY id DESC 
+                                              LIMIT $start_from, $limit";
+                                    $result = mysqli_query($con, $query);
+                                    
+                                    // Count total records
+                                    $count_query = "SELECT COUNT(*) as total FROM activity_history";
+                                    $count_result = mysqli_query($con, $count_query);
+                                    $count_row = mysqli_fetch_assoc($count_result);
+                                    $total_records = $count_row['total'];
+                                    $total_pages = ceil($total_records / $limit);
+                                    
+                                    $start_record = $start_from + 1;
+                                    $end_record = min($start_from + $limit, $total_records);
+                                    ?>
+
                                    <div class="table-responsive">
                                         <table class="table card-table table-vcenter text-nowrap datatable">
                                             <thead>
@@ -378,14 +482,43 @@ $rowpoint = mysqli_fetch_assoc($totalpoint);
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php if (mysqli_num_rows($result) > 0): ?>
+                                                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                                        <tr>
+                                                            <td><?= $row['id'] ?></td>
+                                                            <td><?= htmlspecialchars($row['method']) ?></td>
+                                                            <td><?= htmlspecialchars($row['point_name']) ?></td>
+                                                            <td><?= htmlspecialchars($row['ip_address']) ?></td>
+                                                            <td><?= $row['price'] ?></td>
+                                                            <td><?= $row['created_at'] ?></td>
+                                                        </tr>
+                                                    <?php endwhile; ?>
+                                                <?php else: ?>
+                                                    <tr><td colspan="6" class="text-center">No data found.</td></tr>
+                                                <?php endif; ?>
                                             </tbody>
                                         </table>
                                     </div>
                                    <div class="card-footer d-flex align-items-center">
-                                        <p class="m-0 text-muted">Showing <span></span> to <span></span> of <span>0</span>
-                                            entries</p>
+                                        <p class="m-0 text-muted">
+                                            Showing <span><?= $start_record ?></span> to <span><?= $end_record ?></span> of <span><?= $total_records ?></span> entries
+                                        </p>
                                         <ul class="pagination m-0 ml-auto">
-        
+                                            <?php if ($page > 1): ?>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page=<?= $page - 1 ?>">&laquo; Prev</a>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                                </li>
+                                            <?php endfor; ?>
+                                            <?php if ($page < $total_pages): ?>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page=<?= $page + 1 ?>">Next &raquo;</a>
+                                                </li>
+                                            <?php endif; ?>
                                         </ul>
                                     </div>
                                 </div>

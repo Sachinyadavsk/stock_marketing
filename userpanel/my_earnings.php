@@ -65,8 +65,20 @@ $admin_id=$_SESSION['ADMIN_ID'];
                                              <?php foreach ($cat_ar as $list): ?>
                                         <tr id="<?php echo $list['id'];?>">
                                             <td class="text-sm"><?php echo $list['id'];?></td>
-                                            <td class="text-sm"><span class="badge bg-dark">$<?php echo $list['points'];?></span></td>
-                                            <td class="text-sm"><?php echo $list['timestamp'];?></td>
+                                            <td class="text-sm"><span class="badge bg-dark">₹
+                                               <?php
+                                                if($list['points']=='0'){ ?>
+                                                   <span style="color:white;font-weight:600px">Hold</span>
+                                               <?php }else{ echo $list['points']; } ?>
+                                            </span></td>
+                                            <td class="text-sm">
+                                                <?php 
+                                                 $date_string = $list['timestamp'];
+                                                 $date = DateTime::createFromFormat("d/m/Y H:i:s a", $date_string);
+                                                 $formatted_date = $date->format("F d Y a h:i");
+                                                 echo $formatted_date;
+                                                 ?>
+                                                </td>
                                         </tr>
                                          <?php endforeach; ?>
                                     </tbody>
@@ -133,6 +145,6 @@ $admin_id=$_SESSION['ADMIN_ID'];
     <!-- footer url end -->
     
     <?php }else{
-        header('location:https://reapbucks.com/auth-login');
+        header('location:https://reapbucks.com/userpanel/auth-login');
         }
         ?>

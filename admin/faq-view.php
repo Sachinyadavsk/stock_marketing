@@ -12,7 +12,9 @@ if (isset($_POST['submit'])) {
     $faq_question = isset($_POST['faq_question']) ? $_POST['faq_question'] : '';
     $faq_answer = isset($_POST['faq_answer']) ? $_POST['faq_answer'] : '';
     
-    mysqli_query($con, "INSERT INTO faqs (token_id, faq_question, faq_answer) VALUES ('$token_id', '$faq_question', '$faq_answer')");
+        mysqli_query($con, "INSERT INTO faqs (token_id, faq_question, faq_answer) VALUES ('$token_id', '$faq_question', '$faq_answer')");
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, $faq_question, 'Add New Faqs');
         header('location:faq-view.php');
         die();
        
@@ -36,6 +38,8 @@ if (isset($_POST['submit'])) {
       if ($msg == '') {
           
         mysqli_query($con, "INSERT INTO faqs (token_id, faq_question, faq_answer) VALUES ('$token_id', '$faq_question', '$faq_answer')");
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, $faq_question, 'Add New Faqs');
         header('location:faq-view.php');
         die();
             
@@ -52,6 +56,7 @@ if(isset($_GET['type']) && $_GET['type']!=''){
 		$id=get_safe_value($con,$_GET['id']);
 		$delete_sql="delete from faqs where id='$id'";
 		mysqli_query($con,$delete_sql);
+		logActivity($con, $id, $role_type_is, $type, 'Delete Faqs');
 	}
 }
 
@@ -64,6 +69,7 @@ if (isset($_POST['faq_update'])) {
      
        $update_sql = "UPDATE faqs SET faq_question='$faq_question', faq_answer='$faq_answer' WHERE id='$id'";
         mysqli_query($con, $update_sql);
+        logActivity($con, $id, $role_type_is, $faq_question, 'Update Faqs');
 }
 ?>
 

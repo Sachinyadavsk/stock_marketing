@@ -23,6 +23,8 @@
 // Set default empty values
 $title = '';
 $category = '';
+$point_status = '';
+$aid = '';
 $type = '';
 $points = '';
 $cap = '';
@@ -52,6 +54,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     if ($check > 0) {
         $row = mysqli_fetch_assoc($res); // Missing before
         $category = $row['category'];
+        $point_status = $row['point_status'];
+        $aid = $row['aid'];
         $title = $row['name'];
         $type = $row['type'];
         $points = $row['points'];
@@ -78,6 +82,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
 if (isset($_POST['submit_offer'])) {
     $category = mysqli_real_escape_string($con, $_POST['category']);
+    $point_status = mysqli_real_escape_string($con, $_POST['point_status']);
+    $aid = mysqli_real_escape_string($con, $_POST['aid']);
     $name = mysqli_real_escape_string($con, $_POST['name']);
     $description = mysqli_real_escape_string($con, $_POST['description']);
     $quick_desc = mysqli_real_escape_string($con, $_POST['quick_desc']);
@@ -132,7 +138,7 @@ if (isset($_POST['submit_offer'])) {
         if (isset($_GET['id']) && $_GET['id'] != '') {
             // Update logic
             $sql = "UPDATE offers SET 
-                category='$category', name='$name', description='$description', quick_desc='$quick_desc', hot='$hot', tracking_link='$tracking_link',
+                category='$category', point_status='$point_status', aid='$aid', name='$name', description='$description', quick_desc='$quick_desc', hot='$hot', tracking_link='$tracking_link',
                 preview_link='$preview_link', os='$devices_json', geo='$geo', flow='$flow', points='$points', cap='$cap', cap_reset='$cap_reset',
                 timestamp='$date_time', status='0', type='$type', android_version='$android_version', ios_version='$ios_version',
                 win_version='$win_version', state_disable='$state_disable', stateid='$states'";
@@ -142,15 +148,32 @@ if (isset($_POST['submit_offer'])) {
             }
             $sql .= " WHERE id='$id'";
             mysqli_query($con, $sql);
+            logActivity($con, $id, $role_type_is, $name, 'Update offers list');
+           
+             
+             // Get current offer_ids
+                $result = mysqli_query($con, "SELECT offer_id FROM accepted_ip WHERE id='$aid'");
+                $row = mysqli_fetch_assoc($result);
+                $currentOffers = $row['offer_id'];
+                $offerArray = array_filter(explode(',', $currentOffers));
+                if (!in_array($id, $offerArray)) {
+                    $offerArray[] = $id;
+                    $newOfferIds = implode(',', $offerArray);
+                    mysqli_query($con, "UPDATE accepted_ip SET offer_id='$newOfferIds' WHERE id='$aid'");
+                }
+                
         } else {
             // Insert logic
             mysqli_query($con, "INSERT INTO offers 
-            (category, name, description, quick_desc, hot, tracking_link, preview_link, os, geo, icon_url, flow, points, cap, cap_reset,
+            (category, point_status, aid, name, description, quick_desc, hot, tracking_link, preview_link, os, geo, icon_url, flow, points, cap, cap_reset,
              timestamp, status, type, android_version, ios_version, win_version, state_disable, stateid)
             VALUES (
-            '$category', '$name', '$description', '$quick_desc', '$hot', '$tracking_link', '$preview_link', '$devices_json', '$geo',
+            '$category', '$point_status', '$aid', '$name', '$description', '$quick_desc', '$hot', '$tracking_link', '$preview_link', '$devices_json', '$geo',
             '$image', '$flow', '$points', '$cap', '$cap_reset', '$date_time', '0', '$type', '$android_version', '$ios_version', 
             '$win_version', '$state_disable', '$states')");
+            $last_id = mysqli_insert_id($con);
+            logActivity($con, $last_id, $role_type_is, $name, 'Add new offer list');
+             mysqli_query($con, "UPDATE accepted_ip SET offer_id='$last_id' WHERE id='$aid'");
             header("Location: custom.php");
             die();
         }
@@ -184,12 +207,38 @@ if (isset($_POST['submit_offer'])) {
                             <!-- Alert -->
                             <div class="alert alert-info" role="alert">
                                 <span class="font-weight-bold">Allowed macros are:</span> 
-                                <span class="text-red"><span class="font-weight-bold">[app_oid]</span> for Offer ID</span> and 
-                                <span class="text-red"><span class="font-weight-bold">[app_uid]</span> for User ID</span>.<br>
+                                <span class="text-red"><span class="font-weight-bold">[oid]</span> for Offer ID</span> and 
+                                <span class="text-red"><span class="font-weight-bold">[uid]</span> for User ID</span>.
+                                <span class="text-red"><span class="font-weight-bold">[clickid]</span> for click id</span>.
+                                <span class="text-red"><span class="font-weight-bold">[subid]</span> for Sub ID</span>.<br>
                                 <span class="font-weight-bold">Reminder:</span> system automatically adds 
-                                <span class="text-red">uid, offerid</span> parameters into the given URL.
+                                <span class="text-red">uid, oid, clickid, subid </span> parameters into the given URL.
                             </div>
                     
+                           <!-- Advestise -->
+                            <div class="mb-3 col-12 col-lg-4">
+                                <label class="form-label">Advertisers Name: <span class="text-danger">*</span></label>
+                                <select class="form-select" name="aid" required>
+                                    <option disabled <?php if($aid == '') echo 'selected'; ?>>Choose...</option>
+                                    <?php 
+                                    $cat_res = mysqli_query($con,"SELECT * FROM accepted_ip");
+                                    while($list = mysqli_fetch_assoc($cat_res)){ ?>
+                                        <option value="<?php echo $list['id']; ?>" <?php if($list['id'] == $aid) echo 'selected'; ?>>
+                                            <?php echo $list['company_name']; ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            
+                        <!-- advertisers -->
+                           <div class="mb-3 col-12 col-lg-4">
+                                <label class="form-label">Point status: <span class="text-danger">*</span></label>
+                                <select class="form-select" name="point_status" required>
+                                    <option value="hold" <?= $point_status == 'hold' ? 'selected' : '' ?>>Hold</option>
+                                    <option value="proccessing" <?= $point_status == 'proccessing' ? 'selected' : '' ?>>Proccessing</option>
+                                </select>
+                            </div>
+                            
                             <!-- Title -->
                             <div class="mb-3 col-12 col-lg-4">
                                 <label class="form-label">Title: <span class="text-danger">*</span></label>
@@ -223,7 +272,7 @@ if (isset($_POST['submit_offer'])) {
                             </div>
                     
                             <!-- Type -->
-                            <div class="mb-3 col-12 col-md-6 col-lg-3">
+                            <div class="mb-3 col-12 col-md-6 col-lg-4">
                                 <label class="form-label">Type</label>
                                 <select class="form-select" name="type" required>
                                     <option disabled <?php if($type == '') echo 'selected'; ?>>Choose...</option>
@@ -238,19 +287,19 @@ if (isset($_POST['submit_offer'])) {
                             </div>
                     
                             <!-- Points -->
-                            <div class="mb-3 col-12 col-md-6 col-lg-3">
+                            <div class="mb-3 col-12 col-md-6 col-lg-4">
                                 <label class="form-label">Rewarding Coins: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="points" placeholder="100" value="<?php echo htmlspecialchars($points); ?>">
                             </div>
                     
                             <!-- Daily Cap -->
-                            <div class="mb-3 col-12 col-md-6 col-lg-3">
+                            <div class="mb-3 col-12 col-md-6 col-lg-4">
                                 <label class="form-label">Daily Cap: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="cap" placeholder="Daily Cap" value="<?php echo htmlspecialchars($cap); ?>">
                             </div>
                     
                             <!-- Cap Reset -->
-                            <div class="mb-3 col-12 col-md-6 col-lg-3">
+                            <div class="mb-3 col-12 col-md-6 col-lg-4">
                                 <label class="form-label">Cap Reset Timing: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="cap_reset" placeholder="Cap Reset Timing" value="<?php echo htmlspecialchars($cap_reset); ?>">
                             </div>
@@ -296,42 +345,79 @@ if (isset($_POST['submit_offer'])) {
                                     </div>
                                     <?php endforeach; ?>
                                 
+                                <?php 
+                                $android_versions = [];
+                                $ios_versions = [];
+                                $windows_versions = [];
+                                
+                                $query = "SELECT version, type FROM device_version ORDER BY version ASC";
+                                $result = mysqli_query($con, $query);
+                                
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    switch (strtolower($row['type'])) {
+                                        case 'android':
+                                            $android_versions[] = $row['version'];
+                                            break;
+                                        case 'ios':
+                                            $ios_versions[] = $row['version'];
+                                            break;
+                                        case 'desktop':
+                                            $windows_versions[] = $row['version'];
+                                            break;
+                                    }
+                                }
+                                ?>
                                     <!-- Device Version Selectors -->
+                                    <!-- Android Dropdown -->
                                     <div id="AndroidDiv" style="<?= in_array('Android', $device) ? 'display:block;' : 'display:none;' ?>" class="device-div">
                                         <label for="android_version">Android Version</label>
                                         <select class="form-select" name="android_version">
                                             <option disabled <?= $android_version == '' ? 'selected' : '' ?>>Choose...</option>
-                                            <option value="7.12" <?= $android_version == '7.12' ? 'selected' : '' ?>>7.12</option>
-                                            <option value="8.12" <?= $android_version == '8.12' ? 'selected' : '' ?>>8.12</option>
-                                            <option value="8.85" <?= $android_version == '8.85' ? 'selected' : '' ?>>8.85</option>
+                                            <?php foreach ($android_versions as $version): ?>
+                                                <option value="<?= $version ?>" <?= $android_version == $version ? 'selected' : '' ?>><?= $version ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
-                                
+                                    
+                                    <!-- iOS Dropdown -->
                                     <div id="IOSDiv" style="<?= in_array('IOS', $device) ? 'display:block;' : 'display:none;' ?>" class="device-div">
-                                        <label for="ios_version">IOS Version</label>
+                                        <label for="ios_version">iOS Version</label>
                                         <select class="form-select" name="ios_version">
                                             <option disabled <?= $ios_version == '' ? 'selected' : '' ?>>Choose...</option>
-                                            <option value="8.11" <?= $ios_version == '8.11' ? 'selected' : '' ?>>8.11</option>
-                                            <option value="9.18" <?= $ios_version == '9.18' ? 'selected' : '' ?>>9.18</option>
-                                            <option value="10.00" <?= $ios_version == '10.00' ? 'selected' : '' ?>>10.00</option>
+                                            <?php foreach ($ios_versions as $version): ?>
+                                                <option value="<?= $version ?>" <?= $ios_version == $version ? 'selected' : '' ?>><?= $version ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
-                                
+                                    
+                                    <!-- Windows Dropdown -->
                                     <div id="WindowsDiv" style="<?= in_array('Windows', $device) ? 'display:block;' : 'display:none;' ?>" class="device-div">
-                                        <label for="win_version">Win Version</label>
+                                        <label for="win_version">Windows Version</label>
                                         <select class="form-select" name="win_version">
                                             <option disabled <?= $win_version == '' ? 'selected' : '' ?>>Choose...</option>
-                                            <option value="6.11" <?= $win_version == '6.11' ? 'selected' : '' ?>>6.11</option>
-                                            <option value="7.18" <?= $win_version == '7.18' ? 'selected' : '' ?>>7.18</option>
-                                            <option value="9.00" <?= $win_version == '9.00' ? 'selected' : '' ?>>9.00</option>
+                                            <?php foreach ($windows_versions as $version): ?>
+                                                <option value="<?= $version ?>" <?= $win_version == $version ? 'selected' : '' ?>><?= $version ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
+
                                 </div>
                                 
                                 <!-- Geo Section -->
                                 <div class="mb-3 col-12 col-md-6 col-lg-4">
                                     <label class="form-label">Geo: <span class="text-danger">*</span></label>
-                                
+                                <?php 
+                                   $in_clause = "'" . implode("','", $geo_selected) . "'";
+                                    $query = "SELECT name FROM countries WHERE sortname IN ($in_clause)";
+                                    $result = mysqli_query($con, $query);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        if(!empty($row)){
+                                             ?>
+                                        <span style="background-color: green;color: white;padding: 3px;font-weight: 500;"><?php echo $row['name'] . ",";?></span>
+                                         <?php
+                                        }
+                                    }
+                                ?>
                                     <div>
                                         <label>
                                             <input type="checkbox" id="selectAllGeo" <?= count($geo_selected) === $total_country_count ? 'checked' : '' ?>>
@@ -346,6 +432,7 @@ if (isset($_POST['submit_offer'])) {
                                             $isChecked = in_array($list['sortname'], $geo_selected) ? 'checked' : '';
                                             $iconStyle = in_array($list['sortname'], $geo_selected) ? 'inline' : 'none';
                                         ?>
+                                        
                                         <div class="geo-option" data-id="<?= $list['id']; ?>">
                                             <label>
                                                 <input type="checkbox" name="geo[]" value="<?= $list['sortname']; ?>" class="geo-checkbox" <?= $isChecked ?>>
@@ -359,7 +446,20 @@ if (isset($_POST['submit_offer'])) {
                                 
                                 <!-- States Section -->
                                 <div class="mb-3 col-12 col-md-6 col-lg-4" id="state-container">
+                                    
                                     <label class="form-label">States:</label>
+                                    <?php 
+                                       $in_clause_state = "'" . implode("','", $stateid) . "'";
+                                        $query = "SELECT name FROM state WHERE id IN ($in_clause_state)";
+                                        $result = mysqli_query($con, $query);
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            if(!empty($row)){
+                                                 ?>
+                                            <span style="background-color: green;color: white;padding: 3px;font-weight: 500;"><?php echo $row['name'] . ",";?></span>
+                                             <?php
+                                            }
+                                        }
+                                    ?>
                                     <br>
                                     <div style="height: 138px;overflow-y: auto;border: 1px solid #ddd;">
                                         <div id="state-checkbox-container">

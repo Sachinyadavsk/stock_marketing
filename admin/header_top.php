@@ -7,7 +7,12 @@ if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN']!=''){
 	header('location:https://reapbucks.com/admin/');
 	die();
 }
+
 ?>
+
+
+
+
 <!doctype html>
 <html lang="en">
 

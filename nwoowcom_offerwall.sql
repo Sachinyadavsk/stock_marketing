@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 22, 2025 at 02:57 PM
--- Server version: 10.6.21-MariaDB
--- PHP Version: 8.3.19
+-- Generation Time: Jul 24, 2025 at 11:38 AM
+-- Server version: 10.6.22-MariaDB
+-- PHP Version: 8.3.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,9 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `accepted_ip` (
   `id` int(11) NOT NULL,
-  `offer_id` int(11) NOT NULL,
+  `offer_id` varchar(20) NOT NULL,
   `company_name` varchar(50) NOT NULL,
-  `ip` varchar(50) NOT NULL,
+  `ip` varchar(500) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
   `added_on` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -39,9 +40,9 @@ CREATE TABLE `accepted_ip` (
 -- Dumping data for table `accepted_ip`
 --
 
-INSERT INTO `accepted_ip` (`id`, `offer_id`, `company_name`, `ip`, `added_on`) VALUES
-(3, 3, 'pnb', '122.161.53.95', '02/02/2024 15:22:27 pm'),
-(4, 7, 'kotak', '122.161.53.95', '02/02/2024 15:22:27 pm');
+INSERT INTO `accepted_ip` (`id`, `offer_id`, `company_name`, `ip`, `status`, `added_on`) VALUES
+(1, '13,16,3', 'acii', '106.219.165.189,203.115.105.214,106.219.165.191,106.219.160.222', 0, '10/06/2025 11:15:15 am'),
+(2, '1,2', 'adme', '106.219.165.189,106.219.166.168,106.219.165.191,106.219.160.222', 0, '10/06/2025 11:37:14 am');
 
 -- --------------------------------------------------------
 
@@ -129,7 +130,17 @@ INSERT INTO `access_control` (`id`, `user_id`, `module_id`, `can_view`, `can_ins
 (63, 5, 4, 0, 0, 0, 0),
 (64, 5, 3, 0, 0, 0, 0),
 (65, 5, 2, 0, 0, 0, 0),
-(66, 5, 1, 0, 0, 0, 0);
+(66, 5, 1, 0, 0, 0, 0),
+(67, 4, 34, 0, 0, 0, 0),
+(68, 5, 34, 0, 0, 0, 0),
+(69, 4, 38, 0, 0, 0, 0),
+(70, 4, 37, 0, 0, 0, 0),
+(71, 4, 36, 0, 0, 0, 0),
+(72, 4, 35, 0, 0, 0, 0),
+(73, 5, 38, 0, 0, 0, 0),
+(74, 5, 37, 0, 0, 0, 0),
+(75, 5, 36, 0, 0, 0, 0),
+(76, 5, 35, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -180,7 +191,82 @@ INSERT INTO `access_module` (`id`, `module_name`, `status`) VALUES
 (30, 'user_management_menu', 1),
 (31, 'reports_menu', 1),
 (32, 'offer_walls_menu', 1),
-(33, 'setup_menu', 1);
+(33, 'setup_menu', 1),
+(34, 'advertisers', 1),
+(35, 'management_menu', 1),
+(36, 'android_menu', 1),
+(37, 'ios_menu', 1),
+(38, 'desktop_menu', 1),
+(39, 'report_reject', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activity_history`
+--
+
+CREATE TABLE `activity_history` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `method` varchar(255) DEFAULT NULL,
+  `point_name` varchar(100) DEFAULT NULL,
+  `price` float(10,2) DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `region` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postal` varchar(255) DEFAULT NULL,
+  `loc` varchar(255) DEFAULT NULL,
+  `org` varchar(255) DEFAULT NULL,
+  `device` varchar(255) DEFAULT NULL,
+  `os` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Dumping data for table `activity_history`
+--
+
+INSERT INTO `activity_history` (`id`, `user_id`, `method`, `point_name`, `price`, `ip_address`, `user_agent`, `country`, `region`, `city`, `postal`, `loc`, `org`, `device`, `os`, `created_at`) VALUES
+(1, 31, ' My Earning', 'Kotak 811', 100.00, '106.219.165.189', NULL, 'IN', 'Delhi', 'Delhi', NULL, NULL, NULL, 'desktop - Microsoft - windows - 10.0', 'Android,IOS,Windows', '2025-07-24 05:38:01'),
+(2, 31, ' My Earning', 'Pnb Housing', 100.00, '106.219.165.189', NULL, 'IN', 'Delhi', 'Delhi', NULL, NULL, NULL, 'desktop - Microsoft - windows - 10.0', 'Android,IOS,Windows', '2025-07-24 05:39:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activity_logs`
+--
+
+CREATE TABLE `activity_logs` (
+  `id` int(11) NOT NULL,
+  `curl_id` int(11) NOT NULL,
+  `curl_name` varchar(255) DEFAULT NULL,
+  `activity_type` varchar(100) NOT NULL,
+  `activity_description` text DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `region` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postal` varchar(255) DEFAULT NULL,
+  `loc` varchar(255) DEFAULT NULL,
+  `org` varchar(255) DEFAULT NULL,
+  `device` varchar(255) DEFAULT NULL,
+  `os` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Dumping data for table `activity_logs`
+--
+
+INSERT INTO `activity_logs` (`id`, `curl_id`, `curl_name`, `activity_type`, `activity_description`, `ip_address`, `user_agent`, `country`, `region`, `city`, `postal`, `loc`, `org`, `device`, `os`, `created_at`) VALUES
+(1, 1, 'User ID &nbsp;31', 'zetta test', 'Click link offer Id 1', '106.219.160.222', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services', 'desktop', 'windows', '2025-07-24 11:03:01'),
+(2, 2, 'User ID &nbsp;31', 'zetta test', 'Click link offer Id 2', '106.219.160.222', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services', 'desktop', 'windows', '2025-07-24 11:08:37'),
+(3, 31, 'superadmin', 'zetta test', 'Update data successfully', '106.219.160.222', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services', 'desktop', 'windows', '2025-07-24 11:17:30'),
+(4, 31, '', 'zetta test', 'Logged In', '106.219.160.222', 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services', 'mobile', 'windows', '2025-07-24 11:18:01'),
+(5, 1, 'superadmin', '', 'Login the process', '106.219.160.222', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services', 'desktop', 'windows', '2025-07-24 11:21:52');
 
 -- --------------------------------------------------------
 
@@ -193,17 +279,22 @@ CREATE TABLE `admin` (
   `email` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(1000) NOT NULL,
-  `role` varchar(20) NOT NULL
+  `pvalue` varchar(100) DEFAULT NULL,
+  `role` varchar(20) NOT NULL,
+  `reset_token` varchar(255) DEFAULT NULL,
+  `reset_token_created_at` datetime DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `created_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `email`, `name`, `password`, `role`) VALUES
-(1, 'adminbackpanel@gmail.com', 'Super Admn', '$2y$10$VtcFMOTOy8pLjIPq4xAImeW6mdJEG3kzbzQJvvcet17RQ2UzmNQja', 'superadmin'),
-(4, 'reakbucksadmin@gmail.com', 'admin', '$2y$10$VtcFMOTOy8pLjIPq4xAImeW6mdJEG3kzbzQJvvcet17RQ2UzmNQja', 'admin'),
-(5, 'zettamobile@gmail.com', 'zettamobile', '$2y$10$27WQBtZYLOwJ7M1/3RJKOOq4v1JFPcxagNLnP/253hkMOyDf5a4mO', 'admin');
+INSERT INTO `admin` (`id`, `email`, `name`, `password`, `pvalue`, `role`, `reset_token`, `reset_token_created_at`, `status`, `created_date`) VALUES
+(1, 'adminbackpanel@gmail.com', 'Super Admn', '$2y$10$84v.Gyn7vOuhe.3FuNXg7uZTd5lChUdr7LhcFTmSHaD3rf/40HxUa', NULL, 'superadmin', NULL, NULL, 1, '2025-06-06 04:59:36'),
+(4, 'reakbucksadmin@gmail.com', 'admin', '$2y$10$Ur0oXu3J0TRih9Nyt1wGU.hh1rccxyl2fCrh0WVlFlCf8ve3cLJvi', '1234567', 'admin', NULL, NULL, 1, '2025-06-06 08:42:50'),
+(5, 'zettamobile@gmail.com', 'zettamobile', '$2y$10$ETvn7yttq8Wlq8YSmJYwV.OaWpC9MN4DAos4B/1RUqRj..edYkOlC', '1234568', 'admin', NULL, NULL, 1, '2025-06-06 07:58:22');
 
 -- --------------------------------------------------------
 
@@ -305,6 +396,13 @@ CREATE TABLE `chats` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Dumping data for table `chats`
+--
+
+INSERT INTO `chats` (`id`, `userid`, `name`, `message`, `is_staff`, `created_at`, `updated_at`) VALUES
+(9, 1, 'adminbackpanel@gmail.com', 'hi', 1, '2025-05-26 04:31:27', '2025-05-26 04:31:27');
 
 -- --------------------------------------------------------
 
@@ -48625,6 +48723,28 @@ INSERT INTO `cpa` (`id`, `token_id`, `network_name`, `offer_api_url`, `offer_api
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `device_version`
+--
+
+CREATE TABLE `device_version` (
+  `id` int(11) NOT NULL,
+  `version` varchar(255) DEFAULT NULL,
+  `type` varchar(255) NOT NULL,
+  `added_on` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `device_version`
+--
+
+INSERT INTO `device_version` (`id`, `version`, `type`, `added_on`) VALUES
+(1, '7.28', 'android', '19/06/2025 18:15:41 pm'),
+(2, '10.11.10', 'ios', '19/06/2025 18:21:08 pm'),
+(3, '17.25.11', 'desktop', '19/06/2025 18:24:00 pm');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `faqs`
 --
 
@@ -48683,7 +48803,8 @@ CREATE TABLE `final_report` (
 --
 
 INSERT INTO `final_report` (`id`, `user_id`, `user_click_id`, `user_click_ip`, `user_name`, `user_email`, `user_phone_number`, `user_ip`, `user_device`, `user_location`, `user_proxy`, `user_click_time`, `postback_ip`, `postback_time`, `offer_id`, `offer_category`, `offer_name`, `offer_tracking_link`, `offer_device`, `offer_geo`, `offer_points`, `offer_cap`, `timestamp`) VALUES
-(1, 1, '6191216700', '122.161.53.95', 'sk', 'userfrontpanel@gmail.com', '9898989889', '122.161.51.45', 'desktop - Microsoft - windows - 10.0', 'IN - Uttar Pradesh - Gh?zi?b?d', '1', '14/02/2024 12:06:43 pm', '122.161.53.95', '15/02/2024 14:22:20 pm', 3, 'BFSI', 'Pnb Housing', 'https://www.pnbbank.com?uid={user_id}&oid={offer_id}&cid={click_id}', 'Android,IOS,Windows', 'IN,US', '100', '2', '23/02/2024 14:22:20 pm');
+(1, 31, 'fgLOued1YS', '106.219.160.222', 'zetta test', 'zettaquiz90@gmail.com', '8505807000', '106.219.165.189', 'desktop - Microsoft - windows - 10.0', 'IN - Delhi - Delhi', '1', '24/07/2025 11:03:00 am', '106.219.160.222', '24/07/2025 11:03:58 am', 1, 'Finance', 'Kotak 811', 'https://www.kotakbank.com?uid={uid}&oid={oid}&clickid={clickid}', 'Android,IOS,Windows', 'IN,US', '100', '15', '24/07/2025 11:38:01 am'),
+(2, 31, 'GVyO9zwQni', '106.219.160.222', 'zetta test', 'zettaquiz90@gmail.com', '8505807000', '106.219.165.189', 'desktop - Microsoft - windows - 10.0', 'IN - Delhi - Delhi', '1', '24/07/2025 11:08:36 am', '106.219.160.222', '24/07/2025 11:08:49 am', 2, 'Finance', 'Pnb Housing', 'https://www.pnbbank.com?uid={uid}&oid={oid}&clickid={clickid}', 'Android,IOS,Windows', 'IN,US', '100', '20', '24/07/2025 11:38:01 am');
 
 -- --------------------------------------------------------
 
@@ -48710,7 +48831,7 @@ CREATE TABLE `fraud_prevention_settings` (
 --
 
 INSERT INTO `fraud_prevention_settings` (`id`, `admin_id`, `single_account`, `vpn_block`, `vpn_monitor`, `root_block`, `auto_ban_multi`, `auto_ban_vpn`, `auto_ban_root`, `ban_cc_change`, `prv_acc_del`) VALUES
-(1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0);
+(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -48756,7 +48877,7 @@ CREATE TABLE `giftcard` (
 --
 
 INSERT INTO `giftcard` (`id`, `token_id`, `name`, `input_desc`, `input_type`, `country`, `image_file`, `created_at`) VALUES
-(2, 1, 'Google Play GC', 'Enter your email address (demo)', '2', '', '1744781946_1692167483.png', '2025-04-16 05:57:04');
+(2, 1, 'Google Play GC', 'Enter your email address (demo)', '2', 'hiii', '1744781946_1692167483.png', '2025-06-06 09:41:05');
 
 -- --------------------------------------------------------
 
@@ -48805,28 +48926,42 @@ INSERT INTO `lang` (`id`, `admin_id`, `language_name`, `language_code`, `lang_fi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `local_sms`
+-- Table structure for table `leads`
 --
 
-CREATE TABLE `local_sms` (
+CREATE TABLE `leads` (
   `id` int(11) NOT NULL,
-  `token_id` int(100) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `smsto` varchar(255) DEFAULT NULL,
-  `message_body` text DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+  `user_id` int(11) NOT NULL,
+  `user_click_id` varchar(20) NOT NULL,
+  `user_click_ip` varchar(20) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
+  `user_phone_number` varchar(20) NOT NULL,
+  `user_ip` varchar(20) NOT NULL,
+  `user_device` varchar(200) NOT NULL,
+  `user_location` varchar(30) NOT NULL,
+  `user_proxy` varchar(10) NOT NULL,
+  `user_click_time` varchar(30) NOT NULL,
+  `postback_ip` varchar(20) NOT NULL,
+  `postback_time` varchar(30) NOT NULL,
+  `offer_id` int(11) NOT NULL,
+  `offer_category` varchar(30) NOT NULL,
+  `offer_name` varchar(30) NOT NULL,
+  `offer_tracking_link` varchar(255) NOT NULL,
+  `offer_device` varchar(50) NOT NULL,
+  `offer_geo` varchar(255) NOT NULL,
+  `offer_points` varchar(10) NOT NULL,
+  `offer_cap` varchar(10) NOT NULL,
+  `timestamp` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `local_sms`
+-- Dumping data for table `leads`
 --
 
-INSERT INTO `local_sms` (`id`, `token_id`, `title`, `smsto`, `message_body`, `status`, `date`) VALUES
-(1, 1, 'hi', 'support@greymansmedia.com', 'jhgj', 1, '2025-04-21 10:25:20'),
-(3, 1, 'iopi', 'ashvanee.kumar@unifive.in', 'jkl', 0, '2025-04-11 05:32:30'),
-(4, 1, 'dd', 'es@gmail.com', 'hi', 0, '2025-05-14 01:41:38'),
-(5, 4, 'dsd', 'ashvanee.kumar@unifive.in', 'dfdf', 0, '2025-05-14 01:42:39');
+INSERT INTO `leads` (`id`, `user_id`, `user_click_id`, `user_click_ip`, `user_name`, `user_email`, `user_phone_number`, `user_ip`, `user_device`, `user_location`, `user_proxy`, `user_click_time`, `postback_ip`, `postback_time`, `offer_id`, `offer_category`, `offer_name`, `offer_tracking_link`, `offer_device`, `offer_geo`, `offer_points`, `offer_cap`, `timestamp`) VALUES
+(1, 31, 'fgLOued1YS', '106.219.160.222', 'zetta test', 'zettaquiz90@gmail.com', '8505807000', '106.219.165.189', 'desktop - Microsoft - windows - 10.0', 'IN - Delhi - Delhi', '1', '24/07/2025 11:03:00 am', '106.219.160.222', '24/07/2025 11:03:58 am', 1, 'Finance', 'Kotak 811', 'https://www.kotakbank.com?uid={uid}&oid={oid}&clickid={clickid}', 'Android,IOS,Windows', 'IN,US', '100', '15', '24/07/2025 11:07:54 am'),
+(2, 31, 'GVyO9zwQni', '106.219.160.222', 'zetta test', 'zettaquiz90@gmail.com', '8505807000', '106.219.165.189', 'desktop - Microsoft - windows - 10.0', 'IN - Delhi - Delhi', '1', '24/07/2025 11:08:36 am', '106.219.160.222', '24/07/2025 11:08:49 am', 2, 'Finance', 'Pnb Housing', 'https://www.pnbbank.com?uid={uid}&oid={oid}&clickid={clickid}', 'Android,IOS,Windows', 'IN,US', '100', '20', '24/07/2025 11:08:49 am');
 
 -- --------------------------------------------------------
 
@@ -48880,7 +49015,11 @@ CREATE TABLE `messages` (
 INSERT INTO `messages` (`id`, `title`, `user_id`, `message`, `sender_type`, `is_read`, `created_at`) VALUES
 (1, NULL, 9, 'No active messages for this user.', 'user', 1, '2025-05-15 10:53:31'),
 (2, NULL, 9, 'All User Notification Message', 'admin', 0, '2025-05-15 10:54:37'),
-(3, NULL, 9, 'dfgfdg', 'user', 1, '2025-05-15 11:00:05');
+(3, NULL, 9, 'dfgfdg', 'user', 1, '2025-05-15 11:00:05'),
+(4, NULL, 1, 'sss', 'admin', 0, '2025-06-06 09:20:03'),
+(5, NULL, 1, 'jii', 'admin', 0, '2025-06-06 09:21:40'),
+(6, NULL, 9, 'hiff', 'user', 1, '2025-06-09 05:28:53'),
+(7, NULL, 30, 'The my code not working ', 'user', 0, '2025-07-22 07:54:13');
 
 -- --------------------------------------------------------
 
@@ -48901,8 +49040,7 @@ CREATE TABLE `my_account` (
 --
 
 INSERT INTO `my_account` (`id`, `user_id`, `method_id`, `upi_id`, `timestamp`) VALUES
-(1, 1, 1, 'payme31@paypal', '23/02/2024 16:45:22 pm'),
-(3, 9, 1, '121', '09/05/2025 16:42:32 pm');
+(1, 31, 2, 'uip@44826574', '22/07/2025 16:33:43 pm');
 
 -- --------------------------------------------------------
 
@@ -48914,7 +49052,8 @@ CREATE TABLE `my_earnings` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `my_offer_id` int(11) NOT NULL,
-  `points` int(11) NOT NULL,
+  `points` float(10,2) NOT NULL,
+  `referral_status` tinyint(4) NOT NULL DEFAULT 0,
   `timestamp` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -48922,17 +49061,9 @@ CREATE TABLE `my_earnings` (
 -- Dumping data for table `my_earnings`
 --
 
-INSERT INTO `my_earnings` (`id`, `user_id`, `my_offer_id`, `points`, `timestamp`) VALUES
-(1, 1, 1, 100, '11/12/2023 03:21:45 pm'),
-(3, 1, 7, 60, '06/02/2024 18:25:26 pm'),
-(4, 0, 0, 0, '07/02/2024 17:38:10 pm'),
-(5, 0, 0, 0, '07/02/2024 17:39:12 pm'),
-(6, 1, 3, 100, '07/02/2024 17:39:40 pm'),
-(7, 1, 3, 100, '14/02/2024 12:08:40 pm'),
-(8, 2, 3, 100, '14/02/2024 13:03:52 pm'),
-(9, 3, 3, 100, '14/02/2024 13:04:25 pm'),
-(11, 1, 3, 100, '15/02/2024 12:53:51 pm'),
-(12, 1, 3, 100, '15/02/2024 14:22:20 pm');
+INSERT INTO `my_earnings` (`id`, `user_id`, `my_offer_id`, `points`, `referral_status`, `timestamp`) VALUES
+(1, 31, 1, 100.00, 0, '24/07/2025 11:08:01 am'),
+(2, 31, 2, 100.00, 0, '24/07/2025 11:09:01 am');
 
 -- --------------------------------------------------------
 
@@ -48967,7 +49098,33 @@ CREATE TABLE `notepanel` (
 --
 
 INSERT INTO `notepanel` (`id`, `token_id`, `a_note`, `status`) VALUES
-(1, 1, 'hi', 0);
+(1, 1, 'hi', 0),
+(2, 1, 'Admin note', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `title` varchar(50) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `icon_url` varchar(1000) DEFAULT NULL,
+  `action_url` varchar(1000) DEFAULT NULL,
+  `shoot_count` int(11) DEFAULT NULL,
+  `created_on` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `title`, `description`, `icon_url`, `action_url`, `shoot_count`, `created_on`) VALUES
+(1, 'Reapbucks - An Affiliate Marketing Network', 'Reapbucks - An Affiliate Marketing Network', NULL, 'https://reapbucks.com/', NULL, '2025-05-27 16:26:21'),
+(2, 'Reapbucks - An Affiliate Marketing Network', 'Reapbucks - An Affiliate Marketing Network', NULL, 'https://reapbucks.com/', NULL, '2025-05-27 16:27:08'),
+(3, 'Reapbucks - An Affiliate Marketing Network', 'Reapbucks - An Affiliate Marketing Network', NULL, 'https://reapbucks.com/blogs', NULL, '2025-05-27 16:27:43');
 
 -- --------------------------------------------------------
 
@@ -48978,6 +49135,8 @@ INSERT INTO `notepanel` (`id`, `token_id`, `a_note`, `status`) VALUES
 CREATE TABLE `offers` (
   `id` int(11) NOT NULL,
   `category` varchar(50) DEFAULT NULL,
+  `point_status` varchar(255) DEFAULT NULL,
+  `aid` int(100) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `quick_desc` varchar(50) DEFAULT NULL,
@@ -48998,28 +49157,30 @@ CREATE TABLE `offers` (
   `ios_version` varchar(255) DEFAULT NULL,
   `win_version` varchar(255) DEFAULT NULL,
   `state_disable` int(100) DEFAULT NULL,
-  `stateid` varchar(20) DEFAULT NULL
+  `stateid` varchar(20) DEFAULT NULL,
+  `postback_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `offers`
 --
 
-INSERT INTO `offers` (`id`, `category`, `name`, `description`, `quick_desc`, `hot`, `tracking_link`, `preview_link`, `os`, `geo`, `icon_url`, `flow`, `points`, `cap`, `cap_reset`, `timestamp`, `status`, `type`, `android_version`, `ios_version`, `win_version`, `state_disable`, `stateid`) VALUES
-(1, 'Finance', 'Kotak 811', 'kotak 811 campaign', ' install app and open account', '', 'https://www.kotakbank.com?uid={user_id}&oid={offer_id}&cid={click_id}', 'https://www.kotak.com/en/personal-banking/accounts/savings-account/811-zero-balance-digital-savings-account.html', 'Android,IOS,Windows', 'IN,US', '1745918034_kotak-logo (1).jpg', ' click link, submit form, done', 100, 15, '10:00', '29/10/2025 14:43:54 pm', 1, '', '7.12', '9.18', '9.00', 1, '1,2'),
-(2, 'Finance', 'Pnb Housing', 'Pnb Home Loans', ' ', '', 'https://www.pnbbank.com?uid={user_id}&oid={offer_id}&cid={click_id}', 'https://www.pnbhousing.com/', 'Android,IOS,Windows', 'IN,US', '1745917954_logo-Header.jpg', ' click link, submit form, done', 100, 20, '10:45', '29/04/2025 14:42:34 pm', 1, '', '7.12', '9.18', '9.00', 1, '1,2,3975,3976'),
-(3, 'Finance', 'Plus500', 'Download and Install Allowed traffic : Banner/Display,Classified Ads,Co-Registration,Contextual,Mobile,PPC,PPV/CPV,Social Ads', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20733&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://play.google.com/store/apps/details?id=com.Plus500&gl=US', 'Android', 'AE', '1745917628_unnamed (2).jpg', ' Flow:- Install+open', 25, 100, '00:00', '29/04/2025 14:37:08 pm', 1, '', '7.12', '', '', 1, '3797,3798'),
-(4, 'Gaming', 'Dabdoob', 'KPI:- Place order', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20525&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://apps.apple.com/dz/app/dabdoob/id1288684251', 'IOS', 'AE', '1745917590_230x0w (4).jpg', ' Flow:-  Place order', 100, 50, '00:00', '29/04/2025 14:36:30 pm', 1, '', '', '9.18', '', 1, '3798'),
-(5, 'Gaming', 'Pizza Hut', 'Click to Install should be 0.4%, KPI\'s that need to be maintained ', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20427&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://apps.apple.com/sa/app/pizza-hut-ksa-order-food-now/id1023749374', 'IOS', 'AE', '1745917553_230x0w (3).jpg', ' Flow:- Install+open', 40, 100, '00:00', '29/04/2025 14:35:53 pm', 1, '', '', '10.00', '', 1, '3796,3797,3798'),
-(6, 'Finance', 'Mashreq', 'A reattribution % on installs of up to 15% is acceptable. 5. Click to Install rate (CCR) should not go below 0.1%.', '   gg', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20426&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://apps.apple.com/in/app/mashreq-uae/id378549193', 'IOS', 'AE', '1745917497_230x0w (2).jpg', '   Flow:- Install+open', 702, 50, '00:00', '29/04/2025 14:34:57 pm', 1, '', '', '8.11', '', 1, '3796,3797,3798'),
-(7, 'Gaming', 'MCD', 'Kindly ensure to continue excluding Existing App Users and all News related categories', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20406&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://play.google.com/store/apps/details?id=com.mcdonalds.mobileapp', 'Android', 'AE', '1745917458_unnamed (1).jpg', ' Flow:- Install+open', 28, 50, '00:00', '29/04/2025 14:34:18 pm', 1, '', '8.12', '', '', 1, '3796,3797,3798,3799'),
-(8, 'Shopping', 'NOON', 'event token :- ueqi41 event name :- First _transaction minutes]', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=18907&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://apps.apple.com/app/id1269038866?mt=8', 'Android', 'AE', '1745917317_230x0w (1).jpg', ' Flow:- First _transaction minutes', 70, 50, '00:00', '29/04/2025 14:31:57 pm', 1, '', '7.12', '', '', 0, '3797,3798,3799,3800'),
-(9, 'Gaming', 'Artisee', 'KPI: Install to register 30% 30-35% retention', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=19364&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://apps.apple.com/US/app/id6451007668?mt=8', 'IOS', 'AE', '1745917267_230x0w.jpg', ' Flow:-  Install + App Open + registration', 30, 100, '00:00', '29/04/2025 14:31:07 pm', 1, '', '', '9.18', '', 1, '3796,3797,3798'),
-(10, 'Sweepstakes', '$250 Darden Restaurants', 'Email submit', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20886&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://prizegrab.com/sweepstakes/giftcards/250-darden-gift-card-prizegrab-sweepstakes-2930/join/63/?enter', 'Windows', 'US', '1745917192_darden.jpg', ' Flow:- Email submit', 170, 30, '00:00', '29/04/2025 14:29:52 pm', 1, '', '', '', '7.18', 0, '3940,3941'),
-(11, 'Sweepstakes', '$75 McDonalds Gift Card', 'Email submit', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20889&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://prizegrab.com/sweepstakes/giftcards/75-mcdonalds-gift-card-prizegrab-sweepstakes-2936/join/63/?enter', 'Windows', 'US', '1745917132_mcdonaldsgc.jpg', ' Flow:- Email submit', 170, 30, '00:00', '29/04/2025 14:28:52 pm', 1, '', '', '', '6.11', 1, '3919,3920,3921,3922'),
-(12, 'Sweepstakes', '$300 Venmo', 'Email submit\\r\\n', '  ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20887&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://prizegrab.com/sweepstakes/cash/300-venmo-prize-giveaway-2410/join/63/?enter', 'Windows', 'US', '1745917039_venmogc.jpg', '  Flow:-Email submit\\r\\n', 770, 30, '00:00', '29/04/2025 14:27:19 pm', 1, '', '', '', '7.18', 1, '3920,3921'),
-(13, 'Sweepstakes', '$150 KFC Gift Card', 'Email submit', '  ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20884&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://prizegrab.com/sweepstakes/giftcards/kfc-gift-card-prizegrab-sweepstakes-2382/join/63/?enter', 'Windows', 'US', '1745916961_kfc_gift_card.jpg', '  Flow:- Email submit', 770, 30, '00:00', '29/04/2025 14:26:01 pm', 1, '', '', '', '7.18', 1, '3919,3920,3921'),
-(14, 'Gaming', 'Earnweb', 'No bot, no fraud. Offer converts on an install. Targeting: Android users ONLY, ages 15-45 years old, who are looking for opportunities to earn extra rewards and money on the Internet, students.', '  ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20893&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://play.google.com/store/apps/details?id=com.earn.money.make.online.cash.quick.earnweb', 'Android', 'AU,GB,US', '1745916872_unnamed.jpg', '  Flow:- Install+open', 50, 100, '00:00', '29/04/2025 14:24:32 pm', 1, 'CPR', '7.12', '', '', 1, '');
+INSERT INTO `offers` (`id`, `category`, `point_status`, `aid`, `name`, `description`, `quick_desc`, `hot`, `tracking_link`, `preview_link`, `os`, `geo`, `icon_url`, `flow`, `points`, `cap`, `cap_reset`, `timestamp`, `status`, `type`, `android_version`, `ios_version`, `win_version`, `state_disable`, `stateid`, `postback_url`) VALUES
+(1, 'Finance', 'proccessing', 2, 'Kotak 811', 'kotak 811 campaign', '               install app and open account', '', 'https://www.kotakbank.com?uid={uid}&oid={oid}&clickid={clickid}', 'https://www.kotak.com/en/personal-banking/accounts/savings-account/811-zero-balance-digital-savings-account.html', 'Android,IOS,Windows', 'IN,US', '1745918034_kotak-logo (1).jpg', '        click link, submit form, done', 100, 15, '10:00', '20/06/2025 13:13:21 pm', 1, 'CPL', '7.28', '10.11.10', '17.25.11', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(2, 'Finance', 'proccessing', 2, 'Pnb Housing', 'Pnb Home Loans', '      ', '', 'https://www.pnbbank.com?uid={uid}&oid={oid}&clickid={clickid}', 'https://www.pnbhousing.com/', 'Android,IOS,Windows', 'IN,US', '1745917954_logo-Header.jpg', '      click link, submit form, done', 100, 20, '10:45', '20/06/2025 14:49:44 pm', 1, '', '7.28', '10.11.10', '17.25.11', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(3, 'Finance', 'proccessing', 1, 'Plus500', 'Download and Install Allowed traffic : Banner/Display,Classified Ads,Co-Registration,Contextual,Mobile,PPC,PPV/CPV,Social Ads', '         ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20733&clickid={clickid}&subid={publisher_id}&deviceid={deviceid}', 'https://play.google.com/store/apps/details?id=com.Plus500&gl=US', 'Android,Windows', 'IN,AE', '1745917628_unnamed (2).jpg', '         Flow:- Install+open', 25, 100, '00:00', '20/06/2025 14:51:05 pm', 1, '', '7.28', '10.11.10', '17.25.11', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(4, 'Gaming', 'proccessing', NULL, 'Dabdoob', 'KPI:- Place order', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20525&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://apps.apple.com/dz/app/dabdoob/id1288684251', 'IOS', 'AE', '1745917590_230x0w (4).jpg', ' Flow:-  Place order', 100, 50, '00:00', '29/04/2025 14:36:30 pm', 1, '', '', '9.18', '', 1, '3798', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(5, 'Gaming', 'proccessing', NULL, 'Pizza Hut', 'Click to Install should be 0.4%, KPI\'s that need to be maintained ', ' ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20427&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://apps.apple.com/sa/app/pizza-hut-ksa-order-food-now/id1023749374', 'IOS', 'AE', '1745917553_230x0w (3).jpg', ' Flow:- Install+open', 40, 100, '00:00', '29/04/2025 14:35:53 pm', 1, '', '', '10.00', '', 1, '3796,3797,3798', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(6, 'Finance', 'proccessing', NULL, 'Mashreq', 'A reattribution % on installs of up to 15% is acceptable. 5. Click to Install rate (CCR) should not go below 0.1%.', '   gg', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20426&clickid={clickid}&subid={publisher_id}&deviceid={device_id}', 'https://apps.apple.com/in/app/mashreq-uae/id378549193', 'IOS', 'AE', '1745917497_230x0w (2).jpg', '   Flow:- Install+open', 702, 50, '00:00', '29/04/2025 14:34:57 pm', 1, '', '', '8.11', '', 1, '3796,3797,3798', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(7, 'Gaming', 'proccessing', 0, 'MCD', 'Kindly ensure to continue excluding Existing App Users and all News related categories', '  ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20406&clickid={clickid}&subid={subid}&deviceid={deviceid}', 'https://play.google.com/store/apps/details?id=com.mcdonalds.mobileapp', 'Android', 'AE', '1745917458_unnamed (1).jpg', '  Flow:- Install+open', 28, 50, '00:00', '20/06/2025 13:25:33 pm', 1, '', '7.28', '', '', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(8, 'Shopping', 'proccessing', 0, 'NOON', 'event token :- ueqi41 event name :- First _transaction minutes]', '  ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=18907&clickid={clickid}&subid={subid}&deviceid={deviceid}', 'https://apps.apple.com/app/id1269038866?mt=8', 'Android', 'AE', '1745917317_230x0w (1).jpg', '  Flow:- First _transaction minutes', 70, 50, '00:00', '20/06/2025 13:25:05 pm', 1, '', '7.28', '', '', 0, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(9, 'Gaming', 'proccessing', 0, 'Artisee', 'KPI: Install to register 30% 30-35% retention', '  ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=19364&clickid={clickid}&subid={subid}&deviceid={deviceid}', 'https://apps.apple.com/US/app/id6451007668?mt=8', 'IOS', 'AE', '1745917267_230x0w.jpg', '  Flow:-  Install + App Open + registration', 30, 100, '00:00', '20/06/2025 13:24:43 pm', 1, '', '', '10.11.10', '', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(10, 'Sweepstakes', 'proccessing', 0, '$250 Darden Restaurants', 'Email submit', '  ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20886&clickid={clickid}&subid={subid}&deviceid={deviceid}', 'https://prizegrab.com/sweepstakes/giftcards/250-darden-gift-card-prizegrab-sweepstakes-2930/join/63/?enter', 'Windows', 'US', '1745917192_darden.jpg', '  Flow:- Email submit', 170, 30, '00:00', '20/06/2025 13:24:16 pm', 1, '', '', '', '17.25.11', 0, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(11, 'Sweepstakes', 'proccessing', 0, '$75 McDonalds Gift Card', 'Email submit', '   ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20889&clickid={clickid}&subid={subid}&deviceid={deviceid}', 'https://prizegrab.com/sweepstakes/giftcards/75-mcdonalds-gift-card-prizegrab-sweepstakes-2936/join/63/?enter', 'Windows', 'US', '1745917132_mcdonaldsgc.jpg', '   Flow:- Email submit', 170, 30, '00:00', '20/06/2025 13:23:28 pm', 1, '', '', '', '17.25.11', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(12, 'Sweepstakes', 'proccessing', 0, '$300 Venmo', 'Email submit\\r\\n', '   ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20887&clickid={clickid}&subid={subid}&deviceid={deviceid}', 'https://prizegrab.com/sweepstakes/cash/300-venmo-prize-giveaway-2410/join/63/?enter', 'Windows', 'US', '1745917039_venmogc.jpg', '   Flow:-Email submit\\r\\n', 770, 30, '00:00', '20/06/2025 13:22:47 pm', 1, '', '', '', '17.25.11', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(13, 'Sweepstakes', 'proccessing', 1, '$150 KFC Gift Card', 'Email submit', '    ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20884&clickid={clickid}&subid={subid}&deviceid={deviceid}', 'https://prizegrab.com/sweepstakes/giftcards/kfc-gift-card-prizegrab-sweepstakes-2382/join/63/?enter', 'Windows', 'US', '1745916961_kfc_gift_card.jpg', '    Flow:- Email submit', 770, 30, '00:00', '20/06/2025 13:22:20 pm', 1, '', '', '', '17.25.11', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(14, 'Gaming', 'proccessing', 1, 'Earnweb', 'No bot, no fraud. Offer converts on an install. Targeting: Android users ONLY, ages 15-45 years old, who are looking for opportunities to earn extra rewards and money on the Internet, students.', '      ', '', 'https://zettamobi.xyz/tl.aspx?uid=100&oid=20893&clickid={clickid}&subid={subid}&deviceid={deviceid}', 'https://play.google.com/store/apps/details?id=com.earn.money.make.online.cash.quick.earnweb', 'Android', 'AU,GB,US', '1745916872_unnamed.jpg', '      Flow:- Install+open', 50, 100, '00:00', '20/06/2025 14:48:17 pm', 1, 'CPR', '7.28', '', '', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS'),
+(16, 'Finance', 'proccessing', 1, 'Navi UPI Pay', 'Flow: Install - Login - Simbinding - Bank account addition - First transaction Payable', '             First transaction Payable', '', ' https://zettamobi.xyz/tl.aspx?uid=110&oid=23778&clickid={clickid}&subid={subid}', 'https://play.google.com/store/apps/details?id=com.naviapp', 'Android,IOS,Windows', 'IN', '1750238456_pay.png', '   click link, Install - Login,Simbinding ,Bank account addition ,First transaction Payable', 20, 20, '10', '23/06/2025 13:24:43 pm', 1, 'CPI', '7.28', '10.11.10', '17.25.11', 1, '', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS');
 
 -- --------------------------------------------------------
 
@@ -49074,6 +49235,7 @@ CREATE TABLE `offer_clicks` (
   `user_id` int(11) NOT NULL,
   `offer_id` int(11) NOT NULL,
   `click_id` varchar(20) NOT NULL,
+  `aid` int(100) DEFAULT NULL,
   `sub_id` int(11) NOT NULL,
   `user_ip` varchar(20) NOT NULL,
   `user_country` varchar(20) NOT NULL,
@@ -49088,77 +49250,9 @@ CREATE TABLE `offer_clicks` (
 -- Dumping data for table `offer_clicks`
 --
 
-INSERT INTO `offer_clicks` (`id`, `user_id`, `offer_id`, `click_id`, `sub_id`, `user_ip`, `user_country`, `user_state`, `user_city`, `user_device`, `user_os`, `timestamp`) VALUES
-(69, 1, 1, '545444445', 0, '', '', '', '', '', '', ''),
-(70, 1, 1, '545444698', 0, '', '', '', '', '', '', ''),
-(71, 1, 7, '3339521591', 0, '', '', '', '', '', '', '30/01/2024 13:14:17 pm'),
-(72, 1, 7, '1829797233', 0, '', '', '', '', '', '', '30/01/2024 17:47:07 pm'),
-(73, 1, 3, '154869492', 0, '', '', '', '', '', '', '01/02/2024 13:12:30 pm'),
-(74, 1, 7, '7840874705', 0, '', '', '', '', '', '', '01/02/2024 14:35:22 pm'),
-(75, 1, 3, '3425381955', 0, '', '', '', '', '', '', '01/02/2024 14:35:45 pm'),
-(76, 1, 1, '7404551035', 0, '', '', '', '', '', '', '01/02/2024 14:36:41 pm'),
-(77, 1, 7, '9472364828', 0, '', '', '', '', '', '', '01/02/2024 15:03:16 pm'),
-(78, 1, 7, '3718380557', 0, '', '', '', '', '', '', '01/02/2024 15:03:19 pm'),
-(79, 1, 7, '3935420687', 0, '', '', '', '', '', '', '01/02/2024 15:17:42 pm'),
-(80, 1, 7, '654792298', 0, '', '', '', '', '', '', '05/02/2024 12:58:48 pm'),
-(81, 1, 3, '9326735062', 0, '', '', '', '', '', '', '06/02/2024 18:19:29 pm'),
-(82, 1, 7, '160352452', 0, '', '', '', '', '', '', '06/02/2024 18:25:00 pm'),
-(83, 1, 1, '306551827', 0, '', '', '', '', '', '', '13/02/2024 17:27:08 pm'),
-(84, 1, 3, '6632133364', 0, '', '', '', '', '', '', '13/02/2024 17:37:13 pm'),
-(85, 1, 3, '6191216700', 0, '122.161.53.95', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '14/02/2024 12:06:43 pm'),
-(86, 1, 1, '8521665807', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '21/02/2024 16:25:06 pm'),
-(87, 1, 7, '5520564224', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '21/02/2024 16:25:11 pm'),
-(88, 1, 1, '7459433260', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '21/02/2024 16:25:20 pm'),
-(89, 1, 1, '6275887438', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '21/02/2024 16:27:14 pm'),
-(90, 1, 1, '2401468435', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '21/02/2024 16:27:31 pm'),
-(91, 1, 1, '2715540699', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 17:05:59 pm'),
-(92, 1, 1, '7702591908', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 17:06:07 pm'),
-(93, 1, 1, '7773877256', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '21/02/2024 17:13:25 pm'),
-(94, 1, 1, '1832102165', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 17:13:42 pm'),
-(95, 1, 1, '230939916', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 17:13:51 pm'),
-(96, 1, 1, '2404687916', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 17:15:34 pm'),
-(97, 1, 1, '2647184614', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 17:15:40 pm'),
-(98, 1, 1, '8090481338', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 18:20:28 pm'),
-(99, 1, 1, '6153637354', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 18:21:18 pm'),
-(100, 1, 1, '3017582857', 0, '122.161.49.134', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '21/02/2024 18:21:24 pm'),
-(147, 1, 1, '5484006910', 0, '122.161.48.116', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'android', '23/02/2024 11:12:07 am'),
-(148, 1, 1, '8144035527', 0, '122.161.51.204', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'mobile', 'ios', '23/02/2024 14:21:30 pm'),
-(149, 1, 7, '5754026038', 0, '122.161.51.204', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '23/02/2024 16:48:19 pm'),
-(150, 1, 7, '1948871551', 0, '122.161.48.131', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '28/06/2024 14:38:36 pm'),
-(151, 1, 1, '6812118360', 0, '122.161.48.131', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '28/06/2024 17:05:07 pm'),
-(152, 1, 1, '5170267319', 0, '122.161.53.45', 'IN', 'Uttar Pradesh', 'Gh?zi?b?d', 'desktop', 'windows', '09/07/2024 11:52:39 am'),
-(153, 1, 1, '1742005795', 0, '106.219.165.82', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '24/10/2024 16:37:22 pm'),
-(154, 9, 1, '7223364815', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '09/05/2025 13:26:17 pm'),
-(155, 9, 3, '4432552796', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '09/05/2025 13:26:20 pm'),
-(156, 9, 3, '5868421067', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '09/05/2025 13:26:24 pm'),
-(157, 9, 7, '7254940823', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '09/05/2025 13:26:28 pm'),
-(158, 9, 1, '269754501', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '09/05/2025 15:31:30 pm'),
-(159, 9, 1, '9098339847', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '09/05/2025 16:08:40 pm'),
-(160, 9, 1, '5404655199', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '09/05/2025 16:08:53 pm'),
-(161, 9, 1, '4092976318', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '09/05/2025 16:09:43 pm'),
-(162, 9, 1, '2053254923', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'mobile', 'android', '09/05/2025 17:58:09 pm'),
-(163, 9, 3, '9269205927', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'mobile', 'android', '09/05/2025 17:58:19 pm'),
-(164, 9, 3, '1766006031', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '12/05/2025 12:23:06 pm'),
-(165, 9, 1, '2497542827', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '12/05/2025 12:23:56 pm'),
-(166, 9, 1, '9469460328', 0, '106.219.160.48', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '12/05/2025 12:25:28 pm'),
-(167, 9, 3, '2738704112', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 10:29:37 am'),
-(168, 9, 3, '8400157657', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 10:29:49 am'),
-(169, 9, 1, '1651022195', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 11:35:42 am'),
-(170, 9, 2, '285768988', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 11:37:59 am'),
-(171, 9, 1, '2745876591', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 12:07:15 pm'),
-(172, 9, 1, '5162078339', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 12:09:33 pm'),
-(173, 9, 1, '7869405898', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 12:25:53 pm'),
-(174, 9, 2, '4071096910', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 12:26:21 pm'),
-(175, 9, 2, '9368008461', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 12:27:14 pm'),
-(176, 9, 2, '7812812118', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'mobile', 'android', '15/05/2025 12:30:51 pm'),
-(177, 9, 1, '5903450054', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'mobile', 'android', '15/05/2025 12:30:58 pm'),
-(178, 9, 1, '5434130351', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'mobile', 'android', '15/05/2025 12:31:08 pm'),
-(179, 9, 1, '1734345609', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'mobile', 'android', '15/05/2025 12:31:29 pm'),
-(180, 9, 1, '1143480719', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'mobile', 'android', '15/05/2025 12:31:48 pm'),
-(181, 9, 1, '7332474009', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 15:18:23 pm'),
-(182, 9, 2, '1181176705', 0, '106.219.166.16', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '15/05/2025 16:44:50 pm'),
-(183, 9, 1, '705168053', 0, '106.219.163.177', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '22/05/2025 14:55:38 pm'),
-(184, 9, 1, '9668263675', 0, '106.219.163.177', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '22/05/2025 14:55:43 pm');
+INSERT INTO `offer_clicks` (`id`, `user_id`, `offer_id`, `click_id`, `aid`, `sub_id`, `user_ip`, `user_country`, `user_state`, `user_city`, `user_device`, `user_os`, `timestamp`) VALUES
+(1, 31, 1, 'fgLOued1YS', 2, 31, '106.219.160.222', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '24/07/2025 11:03:00 am'),
+(2, 31, 2, 'GVyO9zwQni', 2, 31, '106.219.160.222', 'IN', 'Delhi', 'Delhi', 'desktop', 'windows', '24/07/2025 11:08:36 am');
 
 -- --------------------------------------------------------
 
@@ -49213,10 +49307,7 @@ CREATE TABLE `payment_methods` (
 
 INSERT INTO `payment_methods` (`id`, `method`, `timestamp`) VALUES
 (1, 'paypal', '23/02/2024 13:14:17 pm'),
-(2, 'paytm', '23/02/2024 13:14:17 pm'),
-(3, 'phonepe', '23/02/2024 13:14:17 pm'),
-(4, 'payneer', '23/02/2024 13:14:17 pm'),
-(5, 'googlepay', '23/02/2024 13:14:17 pm');
+(2, 'upid', '23/02/2024 13:14:17 pm');
 
 -- --------------------------------------------------------
 
@@ -49229,6 +49320,7 @@ CREATE TABLE `postback` (
   `user_id` int(11) NOT NULL,
   `offer_id` int(11) NOT NULL,
   `click_id` varchar(20) NOT NULL,
+  `aid` int(100) DEFAULT NULL,
   `ip` varchar(20) NOT NULL,
   `url` varchar(500) NOT NULL,
   `p1` varchar(255) NOT NULL,
@@ -49238,6 +49330,55 @@ CREATE TABLE `postback` (
   `status` int(11) DEFAULT NULL,
   `timestamp` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `postback`
+--
+
+INSERT INTO `postback` (`id`, `user_id`, `offer_id`, `click_id`, `aid`, `ip`, `url`, `p1`, `p2`, `p3`, `p4`, `status`, `timestamp`) VALUES
+(1, 31, 1, 'fgLOued1YS', 2, '106.219.160.222', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS', '', '', '', '', 2, '24/07/2025 11:03:58 am'),
+(2, 31, 1, 'fgLOued1YS', 2, '106.219.160.222', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS', '', '', '', '', 2, '24/07/2025 11:04:36 am'),
+(3, 31, 1, 'fgLOued1YS', 2, '106.219.160.222', 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS', '', '', '', '', 2, '24/07/2025 11:07:54 am'),
+(4, 31, 2, 'GVyO9zwQni', 2, '106.219.160.222', 'https://reapbucks.com/get_postback.php?aid=2&clickid=GVyO9zwQni', '', '', '', '', 2, '24/07/2025 11:08:49 am'),
+(5, 31, 2, 'GVyO9zwQni', 2, '106.219.160.222', 'https://reapbucks.com/get_postback.php?aid=2&clickid=GVyO9zwQni', '', '', '', '', 2, '24/07/2025 11:08:53 am');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reject`
+--
+
+CREATE TABLE `reject` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_proxy` varchar(255) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `user_click_id` varchar(20) NOT NULL,
+  `user_click_ip` varchar(255) DEFAULT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
+  `user_phone_number` varchar(20) NOT NULL,
+  `user_ip` varchar(20) NOT NULL,
+  `user_device` varchar(200) NOT NULL,
+  `user_location` varchar(30) NOT NULL,
+  `user_click_time` varchar(30) NOT NULL,
+  `offer_id` int(11) NOT NULL,
+  `offer_category` varchar(30) NOT NULL,
+  `offer_name` varchar(30) NOT NULL,
+  `offer_tracking_link` varchar(255) NOT NULL,
+  `offer_device` varchar(50) NOT NULL,
+  `offer_geo` varchar(255) NOT NULL,
+  `offer_points` varchar(10) NOT NULL,
+  `offer_cap` varchar(10) NOT NULL,
+  `timestamp` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `reject`
+--
+
+INSERT INTO `reject` (`id`, `user_id`, `user_proxy`, `reason`, `user_click_id`, `user_click_ip`, `user_name`, `user_email`, `user_phone_number`, `user_ip`, `user_device`, `user_location`, `user_click_time`, `offer_id`, `offer_category`, `offer_name`, `offer_tracking_link`, `offer_device`, `offer_geo`, `offer_points`, `offer_cap`, `timestamp`) VALUES
+(1, 31, 'no', 'aid click_id already data dublicate the lead data', 'GVyO9zwQni', '106.219.160.222', 'zetta test', 'zettaquiz90@gmail.com', '8505807000', '106.219.165.189', 'desktop - Microsoft - windows - 10.0', 'IN - Delhi - Delhi', '24/07/2025 11:08:36 am', 2, 'Finance', 'Pnb Housing', 'https://www.pnbbank.com?uid={uid}&oid={oid}&clickid={clickid}', 'Android,IOS,Windows', 'IN,US', '100', '20', '24/07/2025 11:08:53 am');
 
 -- --------------------------------------------------------
 
@@ -49297,39 +49438,6 @@ CREATE TABLE `sdk` (
 INSERT INTO `sdk` (`id`, `token_id`, `network_name`, `offerwall_description`, `network_slug`, `config_file`, `enabled`, `sdk_key`, `placement_name`, `postback_method_key`, `postback_payload_key`, `postback_type_key`, `postback_exchange`, `postback_url_secret_key`, `postback_reward_amount_key`, `parameter_user_id`, `parameter_offer_id`, `parameter_ip_address`, `verify`, `created_at`) VALUES
 (4, 1, 'Ayetstudios', 'dsfsd', 'sdfs', '1744706685_tapjoy.png', 0, '', '', '', '', '', '', 'fdsf', 'fsd', '', '', '', 'sdfs', '2025-04-15 08:55:24'),
 (5, 1, '', '', '', '1744707088_ayet.png', 1, '', '', '2', '1', '1', '1', '1111', '', '', '', '', '11', '2025-04-15 08:51:28');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sendpush`
---
-
-CREATE TABLE `sendpush` (
-  `id` int(11) NOT NULL,
-  `token_id` int(11) NOT NULL,
-  `sendtype` int(11) DEFAULT NULL,
-  `email_or_userid` varchar(100) DEFAULT NULL,
-  `email_or_userid_type` varchar(10) DEFAULT NULL,
-  `range_from` int(11) DEFAULT NULL,
-  `range_to` int(11) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `text_or_multi` int(11) DEFAULT NULL,
-  `image_file` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
-
---
--- Dumping data for table `sendpush`
---
-
-INSERT INTO `sendpush` (`id`, `token_id`, `sendtype`, `email_or_userid`, `email_or_userid_type`, `range_from`, `range_to`, `title`, `message`, `text_or_multi`, `image_file`, `created_at`) VALUES
-(1, 1, 2, 'ashish@zettamobi.com', '2', 1, 50, '', '', 1, '1744267652_01.jpg', '2025-04-10 06:47:32'),
-(2, 1, 5, 'support@greymansmedia.com', '1', 1, 50, 'hgg', 'gdfgdf', 2, '1744268043_banner-3.jpg', '2025-04-10 06:54:03'),
-(3, 1, 4, 'ashu@greymansmedia.com', '1', 1, 50, 'dgd', 'yttgdf', 1, '1744268115_banner-2.jpg', '2025-04-10 06:55:15'),
-(4, 0, 0, '', '', 0, 0, '', '', 0, '', '2025-04-11 07:06:26'),
-(5, 0, 0, '', '', 0, 0, '', '', 0, '', '2025-04-11 07:07:07'),
-(6, 1, 1, '', '1', 1, 50, '', '', 1, '', '2025-04-21 09:51:03');
 
 -- --------------------------------------------------------
 
@@ -53502,6 +53610,57 @@ INSERT INTO `system_settings` (`id`, `token_id`, `backend_name`, `backend_url`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `id` int(11) NOT NULL,
+  `token` varchar(10000) NOT NULL,
+  `ip` varchar(50) NOT NULL,
+  `device` varchar(50) NOT NULL,
+  `country` varchar(20) NOT NULL,
+  `state` varchar(30) NOT NULL,
+  `city` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pincode` varchar(10) NOT NULL,
+  `loc` varchar(20) NOT NULL,
+  `isp` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `tokens`
+--
+
+INSERT INTO `tokens` (`id`, `token`, `ip`, `device`, `country`, `state`, `city`, `pincode`, `loc`, `isp`) VALUES
+(1, 'c4-R7IJ3JvlSK4oB0Gja8M:APA91bGghX3Y8OvtlMM4ldSRp7fz-tsYXGBInBJi7pUhHo5n8kFD5D8ZRKjvpS4lSlv0kdv6zI0Xeng6BreGpi5JyMU8DMLs5lQK1GiYK4vOf2ZmqGLnqtI', '106.219.160.157', 'desktop - windows', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services'),
+(2, 'd6L3hILMXp8Gd1AY1PXhTn:APA91bEkbgZ7-0dEIRfMKIbNAMIQOtK8KoDau2H_mWLQXWZR71ALgkinYqWBUqNPH2gEKMBaRjuI4I5XcAP8_vXhsY3wHPPUjwoZp3GQSKWJ2moA8t_9lN8', '106.219.160.157', 'desktop - windows', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services'),
+(3, 'dTTs3kicdbcedX5lpMhcS7:APA91bGQ80dZ-xipo4JCwJnmxmPgFK73dWJXdbZJIBcDoyNV99c6QRssqWFsG4erJgbeFWBKAxAq-fJ1ZLFXTmFSSWO_t-fo3iYUxZYiTlwAebnrlg8RoM0', '106.219.160.157', 'desktop - windows', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services'),
+(4, 'ej15RDEWl2myQEPpe5DEtC:APA91bEuRnNIHOQdCxjsFE7FrXGF0zADyWWjtmsWM6W_Va7FksC_EJb_i3dJfwlaI9hZSxlHC1Jf1h14mJ9Rg_wN0_1tgtbBA52YYDb-1RO-4Dm4HlRm3EM', '106.219.160.157', 'desktop - windows', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services'),
+(5, 'e4Fx18GJ8uiMtBYz79OVxL:APA91bFj8YnHgtA95ZWt9Hc64zcVGq1X5I19Dm46EQfgAQ7kZyZxIeZ9NA7hOe0h_5OLpMD-XfA7uXE3yyj__QCx8h8s5D9n73r3fO4uLBuuOaUSCdp9rys', '106.219.160.157', 'desktop - windows', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services'),
+(6, 'c_U-pvYH6_Q05tffe_32hp:APA91bGvgwUl8hjEFSwcFik1Hjl5IcQ6-j9H3_lc7ngo9HThdNuCcDi5erHvoYRd_O_tR8b0cCBsLO2flYMZ7iFspWL45vhReh0f273XR5wf6ZIWQ1OPYzc', '106.219.161.85', 'desktop - windows', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services'),
+(7, 'e6uSvKHfZhBVXwJlQa6I4g:APA91bEVjjRcdoCja9hn8tpU_YHnwSiFBrF6QDT5I_d68K8z7UR0iCmKu7DsUgiZsZyK8XGPPCIsQhtg47aUJZV-nd_gBMznpCzsLf_u8elNH6a-5NEJQ08', '106.219.162.23', 'mobile - android', 'IN', 'Delhi', 'Delhi', '110001', '28.6519,77.2315', 'AS24560 Bharti Airtel Ltd., Telemedia Services');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `url_call_log`
+--
+
+CREATE TABLE `url_call_log` (
+  `id` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `called_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Dumping data for table `url_call_log`
+--
+
+INSERT INTO `url_call_log` (`id`, `url`, `called_at`) VALUES
+(1, 'https://reapbucks.com/get_postback.php?aid=2&clickid=fgLOued1YS', '2025-06-16 10:41:34');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -53527,21 +53686,70 @@ CREATE TABLE `users` (
   `is_online` tinyint(4) NOT NULL DEFAULT 0,
   `reason` text DEFAULT NULL,
   `banstatus` tinyint(4) NOT NULL DEFAULT 0,
-  `is_logged_in` tinyint(1) DEFAULT 1
+  `app_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `leaderboard_rank` int(100) DEFAULT NULL,
+  `subscribed` tinyint(4) NOT NULL DEFAULT 0,
+  `reset_token` varchar(255) DEFAULT NULL,
+  `reset_token_created_at` varchar(255) DEFAULT NULL,
+  `is_logged_in` tinyint(1) DEFAULT 1,
+  `referrel_code` text DEFAULT NULL,
+  `my_ref_code` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `password_plain`, `ip`, `location`, `device`, `balance`, `avatar`, `refby`, `deviceid`, `googlerefid`, `vercode`, `vername`, `timestamp`, `status`, `is_online`, `reason`, `banstatus`, `is_logged_in`) VALUES
-(1, 'Zetta test', 'sonulodhi.54321@gmail.com', '9898989889', '$2y$10$c3IIQbG1daUuV9oFhO9B..VBJrkwNJxlmk8vnbZYkX7cFMVq5uD2S', '472d76', '122.161.51.45', 'IN - Uttar Pradesh - Ghāziābād', 'desktop - Microsoft - windows - 10.0', NULL, '', 'None', '', '', '', '', '08/12/2023 12:16:45 pm', 1, 1, NULL, 0, 0),
-(9, 'ADME', 'gsne458@gmail.com', '9650334999', '$2y$10$gC2HLX3YWjE1aK96oY7jIuSC4rPIyV3Fj7P5b3MqC78ZenhZvStTy', '123456', '122.161.52.203', 'IN - Uttar Pradesh - Ghāziābād', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '26/02/2024 10:19:36 am', 1, 0, NULL, 0, 0),
-(10, 'Nitesh', 'niteshmoriya3939@gmail.com', '9876543209', '$2y$10$fCTrR0aLWGoVfIsjZG.WNe8aS6m8ct9zJbbdtjUmdIbrLhh8/xiTi', '1234567890', '157.37.164.40', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '05/03/2024 22:28:27 pm', 0, 0, NULL, 0, 1),
-(13, '', 'userfrontpanels@gmail.com', '', '$2y$10$hsP/XfbduOUdcCmGMXQsv.Hf0uLc8.BLJKHSRSU6JrtMAdCvgtK/O', 'f6a170', '106.219.161.29', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '25/10/2024 15:32:16 pm', 1, 0, NULL, 0, 1),
-(14, 'Ab', 'abc@gmail.com', '', '$2y$10$nafZqjwiBg9xQptUfl5MYuyDDAkxajem9hPALzlCGjDgre38XICyu', '6f808e', '106.219.161.29', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, '', 'None', '', '', '', '', '25/10/2024 16:31:18 pm', 1, 0, NULL, 0, 1),
-(15, 'dd', 'dd@gmail.com', '', '$2y$10$702.cj7gAdXIYV4RiK76R.H2BaA09DshqaLhyzRfsFJl82bhir5Ou', 'db97bc', '106.219.161.29', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '25/10/2024 16:32:28 pm', 1, 0, 'o', 1, 1),
-(18, 'Apple', 'ex.pans.eu.y.o.rac.l.e71@gmail.com', 'Apple Inc.', '$2y$10$yVqRpRQyGDN/3238F4vyC.fzDEOav92kPwS3XldjTZqb6KgnpBjq6', '', '138.219.123.132', 'US - New Jersey - Secaucus', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '21/02/2025 04:29:40 am', 0, 0, 'h', 0, 0);
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `password_plain`, `ip`, `location`, `device`, `balance`, `avatar`, `refby`, `deviceid`, `googlerefid`, `vercode`, `vername`, `timestamp`, `status`, `is_online`, `reason`, `banstatus`, `app_deleted`, `leaderboard_rank`, `subscribed`, `reset_token`, `reset_token_created_at`, `is_logged_in`, `referrel_code`, `my_ref_code`) VALUES
+(1, 'Zetta test', 'sonulodhi.54321@gmail.com', '9898989889', '$2y$10$c3IIQbG1daUuV9oFhO9B..VBJrkwNJxlmk8vnbZYkX7cFMVq5uD2S', '472d76', '122.161.51.45', 'IN - Uttar Pradesh - Ghāziābād', 'desktop - Microsoft - windows - 10.0', NULL, '', 'None', '', '', '', '', '08/12/2023 12:16:45 pm', 0, 1, NULL, 0, 0, NULL, 0, NULL, NULL, 0, '', '1'),
+(9, 'ADME', 'dsadf@gmail.com', '9650334999', '$2y$10$pj4djdjCkQKuY3Q6d/3mMOhZiiJ4LXtHEodjSX3EKRmb2DMGq9acC', '123456', '122.161.52.203', 'IN - Uttar Pradesh - Ghāziābād', 'desktop - Microsoft - windows - 10.0', NULL, '', 'None', '', '', '', '', '26/02/2024 10:19:36 am', 1, 0, NULL, 0, 0, NULL, 0, NULL, NULL, 0, '', '1'),
+(10, 'Nitesh', 'niteshmoriya3939@gmail.com', '9876543209', '$2y$10$fCTrR0aLWGoVfIsjZG.WNe8aS6m8ct9zJbbdtjUmdIbrLhh8/xiTi', '1234567890', '157.37.164.40', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '05/03/2024 22:28:27 pm', 0, 0, NULL, 0, 0, NULL, 0, NULL, NULL, 1, '', '1'),
+(13, '', 'userfrontpanels@gmail.com', '', '$2y$10$hsP/XfbduOUdcCmGMXQsv.Hf0uLc8.BLJKHSRSU6JrtMAdCvgtK/O', 'f6a170', '106.219.161.29', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '25/10/2024 15:32:16 pm', 1, 0, NULL, 0, 0, NULL, 0, NULL, NULL, 1, '', '1'),
+(14, 'Ab', 'abc@gmail.com', '', '$2y$10$nafZqjwiBg9xQptUfl5MYuyDDAkxajem9hPALzlCGjDgre38XICyu', '6f808e', '106.219.161.29', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, '', 'None', '', '', '', '', '25/10/2024 16:31:18 pm', 1, 0, NULL, 0, 0, NULL, 0, NULL, NULL, 1, '', '1'),
+(15, 'dd', 'dd@gmail.com', '', '$2y$10$702.cj7gAdXIYV4RiK76R.H2BaA09DshqaLhyzRfsFJl82bhir5Ou', 'db97bc', '106.219.161.29', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '25/10/2024 16:32:28 pm', 1, 0, '1234', 1, 0, NULL, 0, NULL, NULL, 0, '', '1'),
+(18, 'Apple', 'ex.pans.eu.y.o.rac.l.e71@gmail.com', 'Apple Inc.', '$2y$10$yVqRpRQyGDN/3238F4vyC.fzDEOav92kPwS3XldjTZqb6KgnpBjq6', '', '138.219.123.132', 'US - New Jersey - Secaucus', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '21/02/2025 04:29:40 am', 0, 0, 'h', 0, 0, NULL, 0, NULL, NULL, 0, '', '1'),
+(28, 'akash gupta', 'akash@zettamobi.com', '8468082680', '$2y$10$KWiaLJEDM.lvzGTRfkADjO/XrtLBlRp2PWSNiqmuSIyJRMzGtr/qq', 'Zmobi@680', '106.219.162.23', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '20/06/2025 10:18:10 am', 0, 0, NULL, 0, 0, NULL, 0, NULL, NULL, 1, '', '1'),
+(30, 'zettamobil', 'zettaquiz900@gmail.com', '9637852100', '$2y$10$FBwl40NCjoknpFY1j.sR1ux1n/2Z2C/R8P4FYwk42nztF9WS56p2C', '123456', '106.219.165.189', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', 5.00, '', 'None', '', '', '', '', '21/07/2025 17:29:31 pm', 1, 1, NULL, 0, 0, NULL, 0, NULL, NULL, 1, '', 'ZTMWDQYOFKI'),
+(31, 'zetta test', 'zettaquiz90@gmail.com', '8505807000', '$2y$10$oKkdIVTS1mZznDS9zGYPL.j6qhqdJsJo3/.LRnfxWZT0jbbmBGbnu', '123456', '106.219.165.189', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', 0.00, '', 'None', '', '', '', '', '21/07/2025 18:07:00 pm', 1, 1, NULL, 0, 0, NULL, 0, NULL, NULL, 1, '', 'ZTMW3AH31JF'),
+(32, 'Drive360', 'drive360in@gmail.com', '1234567890', '$2y$10$A.DXmtX8KVCSe.X89eVCDu8CBe6CkCng2IWgAaZtrxpJ29ZG7XbC2', '', '106.219.165.191', 'IN - Delhi - Delhi', 'desktop - Microsoft - windows - 10.0', NULL, '', 'None', '', '', '', '', '22/07/2025 14:32:46 pm', 1, 0, NULL, 0, 0, NULL, 0, NULL, NULL, 1, 'ZTMWDQYOFKI', 'ZTMJNNFVOMU');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vpn_logs`
+--
+
+CREATE TABLE `vpn_logs` (
+  `id` int(11) NOT NULL,
+  `user_id` int(255) NOT NULL,
+  `timestamp` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `withdrawal`
+--
+
+CREATE TABLE `withdrawal` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `transaction_id` varchar(50) DEFAULT NULL,
+  `method_id` int(11) DEFAULT NULL,
+  `upi_id` varchar(100) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `status` enum('pending','success','cancel') DEFAULT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `ip` varchar(50) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Dumping data for table `withdrawal`
+--
+
+INSERT INTO `withdrawal` (`id`, `user_id`, `transaction_id`, `method_id`, `upi_id`, `amount`, `status`, `username`, `ip`, `created_at`) VALUES
+(1, 31, 'TXN6881C72759C8C', 2, 'uip@44826574', 200.00, 'success', 'zetta test', '106.219.160.222', '2025-07-24 05:39:51');
 
 --
 -- Indexes for dumped tables
@@ -53563,6 +53771,18 @@ ALTER TABLE `access_control`
 -- Indexes for table `access_module`
 --
 ALTER TABLE `access_module`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `activity_history`
+--
+ALTER TABLE `activity_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -53620,6 +53840,12 @@ ALTER TABLE `cpa`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `device_version`
+--
+ALTER TABLE `device_version`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `faqs`
 --
 ALTER TABLE `faqs`
@@ -53662,9 +53888,9 @@ ALTER TABLE `lang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `local_sms`
+-- Indexes for table `leads`
 --
-ALTER TABLE `local_sms`
+ALTER TABLE `leads`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -53704,6 +53930,12 @@ ALTER TABLE `notepanel`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `offers`
 --
 ALTER TABLE `offers`
@@ -53740,6 +53972,12 @@ ALTER TABLE `postback`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `reject`
+--
+ALTER TABLE `reject`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `reward`
 --
 ALTER TABLE `reward`
@@ -53749,12 +53987,6 @@ ALTER TABLE `reward`
 -- Indexes for table `sdk`
 --
 ALTER TABLE `sdk`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `sendpush`
---
-ALTER TABLE `sendpush`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -53777,9 +54009,33 @@ ALTER TABLE `system_settings`
   ADD UNIQUE KEY `token_id` (`token_id`);
 
 --
+-- Indexes for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `url_call_log`
+--
+ALTER TABLE `url_call_log`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `vpn_logs`
+--
+ALTER TABLE `vpn_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `withdrawal`
+--
+ALTER TABLE `withdrawal`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -53790,19 +54046,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accepted_ip`
 --
 ALTER TABLE `accepted_ip`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `access_control`
 --
 ALTER TABLE `access_control`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `access_module`
 --
 ALTER TABLE `access_module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT for table `activity_history`
+--
+ALTER TABLE `activity_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -53832,7 +54100,7 @@ ALTER TABLE `blogs`
 -- AUTO_INCREMENT for table `chats`
 --
 ALTER TABLE `chats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `chat_settings`
@@ -53857,6 +54125,12 @@ ALTER TABLE `countries`
 --
 ALTER TABLE `cpa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `device_version`
+--
+ALTER TABLE `device_version`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `faqs`
@@ -53901,10 +54175,10 @@ ALTER TABLE `lang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `local_sms`
+-- AUTO_INCREMENT for table `leads`
 --
-ALTER TABLE `local_sms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `leads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `maintain`
@@ -53916,19 +54190,19 @@ ALTER TABLE `maintain`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `my_account`
 --
 ALTER TABLE `my_account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `my_earnings`
 --
 ALTER TABLE `my_earnings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `my_payments`
@@ -53940,13 +54214,19 @@ ALTER TABLE `my_payments`
 -- AUTO_INCREMENT for table `notepanel`
 --
 ALTER TABLE `notepanel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `offers`
 --
 ALTER TABLE `offers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `offer_categories`
@@ -53958,7 +54238,7 @@ ALTER TABLE `offer_categories`
 -- AUTO_INCREMENT for table `offer_clicks`
 --
 ALTER TABLE `offer_clicks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `offer_types`
@@ -53976,7 +54256,13 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT for table `postback`
 --
 ALTER TABLE `postback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `reject`
+--
+ALTER TABLE `reject`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reward`
@@ -53989,12 +54275,6 @@ ALTER TABLE `reward`
 --
 ALTER TABLE `sdk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `sendpush`
---
-ALTER TABLE `sendpush`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `spam_protection_settings`
@@ -54015,10 +54295,34 @@ ALTER TABLE `system_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `tokens`
+--
+ALTER TABLE `tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `url_call_log`
+--
+ALTER TABLE `url_call_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `vpn_logs`
+--
+ALTER TABLE `vpn_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `withdrawal`
+--
+ALTER TABLE `withdrawal`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

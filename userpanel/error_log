@@ -1,0 +1,334 @@
+[03-Jun-2025 10:51:03 UTC] PHP Warning:  require(confige.php): failed to open stream: No such file or directory in /home/nwoowcom/reapbucks.com/userpanel/reset-password.php on line 5
+[03-Jun-2025 10:51:03 UTC] PHP Warning:  require(confige.php): failed to open stream: No such file or directory in /home/nwoowcom/reapbucks.com/userpanel/reset-password.php on line 5
+[03-Jun-2025 10:51:03 UTC] PHP Fatal error:  require(): Failed opening required 'confige.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/nwoowcom/reapbucks.com/userpanel/reset-password.php on line 5
+[06-Jun-2025 17:41:53 Asia/kolkata] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 606
+[06-Jun-2025 17:41:53 Asia/kolkata] PHP Fatal error:  Uncaught Error: Call to undefined function logActivity() in /home/nwoowcom/reapbucks.com/userpanel/index.php:643
+Stack trace:
+#0 {main}
+  thrown in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 643
+[06-Jun-2025 17:44:05 Asia/kolkata] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 606
+[06-Jun-2025 17:44:06 Asia/kolkata] PHP Fatal error:  Uncaught Error: Call to undefined function logActivity() in /home/nwoowcom/reapbucks.com/userpanel/index.php:643
+Stack trace:
+#0 {main}
+  thrown in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 643
+[06-Jun-2025 17:48:00 Asia/kolkata] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 606
+[06-Jun-2025 17:48:01 Asia/kolkata] PHP Fatal error:  Uncaught Error: Call to undefined function logActivity() in /home/nwoowcom/reapbucks.com/userpanel/index.php:643
+Stack trace:
+#0 {main}
+  thrown in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 643
+[06-Jun-2025 17:50:04 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:50:11 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:50:14 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:50:18 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:50:22 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:50:26 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:50:29 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:50:32 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:50:34 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:51:13 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:51:20 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:51:24 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:51:27 Asia/kolkata] PHP Fatal error:  Cannot redeclare logActivity() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:6) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 17:53:03 Asia/kolkata] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 613
+[06-Jun-2025 17:53:04 Asia/kolkata] PHP Notice:  Undefined variable: role_type_iu in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 650
+[06-Jun-2025 17:56:24 Asia/kolkata] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 613
+[06-Jun-2025 12:34:20 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:34:20 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:34:20 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:34:22 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:34:22 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:34:22 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:34:23 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:34:23 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:34:23 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:34:24 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:34:24 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:34:24 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:34:24 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:34:24 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:34:24 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:34:24 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:34:24 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:34:24 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:34:31 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:34:31 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:34:31 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:34:58 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:34:58 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:36:41 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:36:41 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:36:45 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:36:45 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:36:46 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:36:46 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:36:50 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:36:50 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:22 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:22 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:22 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:22 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:23 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:23 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:24 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:24 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:24 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:24 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:24 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:24 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:25 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:25 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:25 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:25 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:25 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:25 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:25 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:25 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:37:28 UTC] PHP Notice:  Undefined index: ROLE in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 23
+[06-Jun-2025 12:37:28 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:38:20 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:05 UTC] PHP Fatal error:  Cannot redeclare getUserInfo() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:40 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:41 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:43 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:43 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:43 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:43 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:43 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:44 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:44 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:39:49 UTC] PHP Fatal error:  Cannot redeclare getUserInfos() (previously declared in /home/nwoowcom/reapbucks.com/userpanel/connection.php:25) in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 24
+[06-Jun-2025 12:42:05 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:42:05 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:42:05 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:42:05 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 5
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 8
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 11
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 14
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 17
+[06-Jun-2025 12:42:05 UTC] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/index.php on line 606
+[06-Jun-2025 12:42:27 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:42:27 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:42:27 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:42:27 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 5
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 8
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 11
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 14
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:42:27 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 17
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 5
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 8
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 11
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 14
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:44:27 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 17
+[06-Jun-2025 12:44:46 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:44:46 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:44:46 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:44:46 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 5
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 8
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 11
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 14
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:44:46 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 17
+[06-Jun-2025 12:46:11 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:46:11 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:46:11 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:46:11 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 40
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 2
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 5
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 8
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 11
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 14
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:46:11 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 17
+[06-Jun-2025 12:46:33 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:33 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:33 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:33 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 3
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 9
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 12
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 15
+[06-Jun-2025 12:46:33 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:46:37 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:37 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:37 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:37 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 3
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 9
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 12
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 15
+[06-Jun-2025 12:46:37 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 3
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 9
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 12
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 15
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 3
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 9
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 12
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 15
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 3
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 9
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 12
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 15
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 3
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 9
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 12
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 15
+[06-Jun-2025 12:46:38 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[06-Jun-2025 12:46:39 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:39 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:39 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:39 UTC] PHP Deprecated:  Unparenthesized `a ? b : c ? d : e` is deprecated. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 39
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 3
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 4
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 6
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant PRODUCT_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 7
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 9
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant PRODUCT_MULTIPLE_IMAGE_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 10
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant BANNER_SERVER_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 12
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant BANNER_SITE_PATH already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 13
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_EMAIL already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 15
+[06-Jun-2025 12:46:39 UTC] PHP Notice:  Constant SHIPROCKET_TOKEN_PASSWORD already defined in /home/nwoowcom/reapbucks.com/userpanel/connection.php on line 16
+[10-Jun-2025 10:51:25 Asia/Calcutta] PHP Notice:  Undefined index: timestamp in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 65
+[10-Jun-2025 11:15:36 Asia/Calcutta] PHP Notice:  Undefined index: timestamp in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 65
+[10-Jun-2025 11:38:51 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 72
+[10-Jun-2025 11:38:51 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 126
+[10-Jun-2025 11:38:51 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 133
+[10-Jun-2025 11:38:51 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 137
+[10-Jun-2025 11:38:51 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_timing in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 137
+[10-Jun-2025 13:19:56 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 71
+[10-Jun-2025 13:19:56 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 126
+[10-Jun-2025 13:19:56 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 130
+[10-Jun-2025 13:19:56 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_timing in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 130
+[10-Jun-2025 14:06:43 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 14:06:43 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 130
+[10-Jun-2025 14:06:43 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 137
+[10-Jun-2025 14:06:43 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:06:43 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_timing in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: points in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 79
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: points in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 80
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 130
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 137
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: points in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 140
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: points in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 141
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_timing in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: offer_category in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: offer_name in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: offer_tracking_link in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: offer_device in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: offer_geo in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: offer_points in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 14:07:42 Asia/Calcutta] PHP Notice:  Undefined variable: offer_cap in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 142
+[10-Jun-2025 15:55:55 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 15:55:55 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 131
+[10-Jun-2025 15:58:42 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 15:58:42 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 131
+[10-Jun-2025 16:32:53 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 16:32:53 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 131
+[10-Jun-2025 17:54:16 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 17:54:16 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 150
+[10-Jun-2025 17:59:14 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 17:59:14 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 132
+[10-Jun-2025 18:00:29 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 18:00:29 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 120
+[10-Jun-2025 18:00:29 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 128
+[10-Jun-2025 18:00:29 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 132
+[10-Jun-2025 18:00:29 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 132
+[10-Jun-2025 18:00:29 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_timing in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 132
+[10-Jun-2025 18:08:05 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 80
+[10-Jun-2025 18:08:05 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 125
+[10-Jun-2025 18:08:05 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 133
+[10-Jun-2025 18:08:05 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 137
+[10-Jun-2025 18:08:05 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 137
+[10-Jun-2025 18:08:05 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_timing in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 137
+[10-Jun-2025 18:11:18 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 75
+[10-Jun-2025 18:11:18 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 120
+[10-Jun-2025 18:11:18 Asia/Calcutta] PHP Notice:  Undefined variable: user_proxy in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 128
+[10-Jun-2025 18:11:18 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_ip in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 132
+[10-Jun-2025 18:11:18 Asia/Calcutta] PHP Notice:  Undefined variable: status in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 132
+[10-Jun-2025 18:11:18 Asia/Calcutta] PHP Notice:  Undefined variable: user_click_timing in /home/nwoowcom/reapbucks.com/userpanel/get_postback.php on line 132
+[24-Jul-2025 04:41:15 UTC] PHP Notice:  Undefined index: city in /home/nwoowcom/reapbucks.com/userpanel/wallet.php on line 79
+[24-Jul-2025 04:41:15 UTC] PHP Notice:  Undefined index: state in /home/nwoowcom/reapbucks.com/userpanel/wallet.php on line 80
+[24-Jul-2025 04:41:15 UTC] PHP Notice:  Undefined variable: total_dollar in /home/nwoowcom/reapbucks.com/userpanel/wallet.php on line 90
+[24-Jul-2025 04:42:45 UTC] PHP Notice:  Undefined variable: total_dollar in /home/nwoowcom/reapbucks.com/userpanel/wallet.php on line 70
+[24-Jul-2025 04:43:50 UTC] PHP Notice:  Undefined variable: total_dollar in /home/nwoowcom/reapbucks.com/userpanel/wallet.php on line 70

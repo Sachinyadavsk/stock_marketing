@@ -156,6 +156,12 @@ h3,
   }
 }
 
+@media (max-width: 776px) {
+  .mobile_d {
+    display: none;
+  }
+}
+
 h4,
 .h4 {
   font-size: calc(1.275rem + 0.3vw);

@@ -7,13 +7,29 @@ RewriteRule ^(admin)/(accepted-ip)/?$ admin/accepted-ip.php
 RewriteRule ^(admin)/(auth-login)/?$ admin/auth-login.php
 RewriteRule ^(admin)/(dashboard)/?$ admin/dashboard.php
 RewriteRule ^(admin)/(reports)/?$ admin/leads.php
+RewriteRule ^(admin)/(leads)/?$ admin/user-leads.php
 RewriteRule ^(admin)/(offers)/?$ admin/company.php
+RewriteRule ^(admin)/(activities-logs)/?$ admin/activities-logs.php
 RewriteRule ^(admin)/(users)/?$ admin/users.php
+RewriteRule ^(admin)/(forget-password-submit)/?$ admin/forget-password-submit.php
+RewriteRule ^(admin)/(forget-password)/?$ admin/forget.php
+
+RewriteRule ^(admin)/reset-password/([^/\.]+)?$ admin/reset-password.php?token=$1 [L]
+RewriteRule ^(admin)/reset-password/([a-f0-9]{32})/?$ admin/reset-password.php [L]
+
 RewriteRule ^(admin)/(blogs)/?$ admin/blogs.php
 RewriteRule ^(admin)/(manage)/?$ admin/manage.php
+RewriteRule ^(admin)/(advertisers)/?$ admin/advertisers.php
 RewriteRule ^(admin)/(module-setting)/?$ admin/module_setting.php
 RewriteRule ^(admin)/(offer-categories)/?$ admin/offer-categories.php
 RewriteRule ^(admin)/(offer-types)/?$ admin/offer-types.php
+RewriteRule ^(admin)/(report-reject)/?$ admin/report_reject.php
+
+
+RewriteRule ^(admin)/(android-types)/?$ admin/android-types.php
+RewriteRule ^(admin)/(ios-types)/?$ admin/ios-types.php
+RewriteRule ^(admin)/(desktop-types)/?$ admin/desktop-types.php
+
 RewriteRule ^(admin)/(report-user)/?$ admin/user-report.php
 RewriteRule ^(admin)/(report-offer)/?$ admin/offer-report.php
 RewriteRule ^(admin)/(report-frauds)/?$ admin/fraud-report.php
@@ -26,7 +42,7 @@ RewriteRule ^(admin)/members/page/([0-9]+)/?$ members.php?page=$1 [QSA,L]
 RewriteRule ^(admin)/(members)/?$ admin/members.php [QSA,L]
 
 #User Panel
-RewriteRule ^(userpanel)/(auth-login)/?$ userpanel/login.php
+RewriteRule ^(userpanel)/(auth-login)/?$ userpanel/index.php
 RewriteRule ^(userpanel)/(auth-false)/?$ userpanel/auth-false.php
 RewriteRule ^(userpanel)/(payment-details)/?$ userpanel/payment-details.php
 RewriteRule ^(userpanel)/(offers)/?$ userpanel/offers.php
@@ -35,9 +51,14 @@ RewriteRule ^(userpanel)/(hotoffer)/?$ userpanel/hotoffer.php
 RewriteRule ^(userpanel)/(my_earnings)/?$ userpanel/my_earnings.php
 RewriteRule ^(userpanel)/(my_payments)/?$ userpanel/my_payments.php
 RewriteRule ^(userpanel)/(settings)/?$ userpanel/settings.php
+RewriteRule ^(userpanel)/(wallet)/?$ userpanel/wallet.php
+
 RewriteRule ^(userpanel)/(dashboard)/?$ userpanel/dashboard.php
 RewriteRule ^(userpanel)/(my_referrals)/?$ userpanel/my_referrals.php
 RewriteRule ^(userpanel)/([^/\.]+)/([^/\.]+)/(leads)/?$ userpanel/leads.php
+
+RewriteRule ^(userpanel)/reset-password/([^/\.]+)?$ userpanel/reset-password.php?token=$1 [L]
+RewriteRule ^(userpanel)/reset-password/([a-f0-9]{32})/?$ userpanel/reset-password.php [L]
 
 # Website contents
 RewriteRule ^(faqs)/?$ faqs.php

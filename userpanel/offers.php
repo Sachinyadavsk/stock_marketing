@@ -7,13 +7,14 @@ session_start();
 if(isset($_SESSION['ADMIN_LOGIN'])&&$_SESSION['ADMIN_LOGIN']=='yes'){
     $admin_id=$_SESSION['ADMIN_ID'];
     date_default_timezone_set("Asia/Calcutta");   //India time (GMT+5:30)
-$date_time=date('d/m/Y H:i:s a');
-$dateOnly = date('d/m/Y');
-$timeOnly=date('H:i');
+    $date_time=date('d/m/Y H:i:s a');
+    $dateOnly = date('d/m/Y');
+    $timeOnly=date('H:i');
 ?>
 
 <?php require('connection.php');?>
 <?php require('userinfo.php');?>
+
 <body class="g-sidenav-show  bg-gray-100 ">
     <!-- side nemu bar start -->
     <?php include("side_menu.php");?>
@@ -38,84 +39,23 @@ $timeOnly=date('H:i');
                                 </div>
                             </div>
                         </div>
-                        
-                             <!-- Card header -->
-                                <?php
-                                  if(isset($_REQUEST['offer_id'])&&$_REQUEST['offer_id']!=''){
-                                      $ii=$_REQUEST['offer_id'];
-                                      $cat_res=mysqli_query($con,"select * from offers where id='$ii' ");
-                                                      
-                                        $cat_arr=array();
-                                        while($row=mysqli_fetch_assoc($cat_res)){
-                                          $cat_arr[]=$row;    
-                                        }
-                                        mysqli_next_result($con);
-                                         foreach($cat_arr as $list){
-                                            
-                                ?>
-                                    <div class="modal fade" id="flow<?php echo $list['id'];?>">
-                                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title"><img src="<?php echo $list['icon_url'];?>"><?php echo $list['name'];?></h5><button type="button" class="btn btn-sm btn-label-danger btn-icon" data-bs-dismiss="modal"><i class="mdi mdi-close"></i></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="card">
-                                <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="mb-3">
-                                                    <h5 class="modal-title">Description :</h5><br>
-                                                   <p><?php echo $list['description'];?></p>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <h5 class="modal-title">Flow :</h5><br>
-                                                   <?php $flow=$list['flow'];
-                                                   $flow2=explode(',',$flow);
-                                                   $i=1;
-                                                   foreach($flow2 as $f){
-                                                     echo $i .' - '. $s = $f.'<br>'; 
-                                                     $i++;
-                                                   }
-                                                   
-                                                   ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                              <form action="" method="post">
-                                                                  <input type="hidden" name="ofrid" value="<?php echo $list['id'];?>">
-                                                                <button class="btn btn-success" name="pending_submit" type="submit">Start</button>
-                                                                </form>
-                                        </div>
-                                </div>
-                                </div>
-                            </div> 
-                                </div>
-                            </div>
-                                    </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $("#flow<?php echo $ii; ?>").modal("show");
-                                        });
-                                    </script>
-                                <?php }}?>
-                    
-                               <!--offer list display-->
-                           <div class="card-body px-0 pb-0">
+
+                        <!--offer list display-->
+                        <div class="card-body px-0 pb-0">
                             <div class="table-responsive">
                                 <table class="table table-flush" id="data-list">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>ID</th>
-                                            <th style="padding-left:50px;">Offer</th>
+                                            <th>Offer</th>
+                                            <th class="mobile_d">Install Details</th>
                                             <th>Earn</th>
                                             <th>Description</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
-                                         <?php
+
+                                            <?php
 
                                                 $cat_res=mysqli_query($con,"SELECT * FROM offers WHERE FIND_IN_SET('$os',os) AND FIND_IN_SET('$country',geo) AND status='1'");
                                                 $cat_arr=array();
@@ -151,167 +91,160 @@ $timeOnly=date('H:i');
                                                      
                                                  }else{
                                                 ?>
-                                        <tr id="<?php echo $list['id']; ?>">
-                                                <td class="text-sm"><?php echo $list['id']; ?></td>
+                                            <tr>
+                                                <td class="text-sm">
+                                                    <?php echo $list['id']; ?>
+                                                </td>
                                                 <td class="text-sm">
                                                     <span class="my-2 text-xs">
-                                                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#flow<?php echo $list['id']; ?>">
-                                                            <img src="https://reapbucks.com/admin/images/offers/<?php echo $list['icon_url']; ?>" style="width:100px;height:50px;">
-                                                            <h6><?php echo $list['name']; ?></h6>
-                                                            <?php echo $list['quick_desc']; ?>
+                                                        <a data-bs-toggle="modal" data-bs-target="#modal-edit<?php echo $list['id'];?>" data-bs-original-title="Edit">
+                                                            <img src="https://reapbucks.com/admin/images/offers/<?php echo $list['icon_url']; ?>"
+                                                                style="width:100px;height:50px;" class="moimg">
+                                                            <h6 class="text_mobile_view">
+                                                                <?php echo $list['name'];?>
+                                                            </h6>
                                                         </a>
                                                     </span>
                                                 </td>
-                                                <td class="text-sm">$<?php echo $list['points']; ?></td>
-                                                <td class="text-sm">
-                                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#flow<?php echo $list['id']; ?>">Flow</button>
+                                                <td class="text-lg text-dark mobile_d">
+                                                    <?php echo $list['quick_desc']; ?>
                                                 </td>
-                                            </tr>
+                                                <td class="text-sm">₹
+                                                    <?php echo $list['points']; ?>
+                                                </td>
+                                                <td class="text-sm">
+                                                    <a data-bs-toggle="modal" data-bs-target="#modal-edit<?php echo $list['id'];?>" class="btn btn-primary" data-bs-original-title="Edit">Flow</a>
+                                                </td>
+                                           </tr>
 
-                                            <!-- Modal for Each Offer -->
-                                            <div class="modal fade" id="flow<?php echo $list['id']; ?>">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">
-                                                                <img src="https://reapbucks.com/admin/images/offers/<?php echo $list['icon_url']; ?>" style="height: 20px;">
-                                                                <?php echo $list['name']; ?>
-                                                            </h5>
-                                                            <button type="button" class="btn btn-sm btn-label-danger btn-icon" data-bs-dismiss="modal">X</button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="mb-3">
-                                                                                <h5>Description:</h5>
-                                                                                <p><?php echo $list['description']; ?></p>
-                                                                            </div>
-                                                                            <div class="mb-3">
-                                                                                <h5>Flow:</h5>
-                                                                                <?php
-                                                                                $flow2 = explode(',', $list['flow']);
-                                                                                $i = 1;
-                                                                                foreach ($flow2 as $f) {
-                                                                                    echo $i . ' - ' . htmlspecialchars(trim($f)) . '<br>';
-                                                                                    $i++;
-                                                                                }
-                                                                                ?>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <form action="" method="post">
-                                                                            <input type="hidden" name="ofrid" value="<?php echo $list['id']; ?>">
-                                                                            <button class="btn btn-primary" name="pending_submit" type="submit">Start</button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div> 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <?php
+                                        <?php
                                         } // end j<1
-                                    } // end i<cap
-                                } 
-                                }// end foreach
+                                      } // end i<cap
+                                     } 
+                                    }// end foreach
                                 mysqli_free_result($cat_res);
                                 ?>
                                     </tbody>
                                 </table>
-                               
+
 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <?php
+                $cat_res=mysqli_query($con,"select * from offers");
+                $cat_arr=array();
+                while($row=mysqli_fetch_assoc($cat_res)){
+                  $cat_arr[]=$row;    
+                }
+                 foreach($cat_arr as $list){
+            ?>
 
-              <!-- Auto-show Modal if Offer ID is in URL -->
+            <!--Edit Payment ID-->
+            <div class="modal fade" id="modal-edit<?php echo $list['id'];?>">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <img src="https://reapbucks.com/admin/images/offers/<?php echo $list['icon_url']; ?>" style="height: 20px;">
+                             <?php echo $list['name'];?>
+                            </h5>
+                        <button type="button" class="btn btn-sm btn-label-danger btn-icon" data-bs-dismiss="modal">X</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="card">
+                           <div class="card-body">
+                               <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <h5>Earn Point :  <?php echo $list['points'];?></h5>
+                                            <br>
+                                            <h5 class="modal-title">Description :</h5><br>
+                                            <p>
+                                                <?php echo $list['description'];?>
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <h5 class="modal-title">Flow :</h5><br>
+                                            <?php $flow=$list['flow'];
+                                               $flow2=explode(',',$flow);
+                                               $i=1;
+                                               foreach($flow2 as $f){
+                                                 echo $i .' - '. $s = $f.'<br>'; 
+                                                 $i++;
+                                               }
+                                               ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <form action="" method="post">
+                                        <input type="hidden" name="ofrid" value="<?php echo $list['id'];?>">
+                                        <button class="btn btn-success" name="pending_submit" type="submit">Start</button>
+                                    </form>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php }?>
+
+            <!-- Auto-show Modal if Offer ID is in URL -->
                 <?php
-                if (isset($_REQUEST['offer_id']) && $_REQUEST['offer_id'] != '') {
-                    $offer_id_safe = intval($_REQUEST['offer_id']);
-                    ?>
-                    <script>
-                        $(document).ready(function () {
-                            $("#flow<?php echo $offer_id_safe; ?>").modal("show");
-                        });
-                    </script>
-                <?php } ?>
-                
-                <?php
-                    if(isset($_POST['pending_submit'])){
-                       $ofrid=$_POST['ofrid'];
-                        $cat_res=mysqli_query($con,"select * from offers where id='$ofrid'");
-                        $row=mysqli_fetch_assoc($cat_res);
-                        $trl=$row['tracking_link'];
-                         $clickid=rand(0000000001,9999999999);
-                        mysqli_query($con,"insert into offer_clicks(user_id,offer_id,click_id,sub_id,user_ip,user_country,user_state,user_city,user_device,user_os,timestamp)values('$admin_id','$ofrid','$clickid','','$ipaddress','$country','$region','$cityy','$device','$os','$date_time')");
-                        $urll = $trl;
-                        $user_id = $admin_id;
-                        $offer_id = $ofrid;
-                        $clickid = $clickid;
-                        // $url = str_replace('{user_id}', $user_id, $url);
-                        // $url = str_replace('{offer_id}', $offer_id, $url);
-                        // $url = str_replace('{click_id}', $clickid, $url);
-                        $final_id="$user_id".'_'."$offer_id".'_'."$clickid";
-                        $url = str_replace('{click_id}', $final_id, $urll);
-                        
-                        //  $postback_url = "https://reapbucks.com/get_postback.php?uid={$user_id}&oid={$offer_id}&cid={$clickid}";
-                        // // postback insert record
-                        //  mysqli_query($con,"insert into postback(user_id,offer_id,click_id,ip,url,status,timestamp)values('$user_id','$offer_id','$clickid','$ipaddress','$postback_url','1','$date_time')");
+                    if (isset($_REQUEST['offer_id']) && $_REQUEST['offer_id'] != '') {
+                        $offer_id_safe = intval($_REQUEST['offer_id']);
                         ?>
-                        <script>
-                            var newWindow = window.open("");
-                            newWindow.location.href = "<?php echo $url;?>";
-                        </script> 
-                        <?php
-                    }
-                ?>
-                  
-    <?php
-     if(isset($_REQUEST['oid'])){
-        $id=mysqli_real_escape_string($con,$_REQUEST['oid']);
-        //$sql="select * from my_offers where user_id='$admin_id' && offer_id='$id'";
-     	$res=mysqli_query($con,$sql);
-	    $count=mysqli_num_rows($res);
-	      if($count>0){
-        ?>
-        <script>
-             Swal.fire({
-              position: 'top-end',
-              icon: 'error',
-              title: 'Offer Already Avilable',
-              showConfirmButton: false,
-              timer: 2500
-            })
-            setTimeout(() => {
-             // window.location.href="https://rkelectrocare.com/";
-            }, "2600")
-        </script>
-        <?php  }else{
-  
-        //mysqli_query($con,"insert into my_offers(user_id,offer_id,time_stamp)values('$admin_id','$id','$date_time')");
-    ?>
-    
-    <script>
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Offer Picked',
-          showConfirmButton: false,
-          timer: 2500
-        })
-        setTimeout(() => {
-         // window.location.href="https://rkelectrocare.com/";
-        }, "2600")
-    </script>
-<?php  }
-    }
-?>
+                <script>
+                    $(document).ready(function () {
+                        $("#flow<?php echo $offer_id_safe; ?>").modal("show");
+                    });
+                </script>
+                <?php } ?>
+
+            <?php
+                     if(isset($_POST['pending_submit'])){
+                            $ofrid=$_POST['ofrid'];
+                            $cat_res=mysqli_query($con,"select * from offers where id='$ofrid'");
+                            $row=mysqli_fetch_assoc($cat_res);
+                            $trl=$row['tracking_link'];
+                            $points=$row['points'];
+                            $point_status=$row['point_status'];
+                            $aid=$row['aid'];
+                            
+                            $clickid = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 10);
+                            mysqli_query($con,"insert into offer_clicks(user_id,offer_id,click_id,aid,sub_id,user_ip,user_country,user_state,user_city,user_device,user_os,timestamp)values('$admin_id','$ofrid','$clickid','$aid','','$ipaddress','$country','$region','$cityy','$device','$os','$date_time')");
+                            $urll = $trl;
+                            $user_id = $admin_id;
+                            $offer_id = $ofrid;
+                            $clickid = $clickid;
+                            $deviceid ='';
+                            
+                            $url = str_replace('{deviceid}', $deviceid, $urll);
+                            $url = str_replace('{uid}', $user_id, $url);
+                            $url = str_replace('{oid}', $offer_id, $url);
+                            $url = str_replace('{clickid}', $clickid, $url);
+                            $url = str_replace('{subid}', $user_id, $url);
+                            
+                            // print_r($url);
+                            // exit();
+                            $last_id = mysqli_insert_id($con);
+                            mysqli_query($con, "UPDATE offer_clicks SET sub_id='$user_id' WHERE id='$last_id'");
+                            logActivity($con, $last_id, $user_id_u, $user_id_n, 'Click link offer Id ' . $ofrid);
+                            ?>
+            <script>
+                var newWindow = window.open("");
+                newWindow.location.href = "<?php echo $url;?>";
+            </script>
+            <?php
+                        }
+                    ?>
+
             <!-- footer start -->
             <?php include("footer.php");?>
             <!-- footer start -->
@@ -322,8 +255,8 @@ $timeOnly=date('H:i');
     <!-- footer url start -->
     <?php include("footer_url.php");?>
     <!-- footer url end -->
-    
-     <?php }else{
-        header('location:https://reapbucks.com/auth-login');
+
+    <?php }else{
+        header('location:https://reapbucks.com/userpanel/auth-login');
         }
         ?>

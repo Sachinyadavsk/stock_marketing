@@ -81,6 +81,11 @@
 ?>
 
 
+
+
+
+
+
 <header class="navbar navbar-expand-md navbar-dark">
             <div class="container-xl">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
@@ -177,7 +182,8 @@
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/banned.php">Banned Users</a></li>
                                         <div class="dropdown-divider"></div>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/history.php">Activities History</a></li>
-                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/withdraw.php">Withdrawal Activity</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/withdraw.php">Withdrawal History</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/paid.php">Paid History</a></li>
                                         <div class="dropdown-divider"></div>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/pushmsg.php">Send Push Message</a></li>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/localmsg.php">Send Local Message</a></li>
@@ -208,7 +214,9 @@
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/report-offer/">Offer Report</a></li>
                                         <div class="dropdown-divider"></div>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/report-frauds/">Fraud Report</a></li>
+                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/report-reject/">Reject Report</a></li>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/reports/">All Reports</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/activities-logs/">Activities Logs</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -237,14 +245,12 @@
                                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-toggle="dropdown"
                                         role="button" aria-expanded="false">
                                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24"
-                                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" />
-                                                <path
-                                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                                <circle cx="12" cy="12" r="3" />
-                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z"></path>
+                                            <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                            <path d="M6 12h4m-2 -2v4"></path>
+                                            <line x1="15" y1="11" x2="15" y2="11.01"></line>
+                                            <line x1="18" y1="13" x2="18" y2="13.01"></line></svg>
                                         </span>
                                         <span class="nav-link-title">Setup</span>
                                     </a>
@@ -262,16 +268,10 @@
                                         <div class="dropdown-divider"></div>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/lang.php">Languages</a></li>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/blogs/">Blogs</a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/accepted-ip/">Accepted IP</a></li>
-                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/offer-categories/">Offer Categories</a></li>
-                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/offer-types/">Offer Types</a></li>
-                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/manage/">Manage Admin</a></li>
-                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/module-setting/">Employee Access</a></li>
                                     </ul>
                                     
                                 </li>
-                                <li class="nav-item dropdown">
+                                  <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-toggle="dropdown"
                                         role="button" aria-expanded="false">
                                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -279,18 +279,28 @@
                                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                                 fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" />
-                                                <rect x="2" y="6" width="20" height="12" rx="2" />
-                                                <path d="M6 12h4m-2 -2v4" />
-                                                <line x1="15" y1="11" x2="15" y2="11.01" />
-                                                <line x1="18" y1="13" x2="18" y2="13.01" />
+                                                <path
+                                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                <circle cx="12" cy="12" r="3" />
                                             </svg>
                                         </span>
-                                        <span class="nav-link-title">Payments</span>
+                                        <span class="nav-link-title">Management</span>
                                     </a>
+                                    
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="javascript:void(0);">All Payments</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/accepted-ip/">Advertisers IP</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/offer-categories/">Offer Categories</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/offer-types/">Offer Types</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/manage/">Manage Admin</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/module-setting/">Employee Access</a></li>
+                                         <div class="dropdown-divider"></div>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/android-types/">Android Version</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/ios-types/">IOS Version</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/desktop-types/">Desktop Version</a></li>
                                     </ul>
+                                    
                                 </li>
+                                
                               <?php  
                             }elseif ($_SESSION['EMP_ACCESS']=='single') {?>
                             
@@ -337,6 +347,7 @@
                                          <?php endif; ?>
                                         <?php if (has_module_access($con, 'withdrawal_activity')): ?>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/withdraw.php">Withdrawal Activity</a></li>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/paid.php">Paid History</a></li>
                                          <?php endif; ?>
                                         <?php if (has_module_access($con, 'send_push_message')): ?>
                                         <div class="dropdown-divider"></div>
@@ -387,6 +398,9 @@
                                         <?php if (has_module_access($con, 'fraud_report')): ?>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/report-frauds/">Fraud Report</a></li>
                                          <?php endif; ?>
+                                         <?php if (has_module_access($con, 'report_reject')): ?>
+                                        <li><a class="dropdown-item" href="https://reapbucks.com/admin/report-reject/">Reject Report</a></li>
+                                         <?php endif; ?>
                                         <?php if (has_module_access($con, 'all_reports')): ?>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/reports/">All Reports</a></li>
                                          <?php endif; ?>
@@ -421,6 +435,7 @@
                                          <?php if (has_module_access($con, 'custom_offerwall')): ?>
                                         <li><a class="dropdown-item" href="https://reapbucks.com/admin/custom.php">Custom Offerwall</a></li>
                                          <?php endif; ?>
+                                         
                                     </ul>
                                 </li>
                                 <?php endif; ?>
@@ -430,14 +445,12 @@
                                 <a class="nav-link dropdown-toggle" href="#navbar-base" data-toggle="dropdown"
                                     role="button" aria-expanded="false">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" />
-                                            <path
-                                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                            <circle cx="12" cy="12" r="3" />
-                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z"></path>
+                                            <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                            <path d="M6 12h4m-2 -2v4"></path>
+                                            <line x1="15" y1="11" x2="15" y2="11.01"></line>
+                                            <line x1="18" y1="13" x2="18" y2="13.01"></line></svg>
                                     </span>
                                     <span class="nav-link-title">Setup</span>
                                 </a>
@@ -474,14 +487,50 @@
                                     <li><a class="dropdown-item" href="https://reapbucks.com/admin/blogs/">Blogs</a></li>
                                     <div class="dropdown-divider"></div>
                                      <?php endif; ?>
+                                </ul>
+                                
+                            </li>
+                                <?php endif; ?>
+                                
+                                <?php if (has_module_access($con, 'management_menu')): ?>
+                                  <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-toggle="dropdown"
+                                    role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" />
+                                                <path
+                                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
+                                    </span>
+                                    <span class="nav-link-title">Management</span>
+                                </a>
+                                
+                                <ul class="dropdown-menu">
                                      <?php if (has_module_access($con, 'accepted_ip')): ?>
-                                    <li><a class="dropdown-item" href="https://reapbucks.com/admin/accepted-ip/">Accepted IP</a></li>
+                                    <li><a class="dropdown-item" href="https://reapbucks.com/admin/accepted-ip/">Advertisers IP</a></li>
                                      <?php endif; ?>
                                      <?php if (has_module_access($con, 'offer_categories')): ?>
                                     <li><a class="dropdown-item" href="https://reapbucks.com/admin/offer-categories/">Offer Categories</a></li>
                                      <?php endif; ?>
+                                      
                                      <?php if (has_module_access($con, 'offer_types')): ?>
                                     <li><a class="dropdown-item" href="https://reapbucks.com/admin/offer-types/">Offer Types</a></li>
+                                     <?php endif; ?>
+                                     
+                                     <?php if (has_module_access($con, 'android_menu')): ?>
+                                    <li><a class="dropdown-item" href="https://reapbucks.com/admin/android-types/">Android Version</a></li>
+                                     <?php endif; ?>
+                                     
+                                     <?php if (has_module_access($con, 'ios_menu')): ?>
+                                    <li><a class="dropdown-item" href="https://reapbucks.com/admin/ios-types/">IOS Version</a></li>
+                                     <?php endif; ?>
+                                     
+                                     <?php if (has_module_access($con, 'desktop_menu')): ?>
+                                    <li><a class="dropdown-item" href="https://reapbucks.com/admin/desktop-types/">Desktop Version</a></li>
                                      <?php endif; ?>
                                 </ul>
                                 
@@ -495,10 +544,22 @@
                         </ul>
                         
                         <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-                            <form action="#" method="post">
-                                <input type="hidden" name="_token" value="#">
-                                <div class="input-icon">
-                                    <span class="input-icon-addon">
+                            <form action="https://reapbucks.com/admin/result_search.php" method="post" autocomplete="off">
+                                <div style="position: relative;">
+                                    <!-- Input field -->
+                                    <input type="text" name="search" id="search" class="form-control" placeholder="Search users" style="padding-right: 40px;">
+                            
+                                    <!-- Search button -->
+                                    <button type="submit" name="search_data" style="
+                                        position: absolute;
+                                        right: 10px;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        background: none;
+                                        border: none;
+                                        cursor: pointer;
+                                        padding: 0;
+                                    ">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                             stroke-linecap="round" stroke-linejoin="round">
@@ -506,10 +567,10 @@
                                             <circle cx="10" cy="10" r="7" />
                                             <line x1="21" y1="21" x2="15" y2="15" />
                                         </svg>
-                                    </span>
-                                    <input type="text" name="search" class="form-control" placeholder="Search users">
+                                    </button>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>

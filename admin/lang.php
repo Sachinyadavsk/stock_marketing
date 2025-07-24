@@ -19,9 +19,12 @@ if (isset($_POST['lang_vadd'])) {
         $id = $row['id'];
 
         $sql = "UPDATE lang SET language_code = '$language_code' WHERE id = '$id'";
+        logActivity($con, $id, $role_type_is, $language_name, 'Update new lang');
         } else {
             // Insert
             $sql = "INSERT INTO lang (admin_id, language_name, language_code, lang_file) VALUES ('$admin_id', '$language_name', '$language_code', '$lang_file')";
+            $last_id = mysqli_insert_id($con);
+            logActivity($con, $last_id, $role_type_is, $language_name, 'Add new lang');
         }
 
     $con->query($sql);
@@ -34,6 +37,7 @@ if (isset($_POST['lang_del'])) {
     $id=get_safe_value($con,$_POST['id']);
 	$delete_sql="delete from lang where id='$id'";
 	mysqli_query($con,$delete_sql);
+	logActivity($con, $id, $role_type_is, '', 'Delete lang');
 }
 
 

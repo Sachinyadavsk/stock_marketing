@@ -41,11 +41,14 @@ if (isset($_POST['update_fp'])) {
         }
         $update_str = implode(", ", $update);
         mysqli_query($con, "UPDATE fraud_prevention_settings SET $update_str WHERE admin_id = '$admin_id'");
+        logActivity($con, $admin_id, $role_type_is, '', 'Update fraud prevention settings');
     } else {
         // Insert new record
         $columns = implode(", ", array_merge(['admin_id'], array_keys($values)));
         $data = implode(", ", array_merge(["'$admin_id'"], array_map(fn($v) => "'$v'", $values)));
         mysqli_query($con, "INSERT INTO fraud_prevention_settings ($columns) VALUES ($data)");
+        $last_id = mysqli_insert_id($con);
+        logActivity($con, $last_id, $role_type_is, '', 'Add new fraud prevention settings');
     }
 
      header('location:frauds.php');
@@ -83,6 +86,8 @@ if (isset($_POST['frauds_update'])) {
             ('$admin_id', '$registration_disable', '$registration_validation', '$disposable_email', '$invitation_only', '$block_emu', '$registration_limit_per_hour')";
     }
      $con->query($sql);
+     $last_id = mysqli_insert_id($con);
+     logActivity($con, $last_id, $role_type_is, $admin_id, 'Add new spam protection settings');
      header('location:frauds.php');
      die();
 }
